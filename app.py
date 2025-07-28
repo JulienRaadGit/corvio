@@ -4,9 +4,10 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 
 try:
-    import openai
+    from openai import OpenAI
+    client = OpenAI()
 except ImportError:
-    openai = None  # We handle missing dependency gracefully
+    client = None
 
 
 app = Flask(__name__)
@@ -114,11 +115,11 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
         }
         return json.dumps(example, ensure_ascii=False)
     # Configure la clé API pour OpenAI.
-    openai.api_key = api_key
+    if client is None:
+        return json.dumps({"jours": []}, ensure_ascii=False)
+
     try:
-        # Utiliser par défaut le modèle GPT‑4.1 mini si disponible. Ce nom peut être adapté selon les modèles
-        # disponibles sur votre compte (exemple : "gpt-4.1-mini" ou "gpt-4.1-mini-2025-04-14").
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4.1-mini",
             messages=[
                 {"role": "system", "content": "Vous êtes un coach sportif professionnel."},
@@ -127,8 +128,9 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
             max_tokens=600,
             temperature=0.7
         )
-        workout = response.choices[0].message['content']
+        workout = response.choices[0].message.content
         return workout.strip()
+
     except Exception as e:
         # En cas d'erreur, retourner un message informatif.
         return f"Une erreur est survenue lors de la génération du programme d'entraînement: {str(e)}"
