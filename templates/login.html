@@ -166,10 +166,22 @@
                         window.location.href = '/';
                     }, 1000);
                 } else {
-                    showError('Erreur de vérification du token');
+                    // Show detailed error message
+                    let errorMessage = 'Erreur de vérification du token';
+                    if (data.error) {
+                        errorMessage = data.error;
+                    }
+                    if (data.details) {
+                        errorMessage += ': ' + data.details;
+                    }
+                    showError(errorMessage);
+                    
+                    // Log detailed error for debugging
+                    console.error('Token verification failed:', data);
                 }
             } catch (error) {
                 showError('Erreur lors de la vérification: ' + error.message);
+                console.error('Network error:', error);
             }
         }
 

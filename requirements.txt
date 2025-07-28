@@ -4,3 +4,4 @@ openai>=1.0.0
 gunicorn
 Flask-Session>=0.5.0
 firebase-admin>=6.2.0
+python-dotenv>=1.0.0

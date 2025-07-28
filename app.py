@@ -5,6 +5,10 @@ from flask_cors import CORS
 from flask_session import Session
 import firebase_admin
 from firebase_admin import credentials, auth
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 try:
     from openai import OpenAI
@@ -33,13 +37,38 @@ FIREBASE_CONFIG = {
     "client_x509_cert_url": os.environ.get('FIREBASE_CLIENT_CERT_URL', '')
 }
 
+# Check if Firebase credentials are properly configured
+firebase_initialized = False
+missing_credentials = []
+
+# Check for missing environment variables
+if not FIREBASE_CONFIG['private_key_id']:
+    missing_credentials.append('FIREBASE_PRIVATE_KEY_ID')
+if not FIREBASE_CONFIG['private_key']:
+    missing_credentials.append('FIREBASE_PRIVATE_KEY')
+if not FIREBASE_CONFIG['client_email']:
+    missing_credentials.append('FIREBASE_CLIENT_EMAIL')
+if not FIREBASE_CONFIG['client_id']:
+    missing_credentials.append('FIREBASE_CLIENT_ID')
+if not FIREBASE_CONFIG['client_x509_cert_url']:
+    missing_credentials.append('FIREBASE_CLIENT_CERT_URL')
+
 # Initialize Firebase Admin SDK
-try:
-    cred = credentials.Certificate(FIREBASE_CONFIG)
-    firebase_admin.initialize_app(cred)
-except Exception as e:
-    print(f"Firebase initialization error: {e}")
-    # Continue without Firebase for development
+if missing_credentials:
+    print(f"⚠️  Firebase credentials missing: {', '.join(missing_credentials)}")
+    print("Please set the following environment variables:")
+    for cred in missing_credentials:
+        print(f"  - {cred}")
+    print("Firebase authentication will not work without these credentials.")
+else:
+    try:
+        cred = credentials.Certificate(FIREBASE_CONFIG)
+        firebase_admin.initialize_app(cred)
+        firebase_initialized = True
+        print("✅ Firebase Admin SDK initialized successfully")
+    except Exception as e:
+        print(f"❌ Firebase initialization error: {e}")
+        print("Firebase authentication will not work.")
 
 # In-memory storage for user workout plans (in production, use a database)
 user_workout_plans = {}
@@ -230,14 +259,31 @@ def workout_plan():
 def verify_token():
     """Verify Firebase ID token"""
     try:
+        # Check if Firebase is initialized
+        if not firebase_initialized:
+            return jsonify({
+                'error': 'Firebase not initialized. Please check your Firebase credentials.',
+                'details': 'Missing environment variables for Firebase configuration'
+            }), 500
+        
         data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No JSON data provided'}), 400
+            
         id_token = data.get('idToken')
         
         if not id_token:
             return jsonify({'error': 'No token provided'}), 400
         
         # Verify the token with Firebase
-        decoded_token = auth.verify_id_token(id_token)
+        try:
+            decoded_token = auth.verify_id_token(id_token)
+        except Exception as firebase_error:
+            print(f"Firebase token verification error: {firebase_error}")
+            return jsonify({
+                'error': 'Token verification failed',
+                'details': str(firebase_error)
+            }), 401
         
         # Store user info in session
         session['user'] = {
@@ -247,10 +293,15 @@ def verify_token():
             'picture': decoded_token.get('picture', '')
         }
         
+        print(f"✅ User authenticated successfully: {session['user']['email']}")
         return jsonify({'success': True, 'user': session['user']})
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 401
+        print(f"❌ Token verification error: {e}")
+        return jsonify({
+            'error': 'Token verification error',
+            'details': str(e)
+        }), 401
 
 @app.route('/logout')
 def logout():
