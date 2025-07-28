@@ -5,6 +5,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const productList = document.getElementById('productList');
     const exerciseListDiv = document.getElementById('exerciseList');
 
+    // Firebase Authentication
+    // Import Firebase modules
+    import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js').then(({ initializeApp }) => {
+        return import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js').then(({ getAuth, onAuthStateChanged, signOut }) => {
+            // Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyA_CrBjnDmhDfvvTmx6coTozdyChQMQdjE",
+                authDomain: "corvio-bf0b0.firebaseapp.com",
+                projectId: "corvio-bf0b0",
+                storageBucket: "corvio-bf0b0.firebasestorage.app",
+                messagingSenderId: "637844838567",
+                appId: "1:637844838567:web:d8cabed8e8107426642382",
+                measurementId: "G-D807BNWELB"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+
+            // Handle logout
+            const logoutBtn = document.querySelector('.btn-logout');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    try {
+                        await signOut(auth);
+                        window.location.href = '/logout';
+                    } catch (error) {
+                        console.error('Error signing out:', error);
+                        window.location.href = '/logout';
+                    }
+                });
+            }
+
+            // Auth state observer
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    console.log('User is signed in:', user.email);
+                } else {
+                    console.log('User is signed out');
+                }
+            });
+        });
+    }).catch(error => {
+        console.error('Error loading Firebase:', error);
+    });
+
     // Fonction pour afficher les exercices
     function renderExercises(exercises) {
         exerciseListDiv.innerHTML = '';

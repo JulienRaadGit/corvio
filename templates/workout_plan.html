@@ -9,6 +9,42 @@
      crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{ url_for('index') }}">
+                    <span class="brand-icon">💪</span>
+                    <span class="brand-text">FitGen</span>
+                </a>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="{{ url_for('index') }}" class="nav-link">Accueil</a>
+                {% if user %}
+                    <a href="{{ url_for('workout_plan') }}" class="nav-link">Mon Plan</a>
+                {% endif %}
+            </div>
+            
+            <div class="nav-auth">
+                {% if user %}
+                    <div class="user-profile">
+                        {% if user.picture %}
+                            <img src="{{ user.picture }}" alt="{{ user.name }}" class="user-avatar">
+                        {% endif %}
+                        <span class="user-name">{{ user.name }}</span>
+                        <a href="{{ url_for('logout') }}" class="btn btn-logout">Déconnexion</a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-login">
+                        <span class="google-icon">🔐</span>
+                        Se connecter
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
     <header>
         <h1>Mon Plan d'Entraînement</h1>
         <p>Votre programme personnalisé de 7 jours</p>

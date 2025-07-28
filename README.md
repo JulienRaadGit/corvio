@@ -1,11 +1,11 @@
 # Générateur de Programmes d'Entraînement
 
-Un générateur de programmes d'entraînement personnalisés alimenté par l'IA, avec authentification Google et gestion des plans d'entraînement.
+Un générateur de programmes d'entraînement personnalisés alimenté par l'IA, avec authentification Firebase et gestion des plans d'entraînement.
 
 ## 🚀 Fonctionnalités
 
 - **Génération de programmes personnalisés** : Créez des programmes d'entraînement adaptés à vos besoins
-- **Authentification Google** : Connectez-vous avec votre compte Google pour sauvegarder vos plans
+- **Authentification Firebase** : Connectez-vous avec Google ou email/mot de passe pour sauvegarder vos plans
 - **Plan d'entraînement 7 jours** : Visualisez votre programme complet avec jours de repos
 - **Interface moderne** : Design responsive et intuitif
 - **Sauvegarde automatique** : Vos plans sont automatiquement sauvegardés après connexion
@@ -13,7 +13,7 @@ Un générateur de programmes d'entraînement personnalisés alimenté par l'IA,
 ## 📋 Prérequis
 
 - Python 3.8+
-- Compte Google Cloud Platform (pour l'authentification)
+- Projet Firebase (pour l'authentification)
 - Clé API OpenAI (optionnel)
 
 ## 🛠️ Installation
@@ -36,35 +36,37 @@ Un générateur de programmes d'entraînement personnalisés alimenté par l'IA,
    # Clé secrète Flask (changez cette valeur)
    SECRET_KEY=your-super-secret-key-change-this
    
-   # Configuration Google OAuth
-   GOOGLE_CLIENT_ID=your-google-client-id
-   GOOGLE_CLIENT_SECRET=your-google-client-secret
+   # Configuration Firebase (optionnel pour le développement)
+   FIREBASE_PRIVATE_KEY_ID=your-firebase-private-key-id
+   FIREBASE_PRIVATE_KEY=your-firebase-private-key
+   FIREBASE_CLIENT_EMAIL=your-firebase-client-email
+   FIREBASE_CLIENT_ID=your-firebase-client-id
+   FIREBASE_CLIENT_CERT_URL=your-firebase-client-cert-url
    
    # Clé API OpenAI (optionnel)
    OPENAI_API_KEY=your-openai-api-key
    ```
 
-## 🔐 Configuration Google OAuth
+## 🔐 Configuration Firebase
 
-1. **Créer un projet Google Cloud Platform**
-   - Allez sur [Google Cloud Console](https://console.cloud.google.com/)
+1. **Créer un projet Firebase**
+   - Allez sur [Firebase Console](https://console.firebase.google.com/)
    - Créez un nouveau projet ou sélectionnez un projet existant
 
-2. **Activer l'API Google+**
-   - Dans la console, allez dans "APIs & Services" > "Library"
-   - Recherchez et activez "Google+ API"
+2. **Activer l'authentification**
+   - Dans la console, allez dans "Authentication" > "Sign-in method"
+   - Activez "Google" et "Email/Password"
 
-3. **Créer des identifiants OAuth**
-   - Allez dans "APIs & Services" > "Credentials"
-   - Cliquez sur "Create Credentials" > "OAuth 2.0 Client IDs"
-   - Sélectionnez "Web application"
-   - Ajoutez les URIs de redirection autorisés :
-     - `http://localhost:5000/callback` (pour le développement)
-     - `https://votre-domaine.com/callback` (pour la production)
+3. **Configurer les domaines autorisés**
+   - Dans "Authentication" > "Settings" > "Authorized domains"
+   - Ajoutez vos domaines :
+     - `localhost` (pour le développement)
+     - `votre-domaine.com` (pour la production)
 
-4. **Récupérer les identifiants**
-   - Copiez le Client ID et Client Secret
-   - Ajoutez-les dans votre fichier `.env`
+4. **Récupérer la configuration**
+   - Dans "Project Settings" > "General"
+   - Copiez la configuration Firebase
+   - Pour la production, téléchargez la clé privée du service dans "Project Settings" > "Service accounts"
 
 ## 🚀 Lancement
 

@@ -3,10 +3,8 @@ import json
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from flask_cors import CORS
 from flask_session import Session
-from google_auth_oauthlib.flow import Flow
-from google.oauth2 import id_token
-from google.auth.transport import requests
-import tempfile
+import firebase_admin
+from firebase_admin import credentials, auth
 
 try:
     from openai import OpenAI
@@ -21,9 +19,27 @@ Session(app)
 
 CORS(app)  # allow all cross‑origin requests
 
-# Google OAuth configuration
-GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', 'your-google-client-id')
-GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', 'your-google-client-secret')
+# Firebase configuration - using environment variables for security
+FIREBASE_CONFIG = {
+    "type": "service_account",
+    "project_id": "corvio-bf0b0",
+    "private_key_id": os.environ.get('FIREBASE_PRIVATE_KEY_ID', ''),
+    "private_key": os.environ.get('FIREBASE_PRIVATE_KEY', '').replace('\\n', '\n'),
+    "client_email": os.environ.get('FIREBASE_CLIENT_EMAIL', ''),
+    "client_id": os.environ.get('FIREBASE_CLIENT_ID', ''),
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": os.environ.get('FIREBASE_CLIENT_CERT_URL', '')
+}
+
+# Initialize Firebase Admin SDK
+try:
+    cred = credentials.Certificate(FIREBASE_CONFIG)
+    firebase_admin.initialize_app(cred)
+except Exception as e:
+    print(f"Firebase initialization error: {e}")
+    # Continue without Firebase for development
 
 # In-memory storage for user workout plans (in production, use a database)
 user_workout_plans = {}
@@ -51,25 +67,6 @@ PRODUCT_SUGGESTIONS = [
         "link": "#"  # Remplacez ce lien par votre lien affilié
     }
 ]
-
-def get_google_flow():
-    """Create Google OAuth flow"""
-    client_secrets = {
-        "web": {
-            "client_id": GOOGLE_CLIENT_ID,
-            "client_secret": GOOGLE_CLIENT_SECRET,
-            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            "token_uri": "https://oauth2.googleapis.com/token",
-            "redirect_uris": ["http://localhost:5000/callback"]
-        }
-    }
-    
-    flow = Flow.from_client_config(
-        client_secrets,
-        scopes=['openid', 'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']
-    )
-    flow.redirect_uri = "http://localhost:5000/callback"
-    return flow
 
 def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipment_list: list[str]) -> str:
     """
@@ -211,49 +208,49 @@ def index():
     # Page principale. Rend le formulaire et la liste d'exercices.
     return render_template('index.html', user=session.get('user'))
 
+@app.route('/login')
+def login():
+    """Login page with Firebase authentication"""
+    return render_template('login.html')
+
 @app.route('/workout-plan')
 def workout_plan():
     """Page showing the current user's workout plan"""
     if 'user' not in session:
         return redirect(url_for('login'))
     
-    user_id = session['user']['sub']
+    user_id = session['user']['uid']
     current_plan = user_workout_plans.get(user_id, None)
     
     return render_template('workout_plan.html', 
                          user=session['user'], 
                          workout_plan=current_plan)
 
-@app.route('/login')
-def login():
-    """Initiate Google OAuth login"""
-    flow = get_google_flow()
-    authorization_url, state = flow.authorization_url()
-    session['state'] = state
-    return redirect(authorization_url)
-
-@app.route('/callback')
-def callback():
-    """Handle Google OAuth callback"""
-    flow = get_google_flow()
-    flow.fetch_token(authorization_response=request.url)
-    
-    if not session['state'] == request.args['state']:
-        return redirect(url_for('index'))
-    
-    credentials = flow.credentials
-    id_info = id_token.verify_oauth2_token(
-        credentials.id_token, requests.Request(), GOOGLE_CLIENT_ID
-    )
-    
-    session['user'] = {
-        'sub': id_info['sub'],
-        'email': id_info['email'],
-        'name': id_info.get('name', ''),
-        'picture': id_info.get('picture', '')
-    }
-    
-    return redirect(url_for('index'))
+@app.route('/verify-token', methods=['POST'])
+def verify_token():
+    """Verify Firebase ID token"""
+    try:
+        data = request.get_json()
+        id_token = data.get('idToken')
+        
+        if not id_token:
+            return jsonify({'error': 'No token provided'}), 400
+        
+        # Verify the token with Firebase
+        decoded_token = auth.verify_id_token(id_token)
+        
+        # Store user info in session
+        session['user'] = {
+            'uid': decoded_token['uid'],
+            'email': decoded_token.get('email', ''),
+            'name': decoded_token.get('name', ''),
+            'picture': decoded_token.get('picture', '')
+        }
+        
+        return jsonify({'success': True, 'user': session['user']})
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 401
 
 @app.route('/logout')
 def logout():
@@ -279,7 +276,7 @@ def generate():
     
     # Save workout plan for logged-in user
     if 'user' in session:
-        user_id = session['user']['sub']
+        user_id = session['user']['uid']
         try:
             plan_data = json.loads(plan)
             user_workout_plans[user_id] = plan_data
