@@ -149,6 +149,49 @@ form button:hover {
     margin-bottom: 8px;
 }
 
+/* Style pour le programme structuré */
+.program-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.day-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.day-card h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    font-size: 1.1em;
+}
+
+.exercise-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+.exercise-row select,
+.exercise-row input {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+.exercise-row input[type="number"] {
+    width: 60px;
+}
+.exercise-row label {
+    font-size: 0.9em;
+}
+
 footer {
     text-align: center;
     padding: 20px;

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('infoForm');
     const resultSection = document.getElementById('resultSection');
-    const programOutput = document.getElementById('programOutput');
+    const programContainer = document.getElementById('programContainer');
     const productList = document.getElementById('productList');
     const exerciseListDiv = document.getElementById('exerciseList');
 
@@ -50,9 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleEquipmentOptions();
 
     // Récupérer la liste des exercices au chargement
+    // Variable pour stocker la liste des exercices disponibles
+    let exerciseData = [];
+
     fetch('/static/data/exercises.json')
         .then(response => response.json())
         .then(data => {
+            exerciseData = data;
             renderExercises(data);
         })
         .catch(err => {
@@ -76,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Reset l'affichage
-        programOutput.textContent = 'Génération en cours…';
+        programContainer.innerHTML = '<p>Génération en cours…</p>';
         productList.innerHTML = '';
         resultSection.style.display = 'block';
 
@@ -95,7 +99,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
             });
             const data = await response.json();
-            programOutput.textContent = data.plan;
+            // Essayer d'interpréter la réponse comme JSON structuré
+            let schedule;
+            try {
+                schedule = JSON.parse(data.plan);
+            } catch (e) {
+                // Si ce n'est pas un JSON valide, afficher le texte brutf
+                programContainer.textContent = data.plan;
+                schedule = null;
+            }
+            if (schedule) {
+                renderSchedule(schedule);
+            }
             // Afficher les produits
             data.products.forEach(prod => {
                 const li = document.createElement('li');
@@ -115,4 +130,73 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error(error);
         }
     });
+
+    /**
+     * Affiche le programme structuré sous forme d'agenda interactif.
+     * @param {Object} schedule - Objet JSON avec un tableau 'jours'.
+     */
+    function renderSchedule(schedule) {
+        programContainer.innerHTML = '';
+        if (!schedule || !Array.isArray(schedule.jours)) {
+            programContainer.textContent = 'Format de programme inattendu.';
+            return;
+        }
+        // Pour chaque jour, créer une carte
+        schedule.jours.forEach((dayObj, dayIndex) => {
+            const card = document.createElement('div');
+            card.classList.add('day-card');
+            const title = document.createElement('h4');
+            title.textContent = dayObj.nomJour || `Jour ${dayIndex + 1}`;
+            card.appendChild(title);
+            // Liste des exercices
+            if (Array.isArray(dayObj.exercices)) {
+                dayObj.exercices.forEach((exercise, exIndex) => {
+                    const row = document.createElement('div');
+                    row.classList.add('exercise-row');
+                    // Sélecteur d'exercice
+                    const select = document.createElement('select');
+                    exerciseData.forEach(opt => {
+                        const option = document.createElement('option');
+                        option.value = opt.name;
+                        option.textContent = opt.name;
+                        if (opt.name.toLowerCase() === (exercise.nom || '').toLowerCase()) {
+                            option.selected = true;
+                        }
+                        select.appendChild(option);
+                    });
+                    // Champ séries
+                    const seriesLabel = document.createElement('label');
+                    seriesLabel.textContent = 'Séries:';
+                    const seriesInput = document.createElement('input');
+                    seriesInput.type = 'number';
+                    seriesInput.min = '1';
+                    seriesInput.value = exercise.series || '';
+                    seriesLabel.appendChild(seriesInput);
+                    // Champ répétitions
+                    const repsLabel = document.createElement('label');
+                    repsLabel.textContent = ' Répétitions:';
+                    const repsInput = document.createElement('input');
+                    repsInput.type = 'number';
+                    repsInput.min = '1';
+                    repsInput.value = exercise.repetitions || '';
+                    repsLabel.appendChild(repsInput);
+                    // Champ durée
+                    const durLabel = document.createElement('label');
+                    durLabel.textContent = ' Durée (min):';
+                    const durInput = document.createElement('input');
+                    durInput.type = 'number';
+                    durInput.min = '0';
+                    durInput.value = exercise.duree_minutes || '';
+                    durLabel.appendChild(durInput);
+                    // Append all to row
+                    row.appendChild(select);
+                    row.appendChild(seriesLabel);
+                    row.appendChild(repsLabel);
+                    row.appendChild(durLabel);
+                    card.appendChild(row);
+                });
+            }
+            programContainer.appendChild(card);
+        });
+    }
 });

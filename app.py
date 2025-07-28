@@ -63,41 +63,61 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
 
     # Prépare le prompt pour ChatGPT.
     prompt = (
-        f"Vous êtes un coach sportif professionnel. Créez un programme d'entraînement complet en français "
+        f"Vous êtes un coach sportif professionnel. Créez un programme d'entraînement structuré en français "
         f"pour une personne de {age} ans, mesurant {height} cm et pesant {weight} kg, {equipment_text}. "
-        f"Le programme doit inclure un échauffement, des exercices principaux (cardio et renforcement musculaire), "
-        f"et des étirements. Indiquez clairement le nombre de séries et de répétitions pour chaque exercice, "
-        f"ainsi que la durée des temps de repos. Terminez par des conseils pour la récupération et la progression."
+        f"Le programme doit être réparti sur plusieurs jours de la semaine (par exemple 5 ou 7 jours) et pour chaque jour, "
+        f"décrire plusieurs exercices. Le format de sortie doit être exclusivement du JSON valide sans explication ni balise de code. "
+        f"Structure du JSON : un objet avec une clé 'jours' contenant un tableau. Chaque entrée du tableau représente un jour et doit "
+        f"contenir au moins les clés 'nomJour' (par exemple 'Lundi', 'Mardi', etc.) et 'exercices'. La clé 'exercices' est un tableau d'objets. "
+        f"Chaque exercice doit avoir les clés suivantes : 'nom' (nom de l'exercice), 'series' (nombre de séries), 'repetitions' (nombre de répétitions, laisser vide ou null "
+        f"si l'exercice est basé sur la durée), et 'duree_minutes' (durée en minutes si applicable, sinon null). Utilisez seulement ces clés. "
+        f"Assurez‑vous que le JSON retourné soit strictement conforme à cette structure pour qu'il puisse être analysé par un programme."
     )
 
     # Si la bibliothèque openai n'est pas disponible, renvoyer un texte par défaut.
     if openai is None:
-        return (
-            "(L'API OpenAI n'est pas installée. Veuillez installer la bibliothèque openai et définir votre clé d'API.)\n\n"
-            "Exemple de plan d'entraînement:\n"
-            "- Échauffement: 5 minutes de marche ou de jogging léger.\n"
-            "- Pompes: 3 séries de 12 répétitions.\n"
-            "- Squats: 3 séries de 15 répétitions.\n"
-            "- Planche: 3 séries de 30 secondes.\n"
-            "- Étirements: 5 minutes de stretching général."
-        )
+        # Exemple de sortie JSON lorsque la bibliothèque openai n'est pas disponible
+        example = {
+            "jours": [
+                {
+                    "nomJour": "Lundi",
+                    "exercices": [
+                        {"nom": "Pompes", "series": 3, "repetitions": 12, "duree_minutes": None},
+                        {"nom": "Squats", "series": 3, "repetitions": 15, "duree_minutes": None},
+                        {"nom": "Planche", "series": 3, "repetitions": None, "duree_minutes": 1}
+                    ]
+                },
+                {
+                    "nomJour": "Mardi",
+                    "exercices": [
+                        {"nom": "Fentes", "series": 3, "repetitions": 12, "duree_minutes": None},
+                        {"nom": "Gainage (Planche)", "series": 3, "repetitions": None, "duree_minutes": 1}
+                    ]
+                }
+            ]
+        }
+        return json.dumps(example, ensure_ascii=False)
 
     # Récupère la clé API depuis les variables d'environnement.
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        return (
-            "(Clé API OpenAI manquante. Définissez la variable d'environnement OPENAI_API_KEY pour activer la génération."\
-            ")\n\n"
-            "Exemple de plan d'entraînement:\n"
-            "- Échauffement: 5 minutes de marche ou de jogging léger.\n"
-            "- Pompes: 3 séries de 12 répétitions.\n"
-            "- Squats: 3 séries de 15 répétitions.\n"
-            "- Planche: 3 séries de 30 secondes.\n"
-            "- Étirements: 5 minutes de stretching général."
-        )
+        example = {
+            "jours": [
+                {
+                    "nomJour": "Lundi",
+                    "exercices": [
+                        {"nom": "Pompes", "series": 3, "repetitions": 12, "duree_minutes": None},
+                        {"nom": "Squats", "series": 3, "repetitions": 15, "duree_minutes": None}
+                    ]
+                }
+            ]
+        }
+        return json.dumps(example, ensure_ascii=False)
     # Configure la clé API pour OpenAI.
     openai.api_key = api_key
     try:
+        # Utiliser par défaut le modèle GPT‑4.1 mini si disponible. Ce nom peut être adapté selon les modèles
+        # disponibles sur votre compte (exemple : "gpt-4.1-mini" ou "gpt-4.1-mini-2025-04-14").
         response = openai.ChatCompletion.create(
             model="gpt-4.1-mini",
             messages=[

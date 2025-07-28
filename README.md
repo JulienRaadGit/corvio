@@ -5,7 +5,7 @@ Ce dossier contient une application web simple qui permet aux utilisateurs de re
 ## Prérequis
 
 - Python 3.10 ou supérieur.
-- Une clé API OpenAI valide : définissez la variable d'environnement `OPENAI_API_KEY` avec votre clé pour activer la génération de programmes via ChatGPT.
+- Une clé API OpenAI valide : définissez la variable d'environnement `OPENAI_API_KEY` avec votre clé pour activer la génération de programmes via ChatGPT. Le code est configuré pour utiliser le modèle **GPT‑4.1 mini**, plus récent que GPT‑3.5‑turbo. Si votre compte n’a pas accès à ce modèle, modifiez la variable `model` dans `app.py` pour utiliser un modèle disponible (par exemple `gpt-3.5-turbo`).
 - (Optionnel) Un compte Google AdSense et des liens affiliés pour la monétisation.
 
 ## Installation
