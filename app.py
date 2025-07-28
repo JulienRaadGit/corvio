@@ -1,7 +1,12 @@
 import os
 import json
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 from flask_cors import CORS
+from flask_session import Session
+from google_auth_oauthlib.flow import Flow
+from google.oauth2 import id_token
+from google.auth.transport import requests
+import tempfile
 
 try:
     from openai import OpenAI
@@ -9,9 +14,19 @@ try:
 except ImportError:
     client = None
 
-
 app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-this')
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
+
 CORS(app)  # allow all cross‑origin requests
+
+# Google OAuth configuration
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', 'your-google-client-id')
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', 'your-google-client-secret')
+
+# In-memory storage for user workout plans (in production, use a database)
+user_workout_plans = {}
 
 # Load product suggestions from a hard‑coded list.
 PRODUCT_SUGGESTIONS = [
@@ -37,6 +52,24 @@ PRODUCT_SUGGESTIONS = [
     }
 ]
 
+def get_google_flow():
+    """Create Google OAuth flow"""
+    client_secrets = {
+        "web": {
+            "client_id": GOOGLE_CLIENT_ID,
+            "client_secret": GOOGLE_CLIENT_SECRET,
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "redirect_uris": ["http://localhost:5000/callback"]
+        }
+    }
+    
+    flow = Flow.from_client_config(
+        client_secrets,
+        scopes=['openid', 'https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile']
+    )
+    flow.redirect_uri = "http://localhost:5000/callback"
+    return flow
 
 def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipment_list: list[str]) -> str:
     """
@@ -66,22 +99,24 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
     prompt = (
         f"Vous êtes un coach sportif professionnel. Créez un programme d'entraînement structuré en français "
         f"pour une personne de {age} ans, mesurant {height} cm et pesant {weight} kg, {equipment_text}. "
-        f"Le programme doit être réparti sur plusieurs jours de la semaine (par exemple 5 ou 7 jours) et pour chaque jour, "
-        f"décrire plusieurs exercices. Le format de sortie doit être exclusivement du JSON valide sans explication ni balise de code. "
-        f"Structure du JSON : un objet avec une clé 'jours' contenant un tableau. Chaque entrée du tableau représente un jour et doit "
-        f"contenir au moins les clés 'nomJour' (par exemple 'Lundi', 'Mardi', etc.) et 'exercices'. La clé 'exercices' est un tableau d'objets. "
-        f"Chaque exercice doit avoir les clés suivantes : 'nom' (nom de l'exercice), 'series' (nombre de séries), 'repetitions' (nombre de répétitions, laisser vide ou null "
+        f"Le programme doit être réparti sur 7 jours de la semaine et pour chaque jour, "
+        f"décrire plusieurs exercices ou indiquer 'Repos' si c'est un jour de repos. Le format de sortie doit être exclusivement du JSON valide sans explication ni balise de code. "
+        f"Structure du JSON : un objet avec une clé 'jours' contenant un tableau de 7 éléments. Chaque entrée du tableau représente un jour et doit "
+        f"contenir au moins les clés 'nomJour' (par exemple 'Lundi', 'Mardi', etc.), 'type' ('workout' ou 'rest'), et 'exercices'. "
+        f"La clé 'exercices' est un tableau d'objets (vide si type='rest'). "
+        f"Chaque exercice doit avoir les clés suivantes : 'nom' (nom de l'exercice), 'series' (nombre de séries), 'repetitions' (nombre de répétitions, laisser vide ou null "
         f"si l'exercice est basé sur la durée), et 'duree_minutes' (durée en minutes si applicable, sinon null). Utilisez seulement ces clés. "
         f"Assurez‑vous que le JSON retourné soit strictement conforme à cette structure pour qu'il puisse être analysé par un programme."
     )
 
     # Si la bibliothèque openai n'est pas disponible, renvoyer un texte par défaut.
-    if openai is None:
+    if client is None:
         # Exemple de sortie JSON lorsque la bibliothèque openai n'est pas disponible
         example = {
             "jours": [
                 {
                     "nomJour": "Lundi",
+                    "type": "workout",
                     "exercices": [
                         {"nom": "Pompes", "series": 3, "repetitions": 12, "duree_minutes": None},
                         {"nom": "Squats", "series": 3, "repetitions": 15, "duree_minutes": None},
@@ -90,10 +125,45 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
                 },
                 {
                     "nomJour": "Mardi",
+                    "type": "workout",
                     "exercices": [
                         {"nom": "Fentes", "series": 3, "repetitions": 12, "duree_minutes": None},
                         {"nom": "Gainage (Planche)", "series": 3, "repetitions": None, "duree_minutes": 1}
                     ]
+                },
+                {
+                    "nomJour": "Mercredi",
+                    "type": "rest",
+                    "exercices": []
+                },
+                {
+                    "nomJour": "Jeudi",
+                    "type": "workout",
+                    "exercices": [
+                        {"nom": "Burpees", "series": 3, "repetitions": 10, "duree_minutes": None},
+                        {"nom": "Mountain Climbers", "series": 3, "repetitions": None, "duree_minutes": 2}
+                    ]
+                },
+                {
+                    "nomJour": "Vendredi",
+                    "type": "workout",
+                    "exercices": [
+                        {"nom": "Dips", "series": 3, "repetitions": 8, "duree_minutes": None},
+                        {"nom": "Lunges", "series": 3, "repetitions": 12, "duree_minutes": None}
+                    ]
+                },
+                {
+                    "nomJour": "Samedi",
+                    "type": "workout",
+                    "exercices": [
+                        {"nom": "Jumping Jacks", "series": 3, "repetitions": None, "duree_minutes": 3},
+                        {"nom": "High Knees", "series": 3, "repetitions": None, "duree_minutes": 2}
+                    ]
+                },
+                {
+                    "nomJour": "Dimanche",
+                    "type": "rest",
+                    "exercices": []
                 }
             ]
         }
@@ -106,6 +176,7 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
             "jours": [
                 {
                     "nomJour": "Lundi",
+                    "type": "workout",
                     "exercices": [
                         {"nom": "Pompes", "series": 3, "repetitions": 12, "duree_minutes": None},
                         {"nom": "Squats", "series": 3, "repetitions": 15, "duree_minutes": None}
@@ -135,12 +206,60 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
         # En cas d'erreur, retourner un message informatif.
         return f"Une erreur est survenue lors de la génération du programme d'entraînement: {str(e)}"
 
-
 @app.route('/')
 def index():
     # Page principale. Rend le formulaire et la liste d'exercices.
-    return render_template('index.html')
+    return render_template('index.html', user=session.get('user'))
 
+@app.route('/workout-plan')
+def workout_plan():
+    """Page showing the current user's workout plan"""
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    
+    user_id = session['user']['sub']
+    current_plan = user_workout_plans.get(user_id, None)
+    
+    return render_template('workout_plan.html', 
+                         user=session['user'], 
+                         workout_plan=current_plan)
+
+@app.route('/login')
+def login():
+    """Initiate Google OAuth login"""
+    flow = get_google_flow()
+    authorization_url, state = flow.authorization_url()
+    session['state'] = state
+    return redirect(authorization_url)
+
+@app.route('/callback')
+def callback():
+    """Handle Google OAuth callback"""
+    flow = get_google_flow()
+    flow.fetch_token(authorization_response=request.url)
+    
+    if not session['state'] == request.args['state']:
+        return redirect(url_for('index'))
+    
+    credentials = flow.credentials
+    id_info = id_token.verify_oauth2_token(
+        credentials.id_token, requests.Request(), GOOGLE_CLIENT_ID
+    )
+    
+    session['user'] = {
+        'sub': id_info['sub'],
+        'email': id_info['email'],
+        'name': id_info.get('name', ''),
+        'picture': id_info.get('picture', '')
+    }
+    
+    return redirect(url_for('index'))
+
+@app.route('/logout')
+def logout():
+    """Logout user"""
+    session.clear()
+    return redirect(url_for('index'))
 
 @app.route('/generate', methods=['POST'])
 def generate():
@@ -157,11 +276,20 @@ def generate():
     equipment_list = [str(item) for item in equipment_list]
 
     plan = generate_workout_plan(height, weight, age, gym, equipment_list)
+    
+    # Save workout plan for logged-in user
+    if 'user' in session:
+        user_id = session['user']['sub']
+        try:
+            plan_data = json.loads(plan)
+            user_workout_plans[user_id] = plan_data
+        except:
+            pass  # If plan is not valid JSON, don't save it
+    
     return jsonify({
         'plan': plan,
         'products': PRODUCT_SUGGESTIONS
     })
-
 
 @app.route('/static/data/exercises.json')
 def exercises():
@@ -173,7 +301,6 @@ def exercises():
     except Exception:
         exercises_data = []
     return jsonify(exercises_data)
-
 
 if __name__ == '__main__':
     # Lance l'application Flask.

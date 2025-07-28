@@ -1,105 +1,197 @@
-# Générateur de programmes d'entraînement
+# Générateur de Programmes d'Entraînement
 
-Ce dossier contient une application web simple qui permet aux utilisateurs de renseigner des informations personnelles (âge, taille, poids et accès à du matériel) afin de générer un programme d'entraînement personnalisé à l'aide de l'API ChatGPT. Le site est monétisé via des publicités Google AdSense (non incluses par défaut) et des liens affiliés que vous pourrez ajouter vous‑même.
+Un générateur de programmes d'entraînement personnalisés alimenté par l'IA, avec authentification Google et gestion des plans d'entraînement.
 
-## Prérequis
+## 🚀 Fonctionnalités
 
-- Python 3.10 ou supérieur.
-- Une clé API OpenAI valide : définissez la variable d'environnement `OPENAI_API_KEY` avec votre clé pour activer la génération de programmes via ChatGPT. Le code est configuré pour utiliser le modèle **GPT‑4.1 mini**, plus récent que GPT‑3.5‑turbo. Si votre compte n’a pas accès à ce modèle, modifiez la variable `model` dans `app.py` pour utiliser un modèle disponible (par exemple `gpt-3.5-turbo`).
-- (Optionnel) Un compte Google AdSense et des liens affiliés pour la monétisation.
+- **Génération de programmes personnalisés** : Créez des programmes d'entraînement adaptés à vos besoins
+- **Authentification Google** : Connectez-vous avec votre compte Google pour sauvegarder vos plans
+- **Plan d'entraînement 7 jours** : Visualisez votre programme complet avec jours de repos
+- **Interface moderne** : Design responsive et intuitif
+- **Sauvegarde automatique** : Vos plans sont automatiquement sauvegardés après connexion
 
-## Installation
+## 📋 Prérequis
 
-1. **Installez les dépendances Python** :
+- Python 3.8+
+- Compte Google Cloud Platform (pour l'authentification)
+- Clé API OpenAI (optionnel)
 
-```bash
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+## 🛠️ Installation
+
+1. **Cloner le repository**
+   ```bash
+   git clone <repository-url>
+   cd corvio
+   ```
+
+2. **Installer les dépendances**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Configuration des variables d'environnement**
+
+   Créez un fichier `.env` à la racine du projet :
+   ```env
+   # Clé secrète Flask (changez cette valeur)
+   SECRET_KEY=your-super-secret-key-change-this
+   
+   # Configuration Google OAuth
+   GOOGLE_CLIENT_ID=your-google-client-id
+   GOOGLE_CLIENT_SECRET=your-google-client-secret
+   
+   # Clé API OpenAI (optionnel)
+   OPENAI_API_KEY=your-openai-api-key
+   ```
+
+## 🔐 Configuration Google OAuth
+
+1. **Créer un projet Google Cloud Platform**
+   - Allez sur [Google Cloud Console](https://console.cloud.google.com/)
+   - Créez un nouveau projet ou sélectionnez un projet existant
+
+2. **Activer l'API Google+**
+   - Dans la console, allez dans "APIs & Services" > "Library"
+   - Recherchez et activez "Google+ API"
+
+3. **Créer des identifiants OAuth**
+   - Allez dans "APIs & Services" > "Credentials"
+   - Cliquez sur "Create Credentials" > "OAuth 2.0 Client IDs"
+   - Sélectionnez "Web application"
+   - Ajoutez les URIs de redirection autorisés :
+     - `http://localhost:5000/callback` (pour le développement)
+     - `https://votre-domaine.com/callback` (pour la production)
+
+4. **Récupérer les identifiants**
+   - Copiez le Client ID et Client Secret
+   - Ajoutez-les dans votre fichier `.env`
+
+## 🚀 Lancement
+
+1. **Mode développement**
+   ```bash
+   python app.py
+   ```
+
+2. **Mode production avec Gunicorn**
+   ```bash
+   gunicorn app:app
+   ```
+
+L'application sera accessible sur `http://localhost:5000`
+
+## 📁 Structure du projet
+
+```
+corvio/
+├── app.py                 # Application Flask principale
+├── requirements.txt       # Dépendances Python
+├── README.md             # Ce fichier
+├── static/
+│   ├── css/
+│   │   └── style.css     # Styles CSS
+│   ├── js/
+│   │   └── main.js       # JavaScript frontend
+│   ├── data/
+│   │   └── exercises.json # Liste des exercices
+│   └── images/
+│       └── placeholder.jpg # Image par défaut
+└── templates/
+    ├── index.html        # Page principale
+    └── workout_plan.html # Page du plan d'entraînement
 ```
 
-2. **Définissez votre clé OpenAI** :
+## 🎯 Utilisation
 
-```bash
-export OPENAI_API_KEY="votre_clé_api_openai"
-```
+1. **Accès à l'application**
+   - Ouvrez votre navigateur sur `http://localhost:5000`
+   - Vous verrez la page d'accueil avec le formulaire de génération
 
-3. **Lancez l'application** :
+2. **Connexion avec Google**
+   - Cliquez sur "Se connecter avec Google" dans la barre de navigation
+   - Autorisez l'application à accéder à votre compte Google
+   - Vous serez redirigé vers la page d'accueil connecté
 
-```bash
-python app.py
-```
+3. **Génération d'un programme**
+   - Remplissez le formulaire avec vos informations
+   - Sélectionnez votre équipement disponible
+   - Cliquez sur "Générer le programme"
+   - Votre plan sera automatiquement sauvegardé si vous êtes connecté
 
-L'application s'exécutera par défaut sur <http://localhost:5000>.
+4. **Consultation de votre plan**
+   - Cliquez sur "Mon Plan" dans la navigation
+   - Visualisez votre programme de 7 jours
+   - Imprimez votre plan si nécessaire
 
-## Structure du projet
+## 🔧 Configuration avancée
 
-- `app.py` : serveur Flask qui gère les requêtes et communique avec l'API OpenAI.
-- `requirements.txt` : dépendances Python nécessaires.
-- `templates/index.html` : page principale contenant le formulaire et les sections de résultats.
-- `static/css/style.css` : styles pour le site.
-- `static/js/main.js` : logique côté client pour envoyer les informations et afficher les résultats.
-- `static/data/exercises.json` : liste d'exercices avec noms et noms de fichiers d'images. Vous pouvez modifier cette liste ou y ajouter de nouveaux exercices.
-- `static/images/placeholder.jpg` : image par défaut utilisée si aucune image n'est fournie pour un exercice.
-- `static/images/exercises/` : dossier où vous devez placer vos propres images pour illustrer les exercices. Les noms de fichiers doivent correspondre aux champs `image` dans `exercises.json`.
+### Variables d'environnement
 
-## Formulaire : salle de sport et équipement
+| Variable | Description | Obligatoire |
+|----------|-------------|-------------|
+| `SECRET_KEY` | Clé secrète Flask | Oui |
+| `GOOGLE_CLIENT_ID` | ID client Google OAuth | Oui |
+| `GOOGLE_CLIENT_SECRET` | Secret client Google OAuth | Oui |
+| `OPENAI_API_KEY` | Clé API OpenAI | Non |
 
-Le formulaire de la page d’accueil permet désormais de préciser si l'utilisateur s'entraîne en **salle de sport** ou **à domicile** :
+### Personnalisation
 
-- Si la case « Oui » est sélectionnée pour « Êtes‑vous en salle de sport ? », le programme généré part du principe que toutes sortes d'équipements (machines, haltères, barre de traction, etc.) sont disponibles.
-- Si la case « Non » est sélectionnée, une liste de cases à cocher apparaît. L'utilisateur peut y indiquer quels équipements il possède (haltères, barre de traction, bandes élastiques, kettlebell, corde à sauter, tapis de sol). Cette liste peut être adaptée selon vos besoins en modifiant le HTML dans `templates/index.html`.
+- **Exercices** : Modifiez `static/data/exercises.json` pour ajouter vos exercices
+- **Images** : Ajoutez des images dans `static/images/exercises/`
+- **Styles** : Personnalisez `static/css/style.css`
+- **Logique** : Modifiez `static/js/main.js` pour le comportement frontend
 
-Ces informations sont envoyées au serveur pour adapter le prompt envoyé à l'API OpenAI en conséquence. Si aucun équipement n'est sélectionné à domicile, le programme proposera des exercices au poids du corps.
+## 🚀 Déploiement
 
-## Personnalisation des liens affiliés
+### Heroku
+1. Créez un compte Heroku
+2. Installez Heroku CLI
+3. Créez une nouvelle app :
+   ```bash
+   heroku create votre-app-name
+   ```
+4. Configurez les variables d'environnement :
+   ```bash
+   heroku config:set SECRET_KEY=your-secret-key
+   heroku config:set GOOGLE_CLIENT_ID=your-client-id
+   heroku config:set GOOGLE_CLIENT_SECRET=your-client-secret
+   ```
+5. Déployez :
+   ```bash
+   git push heroku main
+   ```
 
-Le fichier `app.py` contient une liste `PRODUCT_SUGGESTIONS` avec plusieurs produits :
+### Autres plateformes
+L'application est compatible avec toutes les plateformes supportant Python/Flask :
+- PythonAnywhere
+- DigitalOcean
+- AWS
+- Google Cloud Platform
 
-```python
-PRODUCT_SUGGESTIONS = [
-    {
-        "name": "Tapis de yoga antidérapant",
-        "description": "Idéal pour les étirements et les exercices au sol.",
-        "link": "#"  # Remplacez ce lien par votre lien affilié
-    },
-    ...
-]
-```
+## 🤝 Contribution
 
-Pour chaque produit, remplacez la valeur du champ `link` par votre propre lien affilié. Les produits seront affichés sous forme de liste cliquable sur la page de résultats.
+Les contributions sont les bienvenues ! N'hésitez pas à :
+- Signaler des bugs
+- Proposer des améliorations
+- Soumettre des pull requests
 
-## Insertion du code Google AdSense
+## 📄 Licence
 
-Dans le fichier `templates/index.html`, une section est réservée pour le code AdSense :
+Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
 
-```html
-<section class="ads-section">
-    <!-- Insérez ici le code d'annonce Google AdSense -->
-    <!-- Exemple: -->
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
-    <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx" data-ad-slot="xxxxxxxxxx" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
-    <!-- <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
-</section>
-```
+## 🆘 Support
 
-Remplacez cette partie par votre script d'annonce fourni par Google AdSense.
+Si vous rencontrez des problèmes :
+1. Vérifiez que toutes les variables d'environnement sont configurées
+2. Assurez-vous que les dépendances sont installées
+3. Consultez les logs de l'application
+4. Ouvrez une issue sur GitHub
 
-## Modification de la liste des exercices
+## 🔮 Roadmap
 
-La liste des exercices est définie dans `static/data/exercises.json`. Chaque entrée contient un nom et un nom de fichier d'image :
-
-```json
-{
-  "name": "Pompes",
-  "image": "pompes.jpg"
-},
-```
-
-Pour chaque exercice, placez une image correspondante dans `static/images/exercises/` avec le nom indiqué. Si vous ne fournissez pas d'image, l'image par défaut `placeholder.jpg` sera utilisée.
-
-## Notes importantes
-
-- Ce site est fourni à des fins éducatives et doit être adapté à vos besoins avant d'être mis en production.
-- Assurez‑vous de respecter la réglementation sur la collecte des données personnelles (notamment le RGPD en Europe).
-- Les plans d'entraînement générés sont fournis à titre indicatif et ne remplacent pas l'avis d'un professionnel de santé ou d'un coach sportif qualifié.
+- [ ] Base de données pour la persistance des données
+- [ ] Historique des plans d'entraînement
+- [ ] Suivi des progrès
+- [ ] Notifications et rappels
+- [ ] Mode sombre
+- [ ] Application mobile

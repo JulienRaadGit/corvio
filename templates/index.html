@@ -9,12 +9,60 @@
      crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{ url_for('index') }}">
+                    <span class="brand-icon">💪</span>
+                    <span class="brand-text">FitGen</span>
+                </a>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="{{ url_for('index') }}" class="nav-link">Accueil</a>
+                {% if user %}
+                    <a href="{{ url_for('workout_plan') }}" class="nav-link">Mon Plan</a>
+                {% endif %}
+            </div>
+            
+            <div class="nav-auth">
+                {% if user %}
+                    <div class="user-profile">
+                        {% if user.picture %}
+                            <img src="{{ user.picture }}" alt="{{ user.name }}" class="user-avatar">
+                        {% endif %}
+                        <span class="user-name">{{ user.name }}</span>
+                        <a href="{{ url_for('logout') }}" class="btn btn-logout">Déconnexion</a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-login">
+                        <span class="google-icon">🔐</span>
+                        Se connecter avec Google
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
     <header>
         <h1>Générateur de programmes d'entraînement</h1>
         <p>Entrez vos informations pour obtenir un programme personnalisé et gratuit. Le site se finance grâce aux publicités et aux liens affiliés.</p>
     </header>
 
     <main>
+        {% if user %}
+            <section class="welcome-section">
+                <div class="welcome-card">
+                    <h2>Bienvenue, {{ user.name }} !</h2>
+                    <p>Connectez-vous pour sauvegarder vos plans d'entraînement et suivre vos progrès.</p>
+                    <div class="welcome-actions">
+                        <a href="{{ url_for('workout_plan') }}" class="btn btn-primary">Voir mon plan actuel</a>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
         <section class="form-section">
             <h2>Informations personnelles</h2>
             <form id="infoForm">
@@ -29,7 +77,7 @@
 
                 <!-- Question sur la salle de sport -->
                 <fieldset class="gym-fieldset">
-                    <legend>Êtes‑vous en salle de sport ?</legend>
+                    <legend>Êtes‑vous en salle de sport ?</legend>
                     <label>
                         <input type="radio" name="gym" value="yes" id="gymYes" checked>
                         Oui
@@ -42,7 +90,7 @@
 
                 <!-- Options d'équipement disponibles si pas en salle de sport -->
                 <div id="equipmentOptions" class="equipment-options" style="display:none;">
-                    <p>Sélectionnez l'équipement dont vous disposez :</p>
+                    <p>Sélectionnez l'équipement dont vous disposez :</p>
                     <label><input type="checkbox" name="equipmentList" value="haltères"> Haltères</label><br>
                     <label><input type="checkbox" name="equipmentList" value="barre de traction"> Barre de traction</label><br>
                     <label><input type="checkbox" name="equipmentList" value="bandes élastiques"> Bandes élastiques</label><br>
@@ -65,7 +113,7 @@
         </section>
 
         <section class="ads-section">
-            <!-- Les annonces automatiques d'AdSense seront insérées automatiquement par Google AdSense. -->
+            <!-- Les annonces automatiques d'AdSense seront insérées automatiquement par Google AdSense. -->
         </section>
 
         <section class="exercises-section">

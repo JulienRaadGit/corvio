@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 schedule = JSON.parse(data.plan);
             } catch (e) {
-                // Si ce n'est pas un JSON valide, afficher le texte brutf
+                // Si ce n'est pas un JSON valide, afficher le texte brut
                 programContainer.textContent = data.plan;
                 schedule = null;
             }
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 productList.appendChild(li);
             });
         } catch (error) {
-            programOutput.textContent = 'Une erreur est survenue lors de la génération du programme.';
+            programContainer.textContent = 'Une erreur est survenue lors de la génération du programme.';
             console.error(error);
         }
     });
@@ -141,61 +141,79 @@ document.addEventListener('DOMContentLoaded', () => {
             programContainer.textContent = 'Format de programme inattendu.';
             return;
         }
+        
         // Pour chaque jour, créer une carte
         schedule.jours.forEach((dayObj, dayIndex) => {
             const card = document.createElement('div');
             card.classList.add('day-card');
+            
+            // Ajouter la classe pour les jours de repos
+            if (dayObj.type === 'rest') {
+                card.classList.add('rest-day');
+            } else {
+                card.classList.add('workout-day');
+            }
+            
             const title = document.createElement('h4');
             title.textContent = dayObj.nomJour || `Jour ${dayIndex + 1}`;
             card.appendChild(title);
-            // Liste des exercices
-            if (Array.isArray(dayObj.exercices)) {
-                dayObj.exercices.forEach((exercise, exIndex) => {
-                    const row = document.createElement('div');
-                    row.classList.add('exercise-row');
-                    // Sélecteur d'exercice
-                    const select = document.createElement('select');
-                    exerciseData.forEach(opt => {
-                        const option = document.createElement('option');
-                        option.value = opt.name;
-                        option.textContent = opt.name;
-                        if (opt.name.toLowerCase() === (exercise.nom || '').toLowerCase()) {
-                            option.selected = true;
+            
+            // Contenu selon le type de jour
+            if (dayObj.type === 'rest') {
+                const restContent = document.createElement('div');
+                restContent.classList.add('rest-content');
+                
+                const restIcon = document.createElement('span');
+                restIcon.classList.add('rest-icon');
+                restIcon.textContent = '😴';
+                
+                const restText = document.createElement('p');
+                restText.textContent = 'Jour de repos';
+                
+                const restSubtext = document.createElement('small');
+                restSubtext.textContent = 'Profitez de votre récupération !';
+                
+                restContent.appendChild(restIcon);
+                restContent.appendChild(restText);
+                restContent.appendChild(restSubtext);
+                card.appendChild(restContent);
+            } else {
+                // Liste des exercices pour les jours d'entraînement
+                if (Array.isArray(dayObj.exercices)) {
+                    const exercisesList = document.createElement('div');
+                    exercisesList.classList.add('exercises-list');
+                    
+                    dayObj.exercices.forEach((exercise, exIndex) => {
+                        const exerciseItem = document.createElement('div');
+                        exerciseItem.classList.add('exercise-item');
+                        
+                        const exerciseHeader = document.createElement('div');
+                        exerciseHeader.classList.add('exercise-header');
+                        
+                        const exerciseName = document.createElement('h5');
+                        exerciseName.textContent = exercise.nom || `Exercice ${exIndex + 1}`;
+                        
+                        const exerciseType = document.createElement('span');
+                        exerciseType.classList.add('exercise-type');
+                        
+                        if (exercise.repetitions) {
+                            exerciseType.textContent = `${exercise.series} séries × ${exercise.repetitions} répétitions`;
+                        } else if (exercise.duree_minutes) {
+                            exerciseType.textContent = `${exercise.series} séries × ${exercise.duree_minutes} min`;
+                        } else {
+                            exerciseType.textContent = `${exercise.series} séries`;
                         }
-                        select.appendChild(option);
+                        
+                        exerciseHeader.appendChild(exerciseName);
+                        exerciseHeader.appendChild(exerciseType);
+                        exerciseItem.appendChild(exerciseHeader);
+                        exercisesList.appendChild(exerciseItem);
                     });
-                    // Champ séries
-                    const seriesLabel = document.createElement('label');
-                    seriesLabel.textContent = 'Séries:';
-                    const seriesInput = document.createElement('input');
-                    seriesInput.type = 'number';
-                    seriesInput.min = '1';
-                    seriesInput.value = exercise.series || '';
-                    seriesLabel.appendChild(seriesInput);
-                    // Champ répétitions
-                    const repsLabel = document.createElement('label');
-                    repsLabel.textContent = ' Répétitions:';
-                    const repsInput = document.createElement('input');
-                    repsInput.type = 'number';
-                    repsInput.min = '1';
-                    repsInput.value = exercise.repetitions || '';
-                    repsLabel.appendChild(repsInput);
-                    // Champ durée
-                    const durLabel = document.createElement('label');
-                    durLabel.textContent = ' Durée (min):';
-                    const durInput = document.createElement('input');
-                    durInput.type = 'number';
-                    durInput.min = '0';
-                    durInput.value = exercise.duree_minutes || '';
-                    durLabel.appendChild(durInput);
-                    // Append all to row
-                    row.appendChild(select);
-                    row.appendChild(seriesLabel);
-                    row.appendChild(repsLabel);
-                    row.appendChild(durLabel);
-                    card.appendChild(row);
-                });
+                    
+                    card.appendChild(exercisesList);
+                }
             }
+            
             programContainer.appendChild(card);
         });
     }

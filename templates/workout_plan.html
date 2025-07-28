@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Plan d'Entraînement - Générateur de programmes d'entraînement</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7173995370777543"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>Mon Plan d'Entraînement</h1>
+        <p>Votre programme personnalisé de 7 jours</p>
+    </header>
+
+    <main>
+        {% if workout_plan %}
+            <section class="workout-plan-section">
+                <h2>Votre Programme Actuel</h2>
+                <div class="workout-plan-container">
+                    {% for day in workout_plan.jours %}
+                        <div class="day-card {% if day.type == 'rest' %}rest-day{% else %}workout-day{% endif %}">
+                            <h4>{{ day.nomJour }}</h4>
+                            {% if day.type == 'rest' %}
+                                <div class="rest-content">
+                                    <span class="rest-icon">😴</span>
+                                    <p>Jour de repos</p>
+                                    <small>Profitez de votre récupération !</small>
+                                </div>
+                            {% else %}
+                                <div class="exercises-list">
+                                    {% for exercise in day.exercices %}
+                                        <div class="exercise-item">
+                                            <div class="exercise-header">
+                                                <h5>{{ exercise.nom }}</h5>
+                                                <span class="exercise-type">
+                                                    {% if exercise.repetitions %}
+                                                        {{ exercise.series }} séries × {{ exercise.repetitions }} répétitions
+                                                    {% else %}
+                                                        {{ exercise.series }} séries × {{ exercise.duree_minutes }} min
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="plan-actions">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Générer un nouveau plan</a>
+                    <button class="btn btn-secondary" onclick="printPlan()">Imprimer le plan</button>
+                </div>
+            </section>
+        {% else %}
+            <section class="no-plan-section">
+                <div class="empty-state">
+                    <span class="empty-icon">💪</span>
+                    <h2>Aucun plan d'entraînement</h2>
+                    <p>Vous n'avez pas encore généré de plan d'entraînement personnalisé.</p>
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Créer mon premier plan</a>
+                </div>
+            </section>
+        {% endif %}
+
+        <section class="tips-section">
+            <h3>Conseils pour votre entraînement</h3>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <span class="tip-icon">🏃‍♂️</span>
+                    <h4>Échauffement</h4>
+                    <p>N'oubliez pas de vous échauffer 5-10 minutes avant chaque séance.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">💧</span>
+                    <h4>Hydratation</h4>
+                    <p>Buvez suffisamment d'eau avant, pendant et après l'entraînement.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">🎯</span>
+                    <h4>Progression</h4>
+                    <p>Augmentez progressivement l'intensité de vos exercices.</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">😴</span>
+                    <h4>Récupération</h4>
+                    <p>Respectez les jours de repos pour permettre à vos muscles de récupérer.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Générateur de programmes d'entraînement. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        function printPlan() {
+            window.print();
+        }
+    </script>
+</body>
+</html> 
