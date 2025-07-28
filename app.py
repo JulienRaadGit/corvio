@@ -99,7 +99,7 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
     openai.api_key = api_key
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4.1-mini",
             messages=[
                 {"role": "system", "content": "Vous êtes un coach sportif professionnel."},
                 {"role": "user", "content": prompt}
