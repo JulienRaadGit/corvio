@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de programmes d'entraînement</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Générateur de programmes d'entraînement</h1>
+        <p>Entrez vos informations pour obtenir un programme personnalisé et gratuit. Le site se finance grâce aux publicités et aux liens affiliés.</p>
+    </header>
+
+    <main>
+        <section class="form-section">
+            <h2>Informations personnelles</h2>
+            <form id="infoForm">
+                <label for="age">Âge (ans):</label>
+                <input type="number" id="age" name="age" min="1" max="120" required>
+
+                <label for="height">Taille (cm):</label>
+                <input type="number" id="height" name="height" min="50" max="250" required>
+
+                <label for="weight">Poids (kg):</label>
+                <input type="number" id="weight" name="weight" min="20" max="250" required>
+
+                <!-- Question sur la salle de sport -->
+                <fieldset class="gym-fieldset">
+                    <legend>Êtes‑vous en salle de sport&nbsp;?</legend>
+                    <label>
+                        <input type="radio" name="gym" value="yes" id="gymYes" checked>
+                        Oui
+                    </label>
+                    <label>
+                        <input type="radio" name="gym" value="no" id="gymNo">
+                        Non
+                    </label>
+                </fieldset>
+
+                <!-- Options d'équipement disponibles si pas en salle de sport -->
+                <div id="equipmentOptions" class="equipment-options" style="display:none;">
+                    <p>Sélectionnez l'équipement dont vous disposez :</p>
+                    <label><input type="checkbox" name="equipmentList" value="haltères"> Haltères</label><br>
+                    <label><input type="checkbox" name="equipmentList" value="barre de traction"> Barre de traction</label><br>
+                    <label><input type="checkbox" name="equipmentList" value="bandes élastiques"> Bandes élastiques</label><br>
+                    <label><input type="checkbox" name="equipmentList" value="kettlebell"> Kettlebell</label><br>
+                    <label><input type="checkbox" name="equipmentList" value="corde à sauter"> Corde à sauter</label><br>
+                    <label><input type="checkbox" name="equipmentList" value="tapis de sol"> Tapis de sol</label><br>
+                </div>
+
+                <button type="submit">Générer le programme</button>
+            </form>
+        </section>
+
+        <section id="resultSection" class="result-section" style="display:none;">
+            <h2>Votre programme personnalisé</h2>
+            <pre id="programOutput"></pre>
+
+            <h3>Produits recommandés</h3>
+            <ul id="productList"></ul>
+        </section>
+
+        <section class="ads-section">
+            <!-- Insérez ici le code d'annonce Google AdSense -->
+            <!-- Exemple: -->
+            <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+            <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx" data-ad-slot="xxxxxxxxxx" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+            <!-- <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+        </section>
+
+        <section class="exercises-section">
+            <h2>Liste des exercices disponibles</h2>
+            <p>Cette liste est fournie pour que vous puissiez ajouter vos propres images d'illustration. Les images doivent être placées dans <code>static/images/exercises/</code> et référencées dans le fichier <code>static/data/exercises.json</code>.</p>
+            <div id="exerciseList" class="exercise-list"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Générateur de programmes d'entraînement. Tous droits réservés.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

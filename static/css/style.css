@@ -1,0 +1,157 @@
+/* Style général pour un design épuré et moderne */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Style pour la question de la salle de sport et les options d'équipement */
+.gym-fieldset {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+}
+.gym-fieldset legend {
+    font-weight: bold;
+}
+.equipment-options {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    background-color: #f9fbfc;
+}
+.equipment-options p {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+header {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0 0 10px 0;
+}
+
+main {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.form-section, .result-section, .ads-section, .exercises-section {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h2, .result-section h2, .exercises-section h2 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px 0;
+    font-weight: bold;
+}
+
+form input[type="number"], form input[type="checkbox"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form input[type="checkbox"] {
+    width: auto;
+}
+
+form button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #2980b9;
+}
+
+.result-section pre {
+    white-space: pre-wrap;
+    background-color: #f2f4f7;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #e1e4e8;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.result-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.result-section li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #ecf6fd;
+    border: 1px solid #d6eaf8;
+    border-radius: 4px;
+}
+
+.result-section li a {
+    color: #2a7bc5;
+    text-decoration: none;
+}
+
+.result-section li a:hover {
+    text-decoration: underline;
+}
+
+.exercise-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.exercise-item {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+.exercise-item img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 8px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+}

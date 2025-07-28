@@ -1,0 +1,22 @@
+[
+    {"name": "Pompes", "image": "pompes.jpg"},
+    {"name": "Squats", "image": "squats.jpg"},
+    {"name": "Fentes", "image": "fentes.jpg"},
+    {"name": "Gainage (Planche)", "image": "gainage-planche.jpg"},
+    {"name": "Soulevé de terre", "image": "souleve-de-terre.jpg"},
+    {"name": "Développé couché", "image": "developpe-couche.jpg"},
+    {"name": "Tractions", "image": "tractions.jpg"},
+    {"name": "Curl biceps", "image": "curl-biceps.jpg"},
+    {"name": "Extensions triceps", "image": "extensions-triceps.jpg"},
+    {"name": "Burpees", "image": "burpees.jpg"},
+    {"name": "Montées de genoux", "image": "montees-de-genoux.jpg"},
+    {"name": "Abdominaux (crunches)", "image": "abdominaux-crunches.jpg"},
+    {"name": "Planche latérale", "image": "planche-laterale.jpg"},
+    {"name": "Sauts sur place", "image": "sauts-sur-place.jpg"},
+    {"name": "Dips", "image": "dips.jpg"},
+    {"name": "Rowing", "image": "rowing.jpg"},
+    {"name": "Tirage horizontal", "image": "tirage-horizontal.jpg"},
+    {"name": "Mollets debout", "image": "mollets-debout.jpg"},
+    {"name": "Développé militaire (épaules)", "image": "developpe-militaire.jpg"},
+    {"name": "Abduction des hanches", "image": "abduction-des-hanches.jpg"}
+]
