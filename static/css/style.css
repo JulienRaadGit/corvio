@@ -273,7 +273,19 @@ main {
 }
 
 /* Cartes principales */
-.form-section,
+.form-section {
+    background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
+    border-radius: var(--border-radius);
+    padding: 40px;
+    margin: 40px auto;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border-left: 5px solid var(--primary-color);
+    color: var(--dark-blue);
+    max-width: 700px;
+    position: relative;
+}
+
 .result-section,
 .ads-section,
 .exercises-section,
@@ -290,7 +302,11 @@ main {
     color: var(--white);
 }
 
-.form-section:hover,
+.form-section:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
 .result-section:hover,
 .exercises-section:hover,
 .workout-plan-section:hover {
@@ -299,7 +315,16 @@ main {
 }
 
 /* Titres de sections */
-.form-section h2,
+.form-section h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    text-align: center;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+}
+
 .result-section h2,
 .exercises-section h2,
 .workout-plan-section h2,
@@ -312,7 +337,18 @@ main {
     letter-spacing: 1px;
 }
 
-.form-section h2::after,
+.form-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
 .result-section h2::after,
 .exercises-section h2::after,
 .workout-plan-section h2::after,
@@ -529,11 +565,57 @@ form {
     gap: 25px;
 }
 
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 24px;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon-left {
+    position: absolute;
+    left: 14px;
+    font-size: 1.1em;
+    color: var(--primary-color);
+    pointer-events: none;
+}
+
+.input-icon input {
+    padding-left: 38px;
+    width: 100%;
+    padding: 15px 20px 15px 38px;
+    background: var(--dark-blue);
+    border: 2px solid var(--secondary-color);
+    border-radius: 8px;
+    color: var(--white);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.input-icon input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: var(--light-gray);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.12);
+}
+
 form label {
     display: block;
     font-weight: 600;
     margin-bottom: 8px;
-    color: var(--dark-gray);
+    color: var(--dark-blue);
     font-size: 1rem;
 }
 
@@ -557,7 +639,7 @@ form input[type="number"]:focus, .form-input:focus, form input[type="email"]:foc
 
 /* Style pour la salle de sport */
 .gym-fieldset {
-    background: #181b24;
+    background: var(--dark-blue);
     border: 2px solid var(--secondary-color);
     border-radius: var(--border-radius);
     padding: 25px;
@@ -580,6 +662,7 @@ form input[type="number"]:focus, .form-input:focus, form input[type="email"]:foc
     padding: 10px 15px;
     border-radius: 25px;
     transition: var(--transition);
+    color: var(--white);
 }
 
 .gym-fieldset label:hover {
@@ -595,7 +678,7 @@ form input[type="number"]:focus, .form-input:focus, form input[type="email"]:foc
 
 /* Options d'équipement */
 .equipment-options {
-    background: #181b24;
+    background: var(--dark-blue);
     border: 2px solid var(--secondary-color);
     border-radius: var(--border-radius);
     padding: 25px;
@@ -632,6 +715,7 @@ form input[type="number"]:focus, .form-input:focus, form input[type="email"]:foc
     border-radius: 8px;
     transition: var(--transition);
     font-weight: 500;
+    color: var(--white);
 }
 
 .equipment-options label:hover {
