@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const programContainer = document.getElementById('programContainer');
     const productList = document.getElementById('productList');
     const exerciseListDiv = document.getElementById('exerciseList');
+    const loadingSpinner = document.getElementById('loadingSpinner');
 
     // Firebase Authentication
     // Import Firebase modules
@@ -130,7 +131,9 @@ document.addEventListener('DOMContentLoaded', () => {
         programContainer.innerHTML = '<p>Génération en cours…</p>';
         productList.innerHTML = '';
         resultSection.style.display = 'block';
-
+        // Show loading spinner, hide results
+        if (loadingSpinner) loadingSpinner.style.display = 'flex';
+        resultSection.classList.remove('visible');
         try {
             const response = await fetch('/generate', {
                 method: 'POST',
@@ -172,8 +175,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.appendChild(span);
                 productList.appendChild(li);
             });
+            // Hide spinner, fade in results
+            if (loadingSpinner) loadingSpinner.style.display = 'none';
+            setTimeout(() => {
+                resultSection.classList.add('visible');
+            }, 100);
         } catch (error) {
             programContainer.textContent = 'Une erreur est survenue lors de la génération du programme.';
+            if (loadingSpinner) loadingSpinner.style.display = 'none';
+            resultSection.classList.add('visible');
             console.error(error);
         }
     });

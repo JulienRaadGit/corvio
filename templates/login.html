@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Générateur de programmes d'entraînement</title>
+    <title>Sign In - Corvio</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7173995370777543"
      crossorigin="anonymous"></script>
@@ -15,53 +17,59 @@
             <div class="nav-brand">
                 <a href="{{ url_for('index') }}">
                     <span class="brand-icon">💪</span>
-                    <span class="brand-text">FitGen</span>
+                    <span class="brand-text">Corvio</span>
                 </a>
             </div>
-            
             <div class="nav-menu">
-                <a href="{{ url_for('index') }}" class="nav-link">Accueil</a>
+                <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+                <a href="#generator" class="nav-link">Generator</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#about" class="nav-link">About</a>
             </div>
-            
             <div class="nav-auth">
-                <a href="{{ url_for('index') }}" class="btn btn-secondary">Retour</a>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Back</a>
             </div>
         </div>
     </nav>
-
     <main class="login-container">
         <div class="login-card">
             <div class="login-header">
-                <h1>Connexion</h1>
-                <p>Connectez-vous pour sauvegarder vos plans d'entraînement</p>
+                <h1>Sign In</h1>
+                <p>Sign in to save your workout plans</p>
             </div>
-            
             <div class="login-options">
                 <button id="googleSignIn" class="btn btn-google">
-                    <span class="google-icon">🔐</span>
-                    Se connecter avec Google
+                    <span class="google-icon">🔒</span>
+                    Sign in with Google
                 </button>
-                
                 <div class="login-divider">
-                    <span>ou</span>
+                    <span>or</span>
                 </div>
-                
                 <div class="email-login">
                     <input type="email" id="email" placeholder="Email" class="form-input">
-                    <input type="password" id="password" placeholder="Mot de passe" class="form-input">
-                    <button id="emailSignIn" class="btn btn-primary">Se connecter</button>
-                    <button id="emailSignUp" class="btn btn-secondary">Créer un compte</button>
+                    <input type="password" id="password" placeholder="Password" class="form-input">
+                    <button id="emailSignIn" class="btn btn-primary">Sign In</button>
+                    <button id="emailSignUp" class="btn btn-secondary">Create Account</button>
                 </div>
             </div>
-            
             <div id="loginStatus" class="login-status" style="display: none;"></div>
         </div>
     </main>
-
     <footer>
-        <p>&copy; 2025 Générateur de programmes d'entraînement. Tous droits réservés.</p>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="#" target="_blank">Legal</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="Twitter" class="social-icon">🐦</a>
+                <a href="#" aria-label="Instagram" class="social-icon">📸</a>
+                <a href="#" aria-label="GitHub" class="social-icon">💻</a>
+            </div>
+            <p>&copy; 2025 Corvio. All rights reserved.</p>
+        </div>
     </footer>
-
     <!-- Firebase SDK -->
     <script type="module">
         // Import the functions you need from the SDKs you need

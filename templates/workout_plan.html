@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Plan d'Entraînement - Générateur de programmes d'entraînement</title>
+    <title>My Plan - Corvio</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7173995370777543"
      crossorigin="anonymous"></script>
@@ -15,17 +17,15 @@
             <div class="nav-brand">
                 <a href="{{ url_for('index') }}">
                     <span class="brand-icon">💪</span>
-                    <span class="brand-text">FitGen</span>
+                    <span class="brand-text">Corvio</span>
                 </a>
             </div>
-            
             <div class="nav-menu">
-                <a href="{{ url_for('index') }}" class="nav-link">Accueil</a>
-                {% if user %}
-                    <a href="{{ url_for('workout_plan') }}" class="nav-link">Mon Plan</a>
-                {% endif %}
+                <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+                <a href="#generator" class="nav-link">Generator</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#about" class="nav-link">About</a>
             </div>
-            
             <div class="nav-auth">
                 {% if user %}
                     <div class="user-profile">
@@ -33,27 +33,25 @@
                             <img src="{{ user.picture }}" alt="{{ user.name }}" class="user-avatar">
                         {% endif %}
                         <span class="user-name">{{ user.name }}</span>
-                        <a href="{{ url_for('logout') }}" class="btn btn-logout">Déconnexion</a>
+                        <a href="{{ url_for('logout') }}" class="btn btn-logout">Sign out</a>
                     </div>
                 {% else %}
                     <a href="{{ url_for('login') }}" class="btn btn-login">
-                        <span class="google-icon">🔐</span>
-                        Se connecter
+                        <span class="google-icon">🔒</span>
+                        Sign in
                     </a>
                 {% endif %}
             </div>
         </div>
     </nav>
-
     <header>
-        <h1>Mon Plan d'Entraînement</h1>
-        <p>Votre programme personnalisé de 7 jours</p>
+        <h1>My Workout Plan</h1>
+        <p>Your personalized 7-day program</p>
     </header>
-
     <main>
         {% if workout_plan %}
             <section class="workout-plan-section">
-                <h2>Votre Programme Actuel</h2>
+                <h2>Your Current Plan</h2>
                 <div class="workout-plan-container">
                     {% for day in workout_plan.jours %}
                         <div class="day-card {% if day.type == 'rest' %}rest-day{% else %}workout-day{% endif %}">
@@ -61,8 +59,8 @@
                             {% if day.type == 'rest' %}
                                 <div class="rest-content">
                                     <span class="rest-icon">😴</span>
-                                    <p>Jour de repos</p>
-                                    <small>Profitez de votre récupération !</small>
+                                    <p>Rest day</p>
+                                    <small>Enjoy your recovery!</small>
                                 </div>
                             {% else %}
                                 <div class="exercises-list">
@@ -72,9 +70,9 @@
                                                 <h5>{{ exercise.nom }}</h5>
                                                 <span class="exercise-type">
                                                     {% if exercise.repetitions %}
-                                                        {{ exercise.series }} séries × {{ exercise.repetitions }} répétitions
+                                                        {{ exercise.series }} sets × {{ exercise.repetitions }} reps
                                                     {% else %}
-                                                        {{ exercise.series }} séries × {{ exercise.duree_minutes }} min
+                                                        {{ exercise.series }} sets × {{ exercise.duree_minutes }} min
                                                     {% endif %}
                                                 </span>
                                             </div>
@@ -85,54 +83,62 @@
                         </div>
                     {% endfor %}
                 </div>
-                
                 <div class="plan-actions">
-                    <a href="{{ url_for('index') }}" class="btn btn-primary">Générer un nouveau plan</a>
-                    <button class="btn btn-secondary" onclick="printPlan()">Imprimer le plan</button>
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Generate new plan</a>
+                    <button class="btn btn-secondary" onclick="printPlan()">Print plan</button>
                 </div>
             </section>
         {% else %}
             <section class="no-plan-section">
                 <div class="empty-state">
                     <span class="empty-icon">💪</span>
-                    <h2>Aucun plan d'entraînement</h2>
-                    <p>Vous n'avez pas encore généré de plan d'entraînement personnalisé.</p>
-                    <a href="{{ url_for('index') }}" class="btn btn-primary">Créer mon premier plan</a>
+                    <h2>No workout plan</h2>
+                    <p>You haven't generated a personalized workout plan yet.</p>
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">Create my first plan</a>
                 </div>
             </section>
         {% endif %}
-
         <section class="tips-section">
-            <h3>Conseils pour votre entraînement</h3>
+            <h3>Workout Tips</h3>
             <div class="tips-grid">
                 <div class="tip-card">
                     <span class="tip-icon">🏃‍♂️</span>
-                    <h4>Échauffement</h4>
-                    <p>N'oubliez pas de vous échauffer 5-10 minutes avant chaque séance.</p>
+                    <h4>Warm-up</h4>
+                    <p>Don't forget to warm up 5-10 minutes before each session.</p>
                 </div>
                 <div class="tip-card">
                     <span class="tip-icon">💧</span>
-                    <h4>Hydratation</h4>
-                    <p>Buvez suffisamment d'eau avant, pendant et après l'entraînement.</p>
+                    <h4>Hydration</h4>
+                    <p>Drink enough water before, during, and after your workout.</p>
                 </div>
                 <div class="tip-card">
                     <span class="tip-icon">🎯</span>
                     <h4>Progression</h4>
-                    <p>Augmentez progressivement l'intensité de vos exercices.</p>
+                    <p>Gradually increase the intensity of your exercises.</p>
                 </div>
                 <div class="tip-card">
                     <span class="tip-icon">😴</span>
-                    <h4>Récupération</h4>
-                    <p>Respectez les jours de repos pour permettre à vos muscles de récupérer.</p>
+                    <h4>Recovery</h4>
+                    <p>Respect rest days to allow your muscles to recover.</p>
                 </div>
             </div>
         </section>
     </main>
-
     <footer>
-        <p>&copy; 2025 Générateur de programmes d'entraînement. Tous droits réservés.</p>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="#" target="_blank">Legal</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="Twitter" class="social-icon">🐦</a>
+                <a href="#" aria-label="Instagram" class="social-icon">📸</a>
+                <a href="#" aria-label="GitHub" class="social-icon">💻</a>
+            </div>
+            <p>&copy; 2025 Corvio. All rights reserved.</p>
+        </div>
     </footer>
-
     <script>
         function printPlan() {
             window.print();
