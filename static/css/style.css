@@ -340,12 +340,9 @@ main {
     letter-spacing: 1px;
 }
 
-
-
+.form-section h2::after,
 .result-section h2::after,
-.exercises-section h2::after,
-.workout-plan-section h2::after,
-.tips-section h3::after {
+.exercises-section h2::after {
     content: '';
     position: absolute;
     bottom: -10px;
