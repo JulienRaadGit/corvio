@@ -107,9 +107,12 @@ main {
     text-align: center;
 }
 
-.form-section h2::after,
-.result-section h2::after,
 .exercises-section h2::after {
+    display: none;
+}
+
+.form-section h2::after,
+.result-section h2::after {
     content: '';
     position: absolute;
     bottom: -10px;
