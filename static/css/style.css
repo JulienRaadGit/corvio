@@ -10,29 +10,29 @@
     --secondary-color: #1e88e5;
     --accent-color: #4caf50;
     --warning-color: #ff9800;
-    --dark-blue: #1a237e;
-    --light-gray: #f8f9fa;
+    --dark-blue: #151a2e; /* plus sombre */
+    --light-gray: #23273a; /* fond de carte sombre */
     --medium-gray: #6c757d;
-    --dark-gray: #343a40;
-    --white: #ffffff;
-    --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
-    --border-radius: 12px;
-    --transition: all 0.3s ease;
+    --dark-gray: #181b24; /* fond général */
+    --white: #f5f7fa; /* texte clair */
+    --shadow: 0 4px 20px rgba(30, 40, 80, 0.25);
+    --shadow-hover: 0 8px 30px rgba(30, 40, 80, 0.35);
+    --border-radius: 14px;
+    --transition: all 0.3s cubic-bezier(.4,0,.2,1);
 }
 
 /* Body et arrière-plan */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    color: var(--dark-gray);
+    background: linear-gradient(135deg, #181b24 0%, #23273a 100%);
+    color: var(--white);
     line-height: 1.6;
     min-height: 100vh;
 }
 
 /* Navigation Header */
 .navbar {
-    background: var(--white);
+    background: var(--dark-blue);
     box-shadow: var(--shadow);
     position: sticky;
     top: 0;
@@ -54,9 +54,11 @@ body {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: var(--dark-blue);
-    font-weight: 700;
-    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-weight: 800;
+    font-size: 1.7rem;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(255,107,53,0.15);
 }
 
 .brand-icon {
@@ -71,7 +73,7 @@ body {
 
 .nav-link {
     text-decoration: none;
-    color: var(--dark-gray);
+    color: var(--white);
     font-weight: 600;
     padding: 10px 15px;
     border-radius: 25px;
@@ -79,8 +81,8 @@ body {
 }
 
 .nav-link:hover {
-    background: var(--light-gray);
-    color: var(--primary-color);
+    background: var(--primary-color);
+    color: var(--dark-blue);
 }
 
 .nav-auth {
@@ -103,7 +105,7 @@ body {
 
 .user-name {
     font-weight: 600;
-    color: var(--dark-gray);
+    color: var(--white);
 }
 
 .btn {
@@ -118,50 +120,55 @@ body {
     border: none;
     cursor: pointer;
     font-size: 0.95rem;
+    box-shadow: 0 2px 8px rgba(30, 40, 80, 0.15);
 }
 
 .btn-login {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: var(--white);
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    border: none;
 }
 
 .btn-login:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    color: var(--white);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 6px 20px rgba(30, 40, 80, 0.25);
 }
 
 .btn-logout {
     background: var(--light-gray);
-    color: var(--dark-gray);
+    color: var(--white);
     border: 2px solid var(--medium-gray);
 }
 
 .btn-logout:hover {
     background: var(--medium-gray);
-    color: var(--white);
+    color: var(--primary-color);
 }
 
 .btn-primary {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: var(--white);
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    border: none;
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    color: var(--white);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 6px 20px rgba(30, 40, 80, 0.25);
 }
 
 .btn-secondary {
     background: var(--light-gray);
-    color: var(--dark-gray);
+    color: var(--white);
     border: 2px solid var(--medium-gray);
 }
 
 .btn-secondary:hover {
     background: var(--medium-gray);
-    color: var(--white);
+    color: var(--primary-color);
 }
 
 /* Welcome Section */
@@ -198,12 +205,13 @@ body {
 
 /* Header */
 header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: white;
+    background: linear-gradient(135deg, #181b24 0%, #23273a 100%);
+    color: var(--primary-color);
     text-align: center;
     padding: 60px 20px;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 8px 32px rgba(30, 40, 80, 0.25);
 }
 
 header::before {
@@ -219,10 +227,11 @@ header::before {
 
 header h1 {
     font-size: clamp(2.5rem, 5vw, 3.5rem);
-    font-weight: 800;
+    font-weight: 900;
     margin-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    position: relative;
+    text-shadow: 2px 2px 8px rgba(30, 40, 80, 0.4);
+    color: var(--primary-color);
+    letter-spacing: 2px;
 }
 
 header p {
@@ -230,7 +239,7 @@ header p {
     max-width: 600px;
     margin: 0 auto;
     opacity: 0.95;
-    position: relative;
+    color: var(--white);
 }
 
 /* Container principal */
@@ -248,13 +257,14 @@ main {
 .workout-plan-section,
 .no-plan-section,
 .tips-section {
-    background: var(--white);
+    background: var(--light-gray);
     border-radius: var(--border-radius);
     padding: 40px;
     margin: 40px 0;
     box-shadow: var(--shadow);
     transition: var(--transition);
     border-left: 5px solid var(--primary-color);
+    color: var(--white);
 }
 
 .form-section:hover,
@@ -272,11 +282,11 @@ main {
 .workout-plan-section h2,
 .tips-section h3 {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 30px;
-    color: var(--dark-blue);
-    position: relative;
+    color: var(--primary-color);
     text-align: center;
+    letter-spacing: 1px;
 }
 
 .form-section h2::after,
@@ -304,7 +314,7 @@ main {
 }
 
 .day-card {
-    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    background: linear-gradient(135deg, #23273a 0%, #181b24 100%);
     border: 2px solid var(--accent-color);
     border-radius: var(--border-radius);
     padding: 25px;
@@ -343,7 +353,7 @@ main {
 
 .day-card h4 {
     font-size: 1.3rem;
-    color: var(--dark-blue);
+    color: var(--accent-color);
     margin-bottom: 20px;
     font-weight: 700;
     text-align: center;
@@ -384,10 +394,14 @@ main {
 }
 
 .exercise-item {
-    background: var(--light-gray);
-    border-radius: 8px;
-    padding: 15px;
-    border-left: 3px solid var(--primary-color);
+    background: linear-gradient(135deg, #23273a 0%, #181b24 100%);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    text-align: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
 .exercise-header {
@@ -400,7 +414,7 @@ main {
 
 .exercise-header h5 {
     font-size: 1.1rem;
-    color: var(--dark-blue);
+    color: var(--primary-color);
     font-weight: 600;
     margin: 0;
 }
@@ -500,28 +514,28 @@ form label {
     font-size: 1rem;
 }
 
-form input[type="number"] {
+form input[type="number"], .form-input, form input[type="email"], form input[type="password"] {
     width: 100%;
     padding: 15px 20px;
-    background: var(--light-gray);
-    border: 2px solid #e9ecef;
+    background: #23273a;
+    border: 2px solid #23273a;
     border-radius: 8px;
-    color: var(--dark-gray);
+    color: var(--white);
     font-size: 1rem;
     transition: var(--transition);
 }
 
-form input[type="number"]:focus {
+form input[type="number"]:focus, .form-input:focus, form input[type="email"]:focus, form input[type="password"]:focus {
     outline: none;
-    border-color: var(--secondary-color);
-    background: var(--white);
-    box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
+    border-color: var(--primary-color);
+    background: #181b24;
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
 }
 
 /* Style pour la salle de sport */
 .gym-fieldset {
-    background: var(--light-gray);
-    border: 2px solid #e9ecef;
+    background: #181b24;
+    border: 2px solid var(--secondary-color);
     border-radius: var(--border-radius);
     padding: 25px;
     margin: 20px 0;
@@ -529,7 +543,7 @@ form input[type="number"]:focus {
 
 .gym-fieldset legend {
     font-weight: 700;
-    color: var(--dark-blue);
+    color: var(--primary-color);
     padding: 0 15px;
     font-size: 1.1rem;
 }
@@ -558,8 +572,8 @@ form input[type="number"]:focus {
 
 /* Options d'équipement */
 .equipment-options {
-    background: #fff3e0;
-    border: 2px solid var(--warning-color);
+    background: #181b24;
+    border: 2px solid var(--secondary-color);
     border-radius: var(--border-radius);
     padding: 25px;
     margin: 20px 0;
@@ -582,7 +596,7 @@ form input[type="number"]:focus {
 .equipment-options p {
     font-weight: 700;
     margin-bottom: 20px;
-    color: var(--dark-blue);
+    color: var(--primary-color);
     font-size: 1.1rem;
 }
 
@@ -814,8 +828,8 @@ form button:active {
 }
 
 .exercise-item {
-    background: var(--white);
-    border: 2px solid #e9ecef;
+    background: linear-gradient(135deg, #23273a 0%, #181b24 100%);
+    border: 2px solid var(--primary-color);
     border-radius: var(--border-radius);
     padding: 20px;
     text-align: center;
@@ -863,7 +877,7 @@ form button:active {
 
 .exercise-item p {
     font-weight: 600;
-    color: var(--dark-blue);
+    color: var(--accent-color);
     font-size: 1rem;
 }
 
@@ -887,10 +901,11 @@ form button:active {
 /* Footer */
 footer {
     background: var(--dark-blue);
-    color: white;
+    color: var(--white);
     text-align: center;
     padding: 40px 20px;
     margin-top: 60px;
+    box-shadow: 0 -4px 24px rgba(30, 40, 80, 0.25);
 }
 
 footer p {
@@ -1005,7 +1020,7 @@ footer p {
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #23273a;
     border-radius: 4px;
 }
 
@@ -1028,7 +1043,8 @@ footer p {
 }
 
 .login-card {
-    background: var(--white);
+    background: linear-gradient(135deg, #23273a 0%, #181b24 100%);
+    border: 2px solid var(--secondary-color);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     padding: 40px;
@@ -1038,7 +1054,7 @@ footer p {
 }
 
 .login-header h1 {
-    color: var(--dark-blue);
+    color: var(--primary-color);
     margin-bottom: 10px;
     font-size: 2rem;
 }
@@ -1131,15 +1147,15 @@ footer p {
 }
 
 .login-status.error {
-    background: #ffebee;
-    color: #c62828;
-    border: 1px solid #ffcdd2;
+    background: #2d1a1a;
+    color: #ff6b35;
+    border: 1px solid #ff6b35;
 }
 
 .login-status.success {
-    background: #e8f5e8;
-    color: #2e7d32;
-    border: 1px solid #c8e6c9;
+    background: #1a2d1a;
+    color: #4caf50;
+    border: 1px solid #4caf50;
 }
 
 @media (max-width: 480px) {
