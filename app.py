@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_session import Session
 import firebase_admin
 from firebase_admin import credentials, auth
+from firebase_admin import firestore  # Ajout Firestore
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -60,15 +61,18 @@ if missing_credentials:
     for cred in missing_credentials:
         print(f"  - {cred}")
     print("Firebase authentication will not work without these credentials.")
+    db = None  # Firestore non initialisé
 else:
     try:
         cred = credentials.Certificate(FIREBASE_CONFIG)
         firebase_admin.initialize_app(cred)
         firebase_initialized = True
+        db = firestore.client()  # Initialisation Firestore
         print("✅ Firebase Admin SDK initialized successfully")
     except Exception as e:
         print(f"❌ Firebase initialization error: {e}")
         print("Firebase authentication will not work.")
+        db = None
 
 # In-memory storage for user workout plans (in production, use a database)
 user_workout_plans = {}
@@ -338,6 +342,21 @@ def generate():
         'plan': plan,
         'products': PRODUCT_SUGGESTIONS
     })
+
+@app.route('/save-plan', methods=['POST'])
+def save_plan():
+    if 'user' not in session:
+        return jsonify({'error': 'Not authenticated'}), 401
+    if not db:
+        return jsonify({'error': 'Firestore not initialized'}), 500
+    data = request.get_json()
+    plan = data.get('plan')
+    user_id = session['user']['uid']
+    try:
+        db.collection('workoutPlans').add({'uid': user_id, 'plan': plan})
+        return jsonify({'success': True})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/static/data/exercises.json')
 def exercises():
