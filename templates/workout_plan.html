@@ -44,10 +44,18 @@
             </div>
         </div>
     </nav>
-    <header>
+   <header>
         <h1>My Workout Plan</h1>
         <p>Your personalized 7-day program</p>
-    </header>
+        <!-- Debug info - à supprimer après test -->
+        {% if user %}
+            <small style="color: #666;">Debug: User ID = {{ user.uid }}</small><br>
+            <small style="color: #666;">Debug: Plan exists = {{ workout_plan is not none }}</small>
+            {% if workout_plan %}
+                <small style="color: #666;">Debug: Plan has {{ workout_plan.jours|length }} days</small>
+            {% endif %}
+        {% endif %}
+    </header>  
     <main>
         {% if workout_plan %}
             <section class="workout-plan-section">

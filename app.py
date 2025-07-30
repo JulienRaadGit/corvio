@@ -253,12 +253,29 @@ def workout_plan():
         return redirect(url_for('login'))
     
     user_id = session['user']['uid']
+    current_plan = None
+    
+    # D'abord essayer de récupérer depuis la mémoire
     current_plan = user_workout_plans.get(user_id, None)
+    
+    # Si pas en mémoire et Firestore disponible, essayer de récupérer depuis Firestore
+    if not current_plan and db:
+        try:
+            docs = list(db.collection('workoutPlans').where('uid', '==', user_id).limit(1).stream())
+            if docs:
+                doc_data = docs[0].to_dict()
+                current_plan = doc_data.get('plan')
+                # Sauvegarder aussi en mémoire pour les prochaines fois
+                user_workout_plans[user_id] = current_plan
+                print(f"✅ Plan récupéré depuis Firestore pour l'utilisateur {user_id}")
+        except Exception as e:
+            print(f"⚠️ Erreur lors de la récupération Firestore: {e}")
+    
+    print(f"Plan actuel pour {user_id}: {current_plan is not None}")
     
     return render_template('workout_plan.html', 
                          user=session['user'], 
                          workout_plan=current_plan)
-
 @app.route('/verify-token', methods=['POST'])
 def verify_token():
     """Verify Firebase ID token"""
@@ -335,8 +352,30 @@ def generate():
         try:
             plan_data = json.loads(plan)
             user_workout_plans[user_id] = plan_data
-        except:
-            pass  # If plan is not valid JSON, don't save it
+            
+            # Sauvegarder aussi dans Firestore si disponible
+            if db:
+                try:
+                    # Chercher s'il existe déjà un plan pour cet utilisateur
+                    docs = list(db.collection('workoutPlans').where('uid', '==', user_id).limit(1).stream())
+                    
+                    if docs:
+                        # Mettre à jour le plan existant
+                        doc_id = docs[0].id
+                        db.collection('workoutPlans').document(doc_id).update({'plan': plan_data})
+                        print(f"✅ Plan mis à jour dans Firestore pour l'utilisateur {user_id}")
+                    else:
+                        # Créer un nouveau plan
+                        db.collection('workoutPlans').add({'uid': user_id, 'plan': plan_data})
+                        print(f"✅ Nouveau plan créé dans Firestore pour l'utilisateur {user_id}")
+                        
+                except Exception as firestore_error:
+                    print(f"⚠️ Erreur Firestore: {firestore_error}")
+                    # Continue même si Firestore échoue, le plan est sauvé en mémoire
+                    
+            print(f"✅ Plan sauvegardé en mémoire pour l'utilisateur {user_id}")
+        except json.JSONDecodeError:
+            print(f"⚠️ Plan généré n'est pas un JSON valide, non sauvegardé")
     
     return jsonify({
         'plan': plan,
@@ -347,17 +386,40 @@ def generate():
 def save_plan():
     if 'user' not in session:
         return jsonify({'error': 'Not authenticated'}), 401
-    if not db:
-        return jsonify({'error': 'Firestore not initialized'}), 500
+    
     data = request.get_json()
     plan = data.get('plan')
     user_id = session['user']['uid']
+    
+    if not plan:
+        return jsonify({'error': 'No plan provided'}), 400
+    
     try:
-        db.collection('workoutPlans').add({'uid': user_id, 'plan': plan})
+        # Sauvegarder en mémoire
+        user_workout_plans[user_id] = plan
+        
+        # Sauvegarder dans Firestore si disponible
+        if db:
+            try:
+                # Chercher le document existant
+                docs = list(db.collection('workoutPlans').where('uid', '==', user_id).limit(1).stream())
+                
+                if docs:
+                    # Mettre à jour le document existant
+                    doc_id = docs[0].id
+                    db.collection('workoutPlans').document(doc_id).update({'plan': plan})
+                else:
+                    # Créer un nouveau document
+                    db.collection('workoutPlans').add({'uid': user_id, 'plan': plan})
+                    
+                print(f"✅ Plan sauvegardé dans Firestore pour l'utilisateur {user_id}")
+            except Exception as firestore_error:
+                print(f"⚠️ Erreur Firestore lors de la sauvegarde: {firestore_error}")
+        
         return jsonify({'success': True})
     except Exception as e:
+        print(f"❌ Erreur lors de la sauvegarde: {e}")
         return jsonify({'error': str(e)}), 500
-
 @app.route('/update-plan', methods=['POST'])
 def update_plan():
     if 'user' not in session:
