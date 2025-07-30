@@ -272,6 +272,69 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             programContainer.appendChild(card);
+    
+    // À la fin de la boucle, après avoir ajouté toutes les cartes
+    // Ajouter les contrôles d'édition
+    setTimeout(() => {
+        addEditControls();
+    }, 100);
         });
     }
+
+    // Ajouter les contrôles d'édition après avoir rendu le programme
+function addEditControls() {
+    // Ajouter les boutons d'édition aux exercices
+    document.querySelectorAll('.exercise-item').forEach(item => {
+        if (!item.querySelector('.exercise-actions')) {
+            const actionsHTML = `
+                <div class="exercise-actions">
+                    <button class="btn-edit">✏️ Modifier</button>
+                    <button class="btn-delete">🗑️ Supprimer</button>
+                </div>
+                <div class="exercise-edit-form">
+                    <div class="edit-form-grid">
+                        <div class="edit-form-group">
+                            <label>Nom de l'exercice</label>
+                            <input type="text" name="exercise-name" required>
+                        </div>
+                        <div class="edit-form-group">
+                            <label>Séries</label>
+                            <input type="number" name="series" min="1" required>
+                        </div>
+                        <div class="edit-form-group">
+                            <label>Répétitions</label>
+                            <input type="number" name="repetitions" min="1">
+                        </div>
+                    </div>
+                    <div class="edit-form-group">
+                        <label>Durée (minutes) - si pas de répétitions</label>
+                        <input type="number" name="duration" min="1">
+                    </div>
+                    <div class="edit-form-actions">
+                        <button class="btn btn-success btn-small btn-save-exercise">Sauvegarder</button>
+                        <button class="btn btn-cancel btn-small btn-cancel-edit">Annuler</button>
+                    </div>
+                </div>
+            `;
+            item.insertAdjacentHTML('beforeend', actionsHTML);
+        }
+    });
+    
+    // Ajouter des boutons "Ajouter exercice" aux jours d'entraînement
+    document.querySelectorAll('.day-card.workout-day').forEach(dayCard => {
+        if (!dayCard.querySelector('.add-exercise-btn')) {
+            const exercisesList = dayCard.querySelector('.exercises-list');
+            if (exercisesList) {
+                exercisesList.insertAdjacentHTML('afterend', '<button class="add-exercise-btn">+ Ajouter un exercice</button>');
+            }
+        }
+    });
+    
+    // Initialiser l'éditeur si disponible
+    if (typeof WorkoutEditor !== 'undefined') {
+        window.workoutEditor = new WorkoutEditor();
+        window.workoutEditor.workoutPlan = JSON.parse(plan);
+        window.workoutEditor.renderEditablePlan();
+    }
+}
 });

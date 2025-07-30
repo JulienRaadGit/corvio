@@ -358,6 +358,38 @@ def save_plan():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/update-plan', methods=['POST'])
+def update_plan():
+    if 'user' not in session:
+        return jsonify({'error': 'Not authenticated'}), 401
+    
+    data = request.get_json()
+    plan = data.get('plan')
+    user_id = session['user']['uid']
+    
+    # Mettre à jour le plan en mémoire
+    user_workout_plans[user_id] = plan
+    
+    # Si Firestore est disponible, sauvegarder aussi là-bas
+    if db:
+        try:
+            # Chercher le document existant
+            docs = db.collection('workoutPlans').where('uid', '==', user_id).limit(1).stream()
+            doc_id = None
+            for doc in docs:
+                doc_id = doc.id
+                break
+            
+            if doc_id:
+                # Mettre à jour le document existant
+                db.collection('workoutPlans').document(doc_id).update({'plan': plan})
+            else:
+                # Créer un nouveau document
+                db.collection('workoutPlans').add({'uid': user_id, 'plan': plan})
+        except Exception as e:
+            print(f"Erreur Firestore: {e}")
+    
+    return jsonify({'success': True})
 @app.route('/static/data/exercises.json')
 def exercises():
     # Retourne la liste des exercices sous forme de JSON pour le front.

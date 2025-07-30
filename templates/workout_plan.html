@@ -143,6 +143,13 @@
         function printPlan() {
             window.print();
         }
+        
+        // Passer les données du plan au JavaScript
+        {% if workout_plan %}
+        window.workoutPlanData = {{ workout_plan | tojson }};
+        {% endif %}
     </script>
+    <script src="{{ url_for('static', filename='js/workout-editor.js') }}"></script>
+</body>
 </body>
 </html> 
