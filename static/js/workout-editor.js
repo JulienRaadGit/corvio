@@ -208,8 +208,8 @@ class WorkoutEditor {
                     <span class="exercise-type">${typeText}</span>
                 </div>
                 <div class="exercise-actions">
-                    <button class="btn-edit">✏️ Modifier</button>
-                    <button class="btn-delete">🗑️ Supprimer</button>
+                    <button class="btn-edit">Modifier</button>
+                    <button class="btn-delete">Supprimer</button>
                 </div>
                 <div class="exercise-edit-form">
                     <div class="edit-form-grid">
@@ -280,8 +280,8 @@ class WorkoutEditor {
             if (!item.querySelector('.exercise-actions')) {
                 const actionsHTML = `
                     <div class="exercise-actions">
-                        <button class="btn-edit">✏️ Modifier</button>
-                        <button class="btn-delete">🗑️ Supprimer</button>
+                        <button class="btn-edit">Modifier</button>
+                        <button class="btn-delete">Supprimer</button>
                     </div>
                     <div class="exercise-edit-form">
                         <div class="edit-form-grid">
