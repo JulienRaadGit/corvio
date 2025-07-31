@@ -38,6 +38,7 @@ body {
     color: var(--text-primary);
     background: var(--bg-primary);
     min-height: 100vh;
+    padding-top: 90px
 }
 
 /* Navigation */
