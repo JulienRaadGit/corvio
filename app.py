@@ -225,7 +225,7 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="gpt-4.1-mini",
             messages=[
                 {"role": "system", "content": "Vous êtes un coach sportif. Répondez UNIQUEMENT avec le JSON compressé demandé."},
                 {"role": "user", "content": prompt}
