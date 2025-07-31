@@ -840,4 +840,150 @@ footer {
         width: 30px;
         margin: 5px;
     }
+
+    /* Ajoutez ces règles CSS à la fin de votre fichier style.css */
+
+/* Formulaire d'édition - caché par défaut */
+.exercise-edit-form {
+    display: none;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-small);
+    padding: 1.5rem;
+    margin-top: 1rem;
+    border: 1px solid var(--border);
+    animation: slideDown 0.3s ease;
+}
+
+/* Afficher le formulaire quand l'exercice est en cours d'édition */
+.exercise-item.editing .exercise-edit-form {
+    display: block;
+}
+
+/* Masquer les actions normales pendant l'édition */
+.exercise-item.editing .exercise-actions {
+    opacity: 0.5;
+}
+
+/* Grid pour le formulaire d'édition */
+.edit-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.edit-form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.edit-form-group input {
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.edit-form-group input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.edit-form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: var(--radius-small);
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+    border: 1px solid var(--success);
+}
+
+.btn-success:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+.btn-cancel {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.btn-cancel:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+/* Animation pour l'apparition du formulaire */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Style pour le bouton "Ajouter exercice" */
+.add-exercise-btn {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(0, 212, 255, 0.1);
+    border: 2px dashed var(--accent);
+    border-radius: var(--radius-small);
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.add-exercise-btn:hover {
+    background: rgba(0, 212, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Style pour l'indicateur de plan modifié */
+.plan-modified {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid var(--success);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.plan-modified p {
+    color: var(--success);
+    font-weight: 600;
+    margin: 0;
+}
 }
