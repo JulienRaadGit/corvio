@@ -658,17 +658,39 @@ header p {
     box-shadow: 0 2px 4px rgba(0, 212, 255, 0.3);
 }
 
+/* FIX: Actions d'édition cachées par défaut, visibles seulement au hover */
 .exercise-actions {
     display: flex;
     gap: 0.5rem;
     justify-content: flex-end;
     margin-top: 1rem;
     opacity: 0;
-    transition: var(--transition);
+    visibility: hidden;
+    transition: all 0.3s ease;
+    transform: translateY(10px);
 }
 
+/* Afficher les actions au hover de l'exercice */
 .exercise-item:hover .exercise-actions {
     opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Sur mobile/tablette, toujours afficher les actions */
+@media (max-width: 768px) {
+    .exercise-actions {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+}
+
+/* Quand l'exercice est en cours d'édition, toujours afficher les actions */
+.exercise-item.editing .exercise-actions {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 .btn-edit, .btn-delete {
@@ -795,54 +817,6 @@ footer {
     color: var(--text-primary);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .nav-container {
-        padding: 0 1rem;
-    }
-    
-    .nav-menu {
-        gap: 1rem;
-    }
-    
-    .hero-title {
-        font-size: 2rem;
-    }
-    
-    main {
-        padding: 1rem;
-    }
-    
-    .form-section, .welcome-section, .exercises-section, .info-section {
-        padding: 2rem;
-    }
-    
-    .workout-plan-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .exercise-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
-    }
-    
-    .exercise-actions {
-        opacity: 1;
-    }
-    
-    .footer-links {
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-
-    .brand-logo {
-        width: 30px;
-        margin: 5px;
-    }
-
-    /* Ajoutez ces règles CSS à la fin de votre fichier style.css */
-
 /* Formulaire d'édition - caché par défaut */
 .exercise-edit-form {
     display: none;
@@ -857,11 +831,6 @@ footer {
 /* Afficher le formulaire quand l'exercice est en cours d'édition */
 .exercise-item.editing .exercise-edit-form {
     display: block;
-}
-
-/* Masquer les actions normales pendant l'édition */
-.exercise-item.editing .exercise-actions {
-    opacity: 0.5;
 }
 
 /* Grid pour le formulaire d'édition */
@@ -986,4 +955,46 @@ footer {
     font-weight: 600;
     margin: 0;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 1rem;
+    }
+    
+    .nav-menu {
+        gap: 1rem;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    main {
+        padding: 1rem;
+    }
+    
+    .form-section, .welcome-section, .exercises-section, .info-section {
+        padding: 2rem;
+    }
+    
+    .workout-plan-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .exercise-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    
+    .footer-links {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .brand-logo {
+        width: 30px;
+        margin: 5px;
+    }
 }
