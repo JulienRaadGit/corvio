@@ -73,6 +73,12 @@ body {
     color: var(--text-primary);
 }
 
+.brand-logo {
+    width: 40px; /* ajustez la largeur à votre convenance */
+    height: auto;
+    margin: 10px; /* ajustez la marge à votre convenance */
+}
+
 .nav-menu {
     display: flex;
     gap: 2rem;
@@ -772,5 +778,11 @@ footer {
     .footer-links {
         flex-wrap: wrap;
         gap: 1rem;
+    }
+
+    .brand-logo {
+        width: 30px; /* ajustez la largeur à votre convenance */
+        height: auto;
+        margin: 5px; /* ajustez la marge à votre convenance */
     }
 }
