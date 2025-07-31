@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - Corvio</title>
+    <title>Connexion - Corvio</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7173995370777543"
      crossorigin="anonymous"></script>
@@ -21,55 +23,73 @@
                 </a>
             </div>
             <div class="nav-menu">
-                <a href="{{ url_for('index') }}" class="nav-link">Home</a>
-                <a href="#generator" class="nav-link">Generator</a>
+                <a href="{{ url_for('index') }}" class="nav-link">Accueil</a>
+                <a href="#generator" class="nav-link">Générateur</a>
                 <a href="#contact" class="nav-link">Contact</a>
-                <a href="#about" class="nav-link">About</a>
+                <a href="#about" class="nav-link">À propos</a>
             </div>
             <div class="nav-auth">
-                <a href="{{ url_for('index') }}" class="btn btn-secondary">Back</a>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour
+                </a>
             </div>
         </div>
     </nav>
+
     <main class="login-container">
         <div class="login-card">
             <div class="login-header">
-                <h1>Sign In</h1>
-                <p>Sign in to save your workout plans</p>
+                <h1>Connexion</h1>
+                <p>Connectez-vous pour sauvegarder vos programmes d'entraînement</p>
             </div>
             <div class="login-options">
                 <button id="googleSignIn" class="btn btn-google">
-                    <span class="google-icon">🔒</span>
-                    Sign in with Google
+                    <i class="fab fa-google"></i>
+                    Se connecter avec Google
                 </button>
                 <div class="login-divider">
-                    <span>or</span>
+                    <span>ou</span>
                 </div>
                 <div class="email-login">
-                    <input type="email" id="email" placeholder="Email" class="form-input">
-                    <input type="password" id="password" placeholder="Password" class="form-input">
-                    <button id="emailSignIn" class="btn btn-primary">Sign In</button>
-                    <button id="emailSignUp" class="btn btn-secondary">Create Account</button>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email" class="form-input">
+                        <i class="fas fa-envelope input-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" placeholder="Mot de passe" class="form-input">
+                        <i class="fas fa-lock input-icon"></i>
+                    </div>
+                    <button id="emailSignIn" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Se connecter
+                    </button>
+                    <button id="emailSignUp" class="btn btn-secondary">
+                        <i class="fas fa-user-plus"></i>
+                        Créer un compte
+                    </button>
                 </div>
             </div>
-            <div id="loginStatus" class="login-status" style="display: none;"></div>
+            <div id="loginStatus" class="login-status"></div>
         </div>
     </main>
+
     <footer>
         <div class="footer-content">
             <div class="footer-links">
-                <a href="#about">About</a>
+                <a href="#about">À propos</a>
                 <a href="#contact">Contact</a>
-                <a href="#" target="_blank">Legal</a>
+                <a href="#" target="_blank">Légal</a>
             </div>
             <div class="footer-social">
-                <a href="#" aria-label="Twitter" class="social-icon">🐦</a>
-                <a href="#" aria-label="Instagram" class="social-icon">📸</a>
-                <a href="#" aria-label="GitHub" class="social-icon">💻</a>
+                <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="GitHub" class="social-icon"><i class="fab fa-github"></i></a>
             </div>
-            <p>&copy; 2025 Corvio. All rights reserved.</p>
+            <p>&copy; 2025 Corvio. Tous droits réservés.</p>
         </div>
     </footer>
+
     <!-- Firebase SDK -->
     <script type="module">
         // Import the functions you need from the SDKs you need
@@ -174,7 +194,6 @@
                         window.location.href = '/';
                     }, 1000);
                 } else {
-                    // Show detailed error message
                     let errorMessage = 'Erreur de vérification du token';
                     if (data.error) {
                         errorMessage = data.error;
@@ -183,8 +202,6 @@
                         errorMessage += ': ' + data.details;
                     }
                     showError(errorMessage);
-                    
-                    // Log detailed error for debugging
                     console.error('Token verification failed:', data);
                 }
             } catch (error) {
@@ -196,10 +213,8 @@
         // Auth state observer
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is signed in, but we still need to verify with backend
                 console.log('User is signed in:', user.email);
             } else {
-                // User is signed out
                 console.log('User is signed out');
             }
         });
@@ -218,4 +233,4 @@
         }
     </script>
 </body>
-</html> 
+</html>

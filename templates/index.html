@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corvio - Générateur de programmes d'entraînement</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7173995370777543"
      crossorigin="anonymous"></script>
@@ -16,14 +18,14 @@
         <div class="nav-container">
             <div class="nav-brand">
                 <a href="{{ url_for('index') }}">
-                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Corvio" class="brand-logo" style="height:60px;">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Corvio" class="brand-logo">
                 </a>
             </div>
             <div class="nav-menu">
-                <a href="{{ url_for('index') }}" class="nav-link">Home</a>
-                <a href="#generator" class="nav-link">Generator</a>
+                <a href="{{ url_for('index') }}" class="nav-link">Accueil</a>
+                <a href="#generator" class="nav-link">Générateur</a>
                 <a href="#contact" class="nav-link">Contact</a>
-                <a href="#about" class="nav-link">About</a>
+                <a href="#about" class="nav-link">À propos</a>
             </div>
             <div class="nav-auth">
                 {% if user %}
@@ -32,122 +34,144 @@
                             <img src="{{ user.picture }}" alt="{{ user.name }}" class="user-avatar">
                         {% endif %}
                         <span class="user-name">{{ user.name }}</span>
-                        <a href="{{ url_for('logout') }}" class="btn btn-logout">Sign out</a>
+                        <a href="{{ url_for('logout') }}" class="btn btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Déconnexion
+                        </a>
                     </div>
                 {% else %}
                     <a href="{{ url_for('login') }}" class="btn btn-login">
-                        <span class="google-icon">🔒</span>
-                        Sign in
+                        <i class="fas fa-lock"></i>
+                        Connexion
                     </a>
                 {% endif %}
             </div>
         </div>
     </nav>
+
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <h1 class="hero-title">Get Your Personalized Workout Plan</h1>
-            <p class="hero-subtitle">Enter your details and get a free, AI-powered fitness program. No signup required!</p>
-            <a href="#generator" class="btn btn-primary hero-btn" id="startNowBtn">Start now</a>
+            <h1 class="hero-title">Votre Programme d'Entraînement Personnalisé</h1>
+            <p class="hero-subtitle">Entrez vos informations et obtenez un programme de fitness gratuit, alimenté par l'IA. Aucune inscription requise !</p>
+            <a href="#generator" class="btn btn-primary hero-btn" id="startNowBtn">
+                <i class="fas fa-rocket"></i>
+                Commencer maintenant
+            </a>
         </div>
     </section>
+
     <main>
         {% if user %}
             <section class="welcome-section">
                 <div class="welcome-card">
-                    <h2>Welcome, {{ user.name }}!</h2>
-                    <p>Sign in to save your workout plans and track your progress.</p>
+                    <h2>Bienvenue, {{ user.name }} !</h2>
+                    <p>Connecté pour sauvegarder vos programmes d'entraînement et suivre vos progrès.</p>
                     <div class="welcome-actions">
-                        <a href="{{ url_for('workout_plan') }}" class="btn btn-primary">View my plan</a>
+                        <a href="{{ url_for('workout_plan') }}" class="btn btn-primary">
+                            <i class="fas fa-dumbbell"></i>
+                            Voir mon programme
+                        </a>
                     </div>
                 </div>
             </section>
         {% endif %}
+
         <!-- Generator/Form Section -->
         <section class="form-section" id="generator">
-            <h2>Personal Information</h2>
+            <h2>Informations Personnelles</h2>
             <form id="infoForm">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="age">Age (years):</label>
+                        <label for="age">Âge (années) :</label>
                         <input type="number" id="age" name="age" min="1" max="120" required>
                     </div>
                     <div class="form-group">
-                        <label for="height">Height (cm):</label>
+                        <label for="height">Taille (cm) :</label>
                         <input type="number" id="height" name="height" min="50" max="250" required>
                     </div>
                     <div class="form-group">
-                        <label for="weight">Weight (kg):</label>
+                        <label for="weight">Poids (kg) :</label>
                         <input type="number" id="weight" name="weight" min="20" max="250" required>
                     </div>
                 </div>
+
                 <!-- Gym question -->
                 <fieldset class="gym-fieldset">
-                    <legend>Are you training in a gym?</legend>
+                    <legend>Vous entraînez-vous en salle de sport ?</legend>
                     <label>
                         <input type="radio" name="gym" value="yes" id="gymYes" checked>
-                        Yes
+                        Oui
                     </label>
                     <label>
                         <input type="radio" name="gym" value="no" id="gymNo">
-                        No
+                        Non
                     </label>
                 </fieldset>
+
                 <!-- Equipment options if not in gym -->
-                <div id="equipmentOptions" class="equipment-options" style="display:none;">
-                    <p>Select the equipment you have:</p>
-                    <label><input type="checkbox" name="equipmentList" value="dumbbells"> Dumbbells</label><br>
-                    <label><input type="checkbox" name="equipmentList" value="pull-up bar"> Pull-up bar</label><br>
-                    <label><input type="checkbox" name="equipmentList" value="resistance bands"> Resistance bands</label><br>
+                <div id="equipmentOptions" class="equipment-options">
+                    <p>Sélectionnez les équipements que vous avez :</p>
+                    <label><input type="checkbox" name="equipmentList" value="dumbbells"> Haltères</label><br>
+                    <label><input type="checkbox" name="equipmentList" value="pull-up bar"> Barre de traction</label><br>
+                    <label><input type="checkbox" name="equipmentList" value="resistance bands"> Bandes de résistance</label><br>
                     <label><input type="checkbox" name="equipmentList" value="kettlebell"> Kettlebell</label><br>
-                    <label><input type="checkbox" name="equipmentList" value="jump rope"> Jump rope</label><br>
-                    <label><input type="checkbox" name="equipmentList" value="mat"> Mat</label><br>
+                    <label><input type="checkbox" name="equipmentList" value="jump rope"> Corde à sauter</label><br>
+                    <label><input type="checkbox" name="equipmentList" value="mat"> Tapis</label><br>
                 </div>
+
                 <button type="submit" id="generateBtn">
-                    <span class="btn-icon">⚡</span> Generate Plan
+                    <i class="fas fa-magic"></i>
+                    Générer le Programme
                 </button>
-                <div class="loading-spinner" id="loadingSpinner" style="display:none;"></div>
+                <div class="loading-spinner" id="loadingSpinner"></div>
             </form>
         </section>
+
         <!-- Results Section -->
-        <section id="resultSection" class="result-section" style="display:none;">
-            <h2>Your Personalized Plan</h2>
-            <div id="programContainer" class="program-container"></div>
-            <h3>Recommended Products</h3>
+        <section id="resultSection" class="result-section">
+            <h2>Votre Programme Personnalisé</h2>
+            <div id="programContainer" class="workout-plan-container"></div>
+            <h3>Produits Recommandés</h3>
             <ul id="productList"></ul>
         </section>
+
         <!-- Exercises List -->
         <section class="exercises-section">
-            <h2>Available Exercises</h2>
-            <p>You can add your own illustration images. Place them in <code>static/images/exercises/</code> and reference them in <code>static/data/exercises.json</code>.</p>
+            <h2>Exercices Disponibles</h2>
+            <p>Vous pouvez ajouter vos propres images d'illustration. Placez-les dans <code>static/images/exercises/</code> et référencez-les dans <code>static/data/exercises.json</code>.</p>
             <div id="exerciseList" class="exercise-list"></div>
         </section>
+
         <!-- Contact/About Section -->
         <section class="info-section" id="about">
-            <h2>About Corvio</h2>
-            <p>Corvio is a free AI-powered workout generator. Your data is never sold. This site is funded by ads and affiliate links.</p>
+            <h2>À propos de Corvio</h2>
+            <p>Corvio est un générateur d'entraînement gratuit alimenté par l'IA. Vos données ne sont jamais vendues. Ce site est financé par la publicité et les liens d'affiliation.</p>
         </section>
+
         <section class="info-section" id="contact">
             <h2>Contact</h2>
-            <p>For support or feedback, email <a href="mailto:support@corvio.com">support@corvio.com</a>.</p>
+            <p>Pour le support ou les commentaires, envoyez un email à <a href="mailto:support@corvio.com">support@corvio.com</a>.</p>
         </section>
     </main>
+
     <footer>
         <div class="footer-content">
             <div class="footer-links">
-                <a href="#about">About</a>
+                <a href="#about">À propos</a>
                 <a href="#contact">Contact</a>
-                <a href="#" target="_blank">Legal</a>
+                <a href="#" target="_blank">Légal</a>
             </div>
             <div class="footer-social">
-                <a href="#" aria-label="Twitter" class="social-icon">🐦</a>
-                <a href="#" aria-label="Instagram" class="social-icon">📸</a>
-                <a href="#" aria-label="GitHub" class="social-icon">💻</a>
+                <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="GitHub" class="social-icon"><i class="fab fa-github"></i></a>
             </div>
-            <p>&copy; 2025 Corvio. All rights reserved.</p>
+            <p>&copy; 2025 Corvio. Tous droits réservés.</p>
         </div>
     </footer>
+
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
         // Smooth scroll for hero button
