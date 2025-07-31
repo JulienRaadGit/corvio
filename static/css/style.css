@@ -38,7 +38,7 @@ body {
     color: var(--text-primary);
     background: var(--bg-primary);
     min-height: 100vh;
-    padding-top: 90px
+    padding-top: 40px
 }
 
 /* Navigation */
@@ -73,7 +73,7 @@ body {
 }
 
 .brand-logo {
-    width: 40px;
+    width: 60px;
     height: auto;
     margin: 10px;
 }
