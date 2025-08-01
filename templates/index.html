@@ -24,8 +24,8 @@
             <div class="nav-menu">
                 <a href="{{ url_for('index') }}" class="nav-link">Accueil</a>
                 <a href="#generator" class="nav-link">Générateur</a>
-                <a href="#contact" class="nav-link">Contact</a>
-                <a href="#about" class="nav-link">À propos</a>
+                <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+                <a href="{{ url_for('about') }}" class="nav-link">À propos</a>
             </div>
             <div class="nav-auth">
                 {% if user %}
@@ -136,25 +136,14 @@
             <h3>Produits Recommandés</h3>
             <ul id="productList"></ul>
         </section>
-
-        <!-- Contact/About Section -->
-        <section class="info-section" id="about">
-            <h2>À propos de Corvio</h2>
-            <p>Corvio est un générateur d'entraînement gratuit alimenté par l'IA. Vos données ne sont jamais vendues. Ce site est financé par la publicité et les liens d'affiliation.</p>
-        </section>
-
-        <section class="info-section" id="contact">
-            <h2>Contact</h2>
-            <p>Pour le support ou les commentaires, envoyez un email à <a href="mailto:support@corvio.com">support@corvio.com</a>.</p>
-        </section>
     </main>
 
     <footer>
         <div class="footer-content">
             <div class="footer-links">
-                <a href="#about">À propos</a>
-                <a href="#contact">Contact</a>
-                <a href="#" target="_blank">Légal</a>
+                <a href="{{ url_for('about') }}">À propos</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('privacy') }}">Politique de confidentialité</a>
             </div>
             <div class="footer-social">
                 <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-twitter"></i></a>

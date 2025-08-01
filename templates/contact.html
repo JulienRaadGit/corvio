@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Corvio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{ url_for('index') }}">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Corvio" class="brand-logo">
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="{{ url_for('index') }}" class="nav-link">Accueil</a>
+                <a href="{{ url_for('index') }}#generator" class="nav-link">Générateur</a>
+                <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+                <a href="{{ url_for('about') }}" class="nav-link">À propos</a>
+            </div>
+            <div class="nav-auth">
+                {% if user %}
+                    <div class="user-profile">
+                        {% if user.picture %}
+                            <img src="{{ user.picture }}" alt="{{ user.name }}" class="user-avatar">
+                        {% endif %}
+                        <span class="user-name">{{ user.name }}</span>
+                        <a href="{{ url_for('logout') }}" class="btn btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Déconnexion
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-login">
+                        <i class="fas fa-lock"></i>
+                        Connexion
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Contactez-nous</h1>
+        <p>Nous sommes là pour vous aider</p>
+    </header>
+
+    <main>
+        <section class="info-section">
+            <h2>Support et Assistance</h2>
+            <p>Pour toute question, suggestion ou problème technique, n'hésitez pas à nous contacter :</p>
+            
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <span class="tip-icon">📧</span>
+                    <h4>Email</h4>
+                    <p><a href="mailto:support@corvio.com">support@corvio.com</a></p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-icon">⏰</span>
+                    <h4>Délai de réponse</h4>
+                    <p>Nous répondons généralement sous 24-48h</p>
+                </div>
+            </div>
+            
+            <h3>Types de demandes</h3>
+            <p>Nous pouvons vous aider pour :</p>
+            <p>• Problèmes techniques avec l'application</p>
+            <p>• Questions sur votre programme d'entraînement</p>
+            <p>• Suggestions d'amélioration</p>
+            <p>• Partenariats et collaborations</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="{{ url_for('about') }}">À propos</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('privacy') }}">Politique de confidentialité</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="GitHub" class="social-icon"><i class="fab fa-github"></i></a>
+            </div>
+            <p>&copy; 2025 Corvio. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>

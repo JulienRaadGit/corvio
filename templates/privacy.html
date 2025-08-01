@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de confidentialité - Corvio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{ url_for('index') }}">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Corvio" class="brand-logo">
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="{{ url_for('index') }}" class="nav-link">Accueil</a>
+                <a href="{{ url_for('index') }}#generator" class="nav-link">Générateur</a>
+                <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+                <a href="{{ url_for('about') }}" class="nav-link">À propos</a>
+            </div>
+            <div class="nav-auth">
+                {% if user %}
+                    <div class="user-profile">
+                        {% if user.picture %}
+                            <img src="{{ user.picture }}" alt="{{ user.name }}" class="user-avatar">
+                        {% endif %}
+                        <span class="user-name">{{ user.name }}</span>
+                        <a href="{{ url_for('logout') }}" class="btn btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Déconnexion
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-login">
+                        <i class="fas fa-lock"></i>
+                        Connexion
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Politique de Confidentialité</h1>
+        <p>Protection de vos données personnelles</p>
+    </header>
+
+    <main>
+        <section class="info-section">
+            <h2>Collecte des données</h2>
+            <p>Nous collectons uniquement les informations nécessaires pour générer votre programme d'entraînement : âge, taille, poids et équipements disponibles.</p>
+            
+            <h3>Utilisation des données</h3>
+            <p>Vos données sont utilisées exclusivement pour :</p>
+            <p>• Générer votre programme d'entraînement personnalisé</p>
+            <p>• Sauvegarder vos préférences si vous êtes connecté</p>
+            <p>• Améliorer notre service</p>
+            
+            <h3>Protection des données</h3>
+            <p>• Vos données ne sont jamais vendues à des tiers</p>
+            <p>• Nous utilisons des connexions sécurisées (HTTPS)</p>
+            <p>• L'authentification est gérée par Firebase (Google)</p>
+            
+            <h3>Contact</h3>
+            <p>Pour toute question concernant vos données, contactez-nous à <a href="mailto:support@corvio.com">support@corvio.com</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="{{ url_for('about') }}">À propos</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('privacy') }}">Politique de confidentialité</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="GitHub" class="social-icon"><i class="fab fa-github"></i></a>
+            </div>
+            <p>&copy; 2025 Corvio. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -286,6 +286,18 @@ def workout_plan():
                          user=session['user'], 
                          workout_plan=current_plan)
 
+@app.route('/about')
+def about():
+    return render_template('about.html', user=session.get('user'))
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html', user=session.get('user'))
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html', user=session.get('user'))
+
 @app.route('/verify-token', methods=['POST'])
 def verify_token():
     """Verify Firebase ID token"""
