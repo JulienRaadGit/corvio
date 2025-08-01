@@ -1116,141 +1116,71 @@ footer {
     }
 }
 
-/* Tablettes en mode portrait */
 @media (max-width: 768px) {
-    /* Navigation mobile */
-    .nav-toggle {
-        display: flex;
-    }
-    
-    .nav-menu:not(.mobile-menu) {
-        display: none;
-    }
-    
-    .nav-auth {
-        gap: 0.5rem;
-    }
-    
-    .user-profile {
-        gap: 0.5rem;
-    }
-    
-    .user-name {
-        display: none;
-    }
-    
-    /* Hero section */
-    .hero-title {
-        font-size: clamp(2rem, 8vw, 3rem);
-    }
-    
-    .hero-subtitle {
-        font-size: 1rem;
-    }
-    
-    /* Headers */
-    header {
-        padding: 3rem 1rem 2rem;
-    }
-    
-    header h1 {
-        font-size: 2rem;
-    }
-    
-    /* Sections */
-    .section, .form-section, .welcome-section, .exercises-section, 
-    .info-section, .workout-plan-section, .tips-section, .no-plan-section {
-        padding: 2rem;
-        margin: 1.5rem 0;
-    }
-    
-    /* Formulaires */
-    .form-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    .gym-fieldset {
-        padding: 1rem;
-    }
-    
-    .gym-fieldset label {
-        display: block;
-        margin: 0.5rem 0;
-    }
-    
-    /* Workout plan */
-    .workout-plan-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .day-card {
-        min-height: auto;
-    }
-    
-    .exercise-item {
-        padding: 1rem;
-    }
-    
-    .exercise-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-    
-    .exercise-type {
-        align-self: flex-start;
-    }
-    
-    .exercise-actions {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-        margin-top: 0.5rem;
-    }
-    
-    .edit-form-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .edit-form-actions {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
-    /* Tips grid */
-    .tips-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-    }
-    
-    .tip-card {
-        padding: 1.5rem;
-    }
-    
-    /* Plan actions */
-    .plan-actions {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    /* Exercise list */
-    .exercise-list {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 1rem;
-    }
-    
-    /* Footer */
-    .footer-links {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .footer-social {
-        gap: 0.5rem;
-    }   
+  .nav-toggle {
+    display: flex;
+  }
+
+  /* Ne pas cacher complètement le menu desktop mais cacher sa version non mobile */
+  .nav-menu:not(.mobile-menu) {
+    display: none;
+  }
+
+  /* Le menu mobile reste caché par défaut mais prend flex quand actif */
+  .nav-menu.mobile-menu {
+    display: flex;
+    position: fixed;
+    top: 80px;
+    right: -100%;
+    width: 280px;
+    height: calc(100vh - 80px);
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    flex-direction: column;
+    padding: 2rem 0;
+    gap: 0;
+    overflow-y: auto;
+    transition: right 0.3s ease;
+  }
+
+  .nav-menu.mobile-menu.active {
+    right: 0;
+  }
+
+  .nav-menu.mobile-menu .nav-link {
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+
+  .nav-menu.mobile-menu .nav-auth {
+    padding: 1rem 2rem;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav-menu.mobile-menu .nav-auth .user-profile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .nav-menu.mobile-menu .nav-auth .user-name {
+    display: block;
+  }
+
+  .nav-menu.mobile-menu .nav-auth .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
+
 
 /* Smartphones */
 @media (max-width: 480px) {
@@ -1476,4 +1406,31 @@ footer {
     .nav-menu-overlay {
         display: block;
     }
+}
+
+/* --- Desktop --- */
+@media (min-width: 769px) {
+  .nav-toggle {
+    display: none !important;
+  }
+
+  .nav-menu {
+    display: flex !important;
+  }
+
+  .nav-menu.mobile-menu {
+    position: static;
+    width: auto;
+    height: auto;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    flex-direction: row;
+    padding: 0;
+    right: auto;
+  }
+
+  .nav-overlay {
+    display: none !important;
+  }
 }
