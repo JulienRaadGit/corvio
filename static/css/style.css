@@ -1123,7 +1123,7 @@ footer {
         display: flex;
     }
     
-    .nav-menu {
+    .nav-menu:not(.mobile-menu) {
         display: none;
     }
     
@@ -1249,7 +1249,7 @@ footer {
     
     .footer-social {
         gap: 0.5rem;
-    }
+    }   
 }
 
 /* Smartphones */
