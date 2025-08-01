@@ -1,0 +1,66 @@
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-brand">
+            <a href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Corvio" class="brand-logo">
+            </a>
+        </div>
+        <button class="nav-toggle">
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+        </button>
+        <div class="nav-menu">
+            <a href="{{ url_for('index') }}" class="nav-link">Accueil</a>
+            <a href="{{ url_for('index') }}#generator" class="nav-link">Générateur</a>
+            <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+            <a href="{{ url_for('about') }}" class="nav-link">À propos</a>
+        </div>
+        <div class="nav-auth">
+            {% if user %}
+                <div class="user-profile">
+                    {% if user.picture %}
+                        <img src="{{ user.picture }}" alt="{{ user.name }}" class="user-avatar">
+                    {% endif %}
+                    <span class="user-name">{{ user.name }}</span>
+                    <a href="{{ url_for('logout') }}" class="btn btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Déconnexion
+                    </a>
+                </div>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn btn-login">
+                    <i class="fas fa-lock"></i>
+                    Connexion
+                </a>
+            {% endif %}
+        </div>
+        <!-- Menu mobile avec auth inclus -->
+        <div class="nav-menu mobile-menu">
+            <a href="{{ url_for('index') }}" class="nav-link">Accueil</a>
+            <a href="{{ url_for('index') }}#generator" class="nav-link">Générateur</a>
+            <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+            <a href="{{ url_for('about') }}" class="nav-link">À propos</a>
+            <div class="nav-auth">
+                {% if user %}
+                    <div class="user-profile">
+                        {% if user.picture %}
+                            <img src="{{ user.picture }}" alt="{{ user.name }}" class="user-avatar">
+                        {% endif %}
+                        <span class="user-name">{{ user.name }}</span>
+                        <a href="{{ url_for('logout') }}" class="btn btn-logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Déconnexion
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-login">
+                        <i class="fas fa-lock"></i>
+                        Connexion
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="nav-overlay"></div>
+</nav>

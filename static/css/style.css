@@ -285,7 +285,7 @@ main {
     padding: 2rem;
 }
 
-/* Headers */
+/* Headers - Style uniforme pour toutes les pages */
 header {
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
     text-align: center;
@@ -1116,69 +1116,73 @@ footer {
     }
 }
 
+/* Menu mobile - Modifications responsive */
 @media (max-width: 768px) {
-  .nav-toggle {
-    display: flex;
-  }
+    .nav-toggle {
+        display: flex;
+    }
 
-  /* Ne pas cacher complètement le menu desktop mais cacher sa version non mobile */
-  .nav-menu:not(.mobile-menu) {
-    display: none;
-  }
+    .nav-menu:not(.mobile-menu) {
+        display: none;
+    }
 
-  /* Le menu mobile reste caché par défaut mais prend flex quand actif */
-  .nav-menu.mobile-menu {
-    display: flex;
-    position: fixed;
-    top: 80px;
-    right: -100%;
-    width: 280px;
-    height: calc(100vh - 80px);
-    background: var(--bg-card);
-    border-left: 1px solid var(--border);
-    box-shadow: var(--shadow-lg);
-    flex-direction: column;
-    padding: 2rem 0;
-    gap: 0;
-    overflow-y: auto;
-    transition: right 0.3s ease;
-  }
+    .nav-auth {
+        display: none; /* Cacher dans la nav principale sur mobile */
+    }
 
-  .nav-menu.mobile-menu.active {
-    right: 0;
-  }
+    .nav-menu.mobile-menu {
+        display: flex;
+        position: fixed;
+        top: 80px;
+        right: -100%;
+        width: 280px;
+        height: calc(100vh - 80px);
+        background: var(--bg-card);
+        border-left: 1px solid var(--border);
+        box-shadow: var(--shadow-lg);
+        flex-direction: column;
+        padding: 2rem 0;
+        gap: 0;
+        overflow-y: auto;
+        transition: right 0.3s ease;
+    }
 
-  .nav-menu.mobile-menu .nav-link {
-    padding: 1rem 2rem;
-    border-bottom: 1px solid var(--border);
-    display: block;
-    width: 100%;
-    text-align: left;
-  }
+    .nav-menu.mobile-menu.active {
+        right: 0;
+    }
 
-  .nav-menu.mobile-menu .nav-auth {
-    padding: 1rem 2rem;
-    border-top: 1px solid var(--border);
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
+    .nav-menu.mobile-menu .nav-link {
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--border);
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
 
-  .nav-menu.mobile-menu .nav-auth .user-profile {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
+    .nav-menu.mobile-menu .nav-link::after {
+        display: none;
+    }
 
-  .nav-menu.mobile-menu .nav-auth .user-name {
-    display: block;
-  }
+    /* Auth section dans le menu mobile */
+    .nav-menu.mobile-menu .nav-auth {
+        display: flex;
+        padding: 1rem 2rem;
+        border-top: 1px solid var(--border);
+        margin-top: auto;
+        flex-direction: column;
+        gap: 1rem;
+    }
 
-  .nav-menu.mobile-menu .nav-auth .btn {
-    width: 100%;
-    justify-content: center;
-  }
+    .nav-menu.mobile-menu .nav-auth .user-profile {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .nav-menu.mobile-menu .nav-auth .btn {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 
@@ -1400,12 +1404,6 @@ footer {
 /* Gestion du menu burger avec JavaScript */
 .nav-menu-overlay {
     display: none;
-}
-
-@media (max-width: 768px) {
-    .nav-menu-overlay {
-        display: block;
-    }
 }
 
 /* --- Desktop --- */
