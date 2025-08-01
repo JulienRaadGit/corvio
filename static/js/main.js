@@ -337,4 +337,108 @@ function addEditControls() {
         window.workoutEditor.renderEditablePlan();
     }
 }
+})
+// Code à ajouter à la fin du fichier main.js
+
+// Menu burger functionality
+document.addEventListener('DOMContentLoaded', () => {
+    // Créer le bouton burger et l'overlay s'ils n'existent pas
+    function createMobileMenu() {
+        const navContainer = document.querySelector('.nav-container');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (!navContainer || !navMenu) return;
+        
+        // Créer le bouton burger s'il n'existe pas
+        if (!document.querySelector('.nav-toggle')) {
+            const toggleButton = document.createElement('button');
+            toggleButton.className = 'nav-toggle';
+            toggleButton.innerHTML = `
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            `;
+            
+            // Insérer avant .nav-auth
+            const navAuth = document.querySelector('.nav-auth');
+            navContainer.insertBefore(toggleButton, navAuth);
+        }
+        
+        // Créer l'overlay s'il n'existe pas
+        if (!document.querySelector('.nav-overlay')) {
+            const overlay = document.createElement('div');
+            overlay.className = 'nav-overlay';
+            document.body.appendChild(overlay);
+        }
+        
+        // Ajouter les classes nécessaires au menu
+        navMenu.classList.add('mobile-menu');
+    }
+    
+    // Initialiser le menu mobile
+    createMobileMenu();
+    
+    // Gérer le clic sur le bouton burger
+    const toggleButton = document.querySelector('.nav-toggle');
+    const mobileMenu = document.querySelector('.nav-menu.mobile-menu');
+    const overlay = document.querySelector('.nav-overlay');
+    
+    if (toggleButton && mobileMenu && overlay) {
+        toggleButton.addEventListener('click', () => {
+            toggleButton.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Empêcher le scroll du body quand le menu est ouvert
+            if (mobileMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Fermer le menu en cliquant sur l'overlay
+        overlay.addEventListener('click', () => {
+            toggleButton.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Fermer le menu en cliquant sur un lien
+        const navLinks = mobileMenu.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                toggleButton.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Fermer le menu avec la touche Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                toggleButton.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+    
+    // Gérer le redimensionnement de la fenêtre
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            // Réinitialiser le menu sur grands écrans
+            const toggleButton = document.querySelector('.nav-toggle');
+            const mobileMenu = document.querySelector('.nav-menu.mobile-menu');
+            const overlay = document.querySelector('.nav-overlay');
+            
+            if (toggleButton) toggleButton.classList.remove('active');
+            if (mobileMenu) mobileMenu.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
 });
