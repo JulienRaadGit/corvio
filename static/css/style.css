@@ -669,19 +669,21 @@ header p {
 .exercises-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem;
+    gap: 0.5rem;
+    padding: 1.25rem;
     flex: 1;
 }
 
 .exercise-item {
     background: var(--bg-card);
     border-radius: var(--radius-small);
-    padding: 1.25rem;
+    padding: 0.75rem;
     border: 1px solid var(--border);
     transition: var(--transition);
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    transform: scale(1);
 }
 
 .exercise-item::before {
@@ -692,24 +694,31 @@ header p {
     right: 0;
     height: 3px;
     background: linear-gradient(90deg, var(--accent) 0%, var(--accent-secondary) 100%);
+    transition: var(--transition);
 }
 
 .exercise-item:hover {
-    transform: translateY(-1px);
+    transform: scale(1.02);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+}
+
+.exercise-item:hover::before {
+    height: 4px;
 }
 
 .exercise-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 1rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
+    padding-right: 80px;
 }
 
 .exercise-header h5 {
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin: 0;
     color: var(--text-primary);
     flex: 1;
@@ -718,9 +727,9 @@ header p {
 .exercise-type {
     background: linear-gradient(135deg, var(--accent) 0%, #0099cc 100%);
     color: white;
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
     font-weight: 600;
     white-space: nowrap;
     box-shadow: 0 2px 4px rgba(0, 212, 255, 0.3);
@@ -730,11 +739,14 @@ header p {
     display: flex;
     gap: 0.5rem;
     justify-content: flex-end;
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
     transform: translateY(10px);
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
 }
 
 .exercise-item:hover .exercise-actions,
@@ -1271,25 +1283,40 @@ footer {
     
     .exercises-list {
         padding: 1rem;
-        gap: 0.75rem;
+        gap: 0.5rem;
     }
     
     .exercise-item {
-        padding: 1rem;
+        padding: 0.75rem;
+    }
+    
+    .exercise-item:hover {
+        padding: 0.875rem;
+        transform: scale(1.01);
+    }
+    
+    .exercise-header {
+        padding-right: 70px;
     }
     
     .exercise-header h5 {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
     
     .exercise-type {
-        font-size: 0.75rem;
-        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .exercise-actions {
+        top: 0.5rem;
+        right: 0.5rem;
     }
     
     .btn-edit, .btn-delete {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
     }
     
     .add-exercise-btn {
@@ -1352,6 +1379,50 @@ footer {
     .exercise-type {
         font-size: 0.7rem;
     }
+}
+
+/* Interactions tactiles pour mobile */
+@media (hover: none) and (pointer: coarse) {
+    .exercise-item {
+        transition: all 0.2s ease;
+    }
+    
+    .exercise-item:active {
+        transform: scale(0.98);
+        background: var(--bg-card-light);
+    }
+    
+    .exercise-actions {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        position: static;
+        margin-top: 0.5rem;
+        justify-content: flex-end;
+    }
+    
+    .btn-edit:active, .btn-delete:active {
+        transform: scale(0.95);
+    }
+}
+
+/* Effet tactile pour les appareils tactiles */
+.touch-device .exercise-item.touch-active {
+    transform: scale(0.98);
+    background: var(--bg-card-light);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Focus pour les exercices sur mobile */
+.touch-device .exercise-item:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Amélioration de l'accessibilité */
+.exercise-item:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
 }
 
 /* Desktop Menu */

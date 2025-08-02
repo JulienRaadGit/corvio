@@ -35,10 +35,42 @@ class WorkoutEditor {
             }
         });
 
+        // Gestion des interactions tactiles pour mobile
+        this.setupTouchInteractions();
+
         // Sauvegarder automatiquement quand le plan est modifié
         document.addEventListener('plan-modified', () => {
             this.savePlan();
         });
+    }
+
+    setupTouchInteractions() {
+        // Détecter si l'appareil supporte le toucher
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        
+        if (isTouchDevice) {
+            // Ajouter des classes pour les appareils tactiles
+            document.body.classList.add('touch-device');
+            
+            // Gérer les interactions tactiles sur les exercices
+            document.addEventListener('touchstart', (e) => {
+                const exerciseItem = e.target.closest('.exercise-item');
+                if (exerciseItem && !e.target.closest('.exercise-actions')) {
+                    // Ajouter un effet visuel au toucher
+                    exerciseItem.classList.add('touch-active');
+                }
+            }, { passive: true });
+
+            document.addEventListener('touchend', (e) => {
+                const exerciseItem = e.target.closest('.exercise-item');
+                if (exerciseItem) {
+                    // Retirer l'effet visuel
+                    setTimeout(() => {
+                        exerciseItem.classList.remove('touch-active');
+                    }, 150);
+                }
+            }, { passive: true });
+        }
     }
 
     editExercise(button) {
