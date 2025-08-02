@@ -965,6 +965,11 @@ def exercises():
 def ads():
     return send_from_directory(app.static_folder, 'ads.txt')
 
+@app.route('/robots.txt')
+def robots():
+    """Sert le fichier robots.txt"""
+    return send_from_directory(app.static_folder, 'robots.txt')
+
 @app.route('/legal')
 def legal():
     return render_template('legal.html', user=session.get('user'))
@@ -984,6 +989,40 @@ def article(article_id):
         return render_template('article.html', user=session.get('user'), article=article, articles=BLOG_ARTICLES)
     else:
         return redirect(url_for('blog'))
+
+@app.route('/sitemap.xml')
+def sitemap():
+    """Génère un sitemap XML pour le SEO"""
+    from flask import make_response
+    from datetime import datetime
+    
+    # Liste des URLs du site
+    urls = [
+        {'loc': url_for('index', _external=True), 'lastmod': datetime.now().strftime('%Y-%m-%d'), 'priority': '1.0'},
+        {'loc': url_for('about', _external=True), 'lastmod': datetime.now().strftime('%Y-%m-%d'), 'priority': '0.8'},
+        {'loc': url_for('contact', _external=True), 'lastmod': datetime.now().strftime('%Y-%m-%d'), 'priority': '0.7'},
+        {'loc': url_for('blog', _external=True), 'lastmod': datetime.now().strftime('%Y-%m-%d'), 'priority': '0.8'},
+        {'loc': url_for('privacy', _external=True), 'lastmod': datetime.now().strftime('%Y-%m-%d'), 'priority': '0.5'},
+        {'loc': url_for('terms', _external=True), 'lastmod': datetime.now().strftime('%Y-%m-%d'), 'priority': '0.5'},
+        {'loc': url_for('legal', _external=True), 'lastmod': datetime.now().strftime('%Y-%m-%d'), 'priority': '0.5'},
+    ]
+    
+    # Générer le XML
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml_content += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    
+    for url in urls:
+        xml_content += '  <url>\n'
+        xml_content += f'    <loc>{url["loc"]}</loc>\n'
+        xml_content += f'    <lastmod>{url["lastmod"]}</lastmod>\n'
+        xml_content += f'    <priority>{url["priority"]}</priority>\n'
+        xml_content += '  </url>\n'
+    
+    xml_content += '</urlset>'
+    
+    response = make_response(xml_content)
+    response.headers['Content-Type'] = 'application/xml'
+    return response
 
 if __name__ == '__main__':
     # Lance l'application Flask.

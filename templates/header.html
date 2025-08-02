@@ -1,3 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Générateur de programmes d'entraînement personnalisés alimenté par l'IA. Créez votre programme de fitness gratuit adapté à vos besoins et équipements.">
+    <meta name="keywords" content="entraînement, fitness, programme sport, musculation, cardio, exercices, IA, personnalisé">
+    <meta name="author" content="Corvio">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Corvio - Générateur de Programmes d'Entraînement">
+    <meta property="og:description" content="Créez votre programme d'entraînement personnalisé gratuit avec l'IA">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:image" content="{{ url_for('static', filename='images/logo.png', _external=True) }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Corvio - Générateur de Programmes d'Entraînement">
+    <meta name="twitter:description" content="Créez votre programme d'entraînement personnalisé gratuit avec l'IA">
+    <meta name="awin-verification" content="Awin">
+    <title>{% block title %}Corvio - Générateur de programmes d'entraînement{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='ads-config.js') }}"></script>
+</head>
+<body>
 <meta name="awin-verification" content="Awin">
 <nav class="navbar">
     <div class="nav-container">
