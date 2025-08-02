@@ -1166,7 +1166,8 @@ header p {
     font-size: 0.9rem;
 }
 
-.edit-form-group input {
+.edit-form-group input,
+.edit-form-group select {
     padding: 0.75rem;
     border: 1px solid var(--border);
     border-radius: var(--radius-small);
@@ -1174,6 +1175,16 @@ header p {
     color: var(--text-primary);
     font-size: 0.9rem;
     transition: var(--transition);
+}
+
+.edit-form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
 }
 
 .edit-form-group input:focus {
@@ -1209,6 +1220,23 @@ header p {
 .add-exercise-btn:hover {
     background: rgba(0, 212, 255, 0.2);
     transform: translateY(-1px);
+}
+
+.add-exercise-form {
+    background: var(--bg-card-light);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-small);
+    padding: 1.5rem;
+    margin-top: 1rem;
+    animation: slideDown 0.3s ease;
+}
+
+.add-exercise-form .edit-form-grid {
+    margin-bottom: 1rem;
+}
+
+.add-exercise-form .edit-form-actions {
+    justify-content: flex-end;
 }
 
 .plan-modified {

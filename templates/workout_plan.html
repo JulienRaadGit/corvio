@@ -68,21 +68,23 @@
                                             <div class="exercise-edit-form">
                                                 <div class="edit-form-grid">
                                                     <div class="edit-form-group">
-                                                        <label>Nom de l'exercice</label>
-                                                        <input type="text" name="exercise-name" required>
+                                                        <label>Exercice</label>
+                                                        <select name="exercise-select" required>
+                                                            <option value="">Choisir un exercice...</option>
+                                                        </select>
                                                     </div>
                                                     <div class="edit-form-group">
                                                         <label>Séries</label>
                                                         <input type="number" name="series" min="1" required>
                                                     </div>
-                                                    <div class="edit-form-group">
+                                                    <div class="edit-form-group exercise-repetitions-group">
                                                         <label>Répétitions</label>
                                                         <input type="number" name="repetitions" min="1">
                                                     </div>
-                                                </div>
-                                                <div class="edit-form-group">
-                                                    <label>Durée (minutes) - si pas de répétitions</label>
-                                                    <input type="number" name="duration" min="1">
+                                                    <div class="edit-form-group exercise-duration-group" style="display: none;">
+                                                        <label>Durée (minutes)</label>
+                                                        <input type="number" name="duration" min="1">
+                                                    </div>
                                                 </div>
                                                 <div class="edit-form-actions">
                                                     <button class="btn btn-success btn-small btn-save-exercise">
@@ -102,6 +104,38 @@
                                     <i class="fas fa-plus"></i>
                                     Ajouter un exercice
                                 </button>
+                                <div class="add-exercise-form" style="display: none;">
+                                    <div class="edit-form-grid">
+                                        <div class="edit-form-group">
+                                            <label>Exercice</label>
+                                            <select name="new-exercise-select" required>
+                                                <option value="">Choisir un exercice...</option>
+                                            </select>
+                                        </div>
+                                        <div class="edit-form-group">
+                                            <label>Séries</label>
+                                            <input type="number" name="new-series" min="1" required>
+                                        </div>
+                                        <div class="edit-form-group new-exercise-repetitions-group">
+                                            <label>Répétitions</label>
+                                            <input type="number" name="new-repetitions" min="1">
+                                        </div>
+                                        <div class="edit-form-group new-exercise-duration-group" style="display: none;">
+                                            <label>Durée (minutes)</label>
+                                            <input type="number" name="new-duration" min="1">
+                                        </div>
+                                    </div>
+                                    <div class="edit-form-actions">
+                                        <button class="btn btn-success btn-small btn-save-new-exercise">
+                                            <i class="fas fa-check"></i>
+                                            Ajouter
+                                        </button>
+                                        <button class="btn btn-cancel btn-small btn-cancel-add">
+                                            <i class="fas fa-times"></i>
+                                            Annuler
+                                        </button>
+                                    </div>
+                                </div>
                             {% endif %}
                         </div>
                     {% endfor %}
