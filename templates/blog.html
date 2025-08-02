@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Fitness - Corvio</title>
+    <meta name="description" content="Découvrez nos articles de fitness, conseils d'entraînement et guides nutritionnels pour optimiser vos performances sportives.">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Blog Fitness - Corvio">
+    <meta property="og:description" content="Découvrez nos articles de fitness, conseils d'entraînement et guides nutritionnels pour optimiser vos performances sportives.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://corvio.xyz/blog">
+    
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "Blog Fitness Corvio",
+        "description": "Articles de fitness et conseils d'entraînement personnalisés",
+        "url": "https://corvio.xyz/blog",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Corvio"
+        }
+    }
+    </script>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <main class="blog-page">
+        <!-- Hero Section -->
+        <section class="blog-hero">
+            <div class="container">
+                <h1>Blog Fitness</h1>
+                <p>Découvrez nos conseils d'experts, guides pratiques et astuces pour optimiser vos entraînements et atteindre vos objectifs fitness.</p>
+            </div>
+        </section>
+
+        <!-- Blog Articles -->
+        <section class="blog-content">
+            <div class="container">
+                <div class="blog-grid">
+                    <!-- Article 1 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ url_for('static', filename='images/strength-training.jpg') }}" alt="Musculation pour débutants">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Musculation</span>
+                                <span class="blog-date">15 Janvier 2024</span>
+                            </div>
+                            <h3>Guide complet de la musculation pour débutants</h3>
+                            <p>Découvrez les bases essentielles de la musculation : exercices fondamentaux, techniques correctes et progression adaptée aux débutants.</p>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 2 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ url_for('static', filename='images/cardio-workout.jpg') }}" alt="Cardio efficace">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Cardio</span>
+                                <span class="blog-date">12 Janvier 2024</span>
+                            </div>
+                            <h3>5 séances de cardio efficaces pour brûler les graisses</h3>
+                            <p>Optimisez votre perte de poids avec ces entraînements cardio variés et intensifs, adaptés à tous les niveaux.</p>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 3 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ url_for('static', filename='images/nutrition.jpg') }}" alt="Nutrition sportive">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Nutrition</span>
+                                <span class="blog-date">10 Janvier 2024</span>
+                            </div>
+                            <h3>Nutrition sportive : que manger avant et après l'entraînement</h3>
+                            <p>Maximisez vos performances et votre récupération grâce à une alimentation adaptée à vos objectifs sportifs.</p>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 4 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ url_for('static', filename='images/home-workout.jpg') }}" alt="Entraînement à domicile">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Entraînement</span>
+                                <span class="blog-date">8 Janvier 2024</span>
+                            </div>
+                            <h3>Programme d'entraînement complet à domicile sans matériel</h3>
+                            <p>Restez en forme même sans salle de sport avec ce programme complet utilisant uniquement votre poids de corps.</p>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 5 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ url_for('static', filename='images/recovery.jpg') }}" alt="Récupération musculaire">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Récupération</span>
+                                <span class="blog-date">5 Janvier 2024</span>
+                            </div>
+                            <h3>Les secrets d'une récupération musculaire optimale</h3>
+                            <p>Découvrez les techniques et astuces pour accélérer votre récupération et éviter les blessures.</p>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 6 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ url_for('static', filename='images/motivation.jpg') }}" alt="Motivation sportive">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Motivation</span>
+                                <span class="blog-date">3 Janvier 2024</span>
+                            </div>
+                            <h3>10 techniques pour maintenir sa motivation sportive</h3>
+                            <p>Gardez le cap sur vos objectifs fitness grâce à ces stratégies éprouvées de motivation et de persévérance.</p>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 7 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ url_for('static', filename='images/flexibility.jpg') }}" alt="Flexibilité et mobilité">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Flexibilité</span>
+                                <span class="blog-date">1 Janvier 2024</span>
+                            </div>
+                            <h3>Améliorez votre flexibilité : exercices et étirements essentiels</h3>
+                            <p>Développez votre mobilité et prévenez les blessures avec ces exercices de flexibilité ciblés.</p>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 8 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ url_for('static', filename='images/goal-setting.jpg') }}" alt="Définition d'objectifs">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Objectifs</span>
+                                <span class="blog-date">30 Décembre 2023</span>
+                            </div>
+                            <h3>Comment définir et atteindre vos objectifs fitness</h3>
+                            <p>Apprenez à fixer des objectifs SMART et à créer un plan d'action efficace pour les atteindre.</p>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 9 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ url_for('static', filename='images/functional-training.jpg') }}" alt="Entraînement fonctionnel">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Fonctionnel</span>
+                                <span class="blog-date">28 Décembre 2023</span>
+                            </div>
+                            <h3>L'entraînement fonctionnel : pourquoi et comment s'y mettre</h3>
+                            <p>Découvrez les bénéfices de l'entraînement fonctionnel pour améliorer vos performances quotidiennes.</p>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <!-- Article 10 -->
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="{{ url_for('static', filename='images/mental-strength.jpg') }}" alt="Force mentale">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">Mental</span>
+                                <span class="blog-date">25 Décembre 2023</span>
+                            </div>
+                            <h3>Développez votre force mentale pour dépasser vos limites</h3>
+                            <p>La force mentale est aussi importante que la force physique. Découvrez comment la cultiver.</p>
+                            <a href="#" class="read-more">Lire l'article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Newsletter Signup -->
+                <div class="newsletter-section">
+                    <div class="newsletter-content">
+                        <h3>Restez informé !</h3>
+                        <p>Recevez nos derniers articles et conseils fitness directement dans votre boîte mail.</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Votre adresse email" required>
+                            <button type="submit" class="btn btn-primary">S'abonner</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Corvio</h4>
+                    <p>Générateur de programmes d'entraînement personnalisés alimenté par l'IA.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="/about">À propos</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Légal</h4>
+                    <ul>
+                        <li><a href="/privacy">Confidentialité</a></li>
+                        <li><a href="/legal">Mentions légales</a></li>
+                        <li><a href="/terms">Conditions d'utilisation</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Corvio. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

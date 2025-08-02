@@ -559,6 +559,10 @@ def legal():
 def terms():
     return render_template('terms.html', user=session.get('user'))
 
+@app.route('/blog')
+def blog():
+    return render_template('blog.html', user=session.get('user'))
+
 if __name__ == '__main__':
     # Lance l'application Flask.
     port = int(os.environ.get('PORT', 5000))
