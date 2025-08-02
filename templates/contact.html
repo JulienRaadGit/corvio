@@ -7,40 +7,121 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
 <body>
     {% include 'header.html' %}
 
     <header>
         <h1>Contactez-nous</h1>
-        <p>Nous sommes là pour vous aider</p>
+        <p>Nous sommes là pour vous aider et répondre à toutes vos questions</p>
     </header>
 
     <main>
         <section class="info-section">
-            <h2>Support et Assistance</h2>
-            <p>Pour toute question, suggestion ou problème technique, n'hésitez pas à nous contacter :</p>
-            
-            <div class="tips-grid">
-                <div class="tip-card">
-                    <span class="tip-icon">📧</span>
-                    <h4>Email</h4>
-                    <p><a href="mailto:support@corvio.com">support@corvio.com</a></p>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Informations de contact</h2>
+                    <p>Notre équipe est disponible pour vous accompagner dans votre parcours fitness. N'hésitez pas à nous contacter pour toute question.</p>
+                    
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Email</h4>
+                                <p><a href="mailto:support@corvio.com">support@corvio.com</a></p>
+                                <span class="response-time">Réponse sous 24-48h</span>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Horaires</h4>
+                                <p>Lundi - Vendredi</p>
+                                <span class="response-time">9h00 - 18h00 (CET)</span>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Support technique</h4>
+                                <p><a href="mailto:tech@corvio.com">tech@corvio.com</a></p>
+                                <span class="response-time">Problèmes techniques</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="tip-card">
-                    <span class="tip-icon">⏰</span>
-                    <h4>Délai de réponse</h4>
-                    <p>Nous répondons généralement sous 24-48h</p>
+                
+                <div class="contact-form-section">
+                    <h2>Envoyez-nous un message</h2>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nom complet *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Sujet *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Choisissez un sujet</option>
+                                <option value="technical">Problème technique</option>
+                                <option value="workout">Question sur l'entraînement</option>
+                                <option value="feature">Suggestion d'amélioration</option>
+                                <option value="partnership">Partenariat</option>
+                                <option value="other">Autre</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="6" required placeholder="Décrivez votre demande en détail..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Envoyer le message
+                        </button>
+                    </form>
                 </div>
             </div>
             
-            <h3>Types de demandes</h3>
-            <p>Nous pouvons vous aider pour :</p>
-            <p>• Problèmes techniques avec l'application</p>
-            <p>• Questions sur votre programme d'entraînement</p>
-            <p>• Suggestions d'amélioration</p>
-            <p>• Partenariats et collaborations</p>
+            <div class="faq-section">
+                <h3>Questions fréquentes</h3>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h4><i class="fas fa-question-circle"></i> Comment fonctionne l'IA de Corvio ?</h4>
+                        <p>Notre intelligence artificielle analyse vos données personnelles (âge, taille, poids) et vos équipements disponibles pour générer un programme d'entraînement personnalisé de 7 jours.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h4><i class="fas fa-question-circle"></i> Mes données sont-elles sécurisées ?</h4>
+                        <p>Absolument. Vos données sont protégées par des connexions HTTPS sécurisées et ne sont jamais vendues à des tiers. L'authentification est gérée par Firebase (Google).</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h4><i class="fas fa-question-circle"></i> Le service est-il vraiment gratuit ?</h4>
+                        <p>Oui, Corvio est entièrement gratuit. Nous nous finançons uniquement par la publicité et les liens d'affiliation avec nos partenaires de confiance.</p>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <h4><i class="fas fa-question-circle"></i> Puis-je modifier mon programme d'entraînement ?</h4>
+                        <p>Oui, vous pouvez modifier, ajouter ou supprimer des exercices directement dans l'interface. Vos modifications sont sauvegardées si vous êtes connecté.</p>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -59,5 +140,25 @@
             <p>&copy; 2025 Corvio. Tous droits réservés.</p>
         </div>
     </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulation d'envoi de formulaire
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.');
+                this.reset();
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+    </script>
 </body>
 </html>
