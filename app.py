@@ -26,12 +26,24 @@ CORS(app)
 
 # Mapping des exercices et jours pour compression
 EXERCISE_MAPPING = {
-    1: "Pompes", 2: "Squats", 3: "Fentes", 4: "Gainage (Planche)", 5: "Soulevé de terre",
-    6: "Développé couché", 7: "Tractions", 8: "Curl biceps", 9: "Extensions triceps", 10: "Burpees",
-    11: "Montées de genoux", 12: "Abdominaux (crunches)", 13: "Planche latérale", 14: "Sauts sur place", 15: "Dips",
-    16: "Rowing", 17: "Tirage horizontal", 18: "Mollets debout", 19: "Développé militaire (épaules)", 20: "Abduction des hanches",
-    21: "Jumping Jacks", 22: "High Knees", 23: "Mountain Climbers", 24: "Lunges", 25: "Cardio",
-    26: "Étirements", 27: "Course à pied", 28: "Vélo", 29: "Natation", 30: "Marche"
+    1: "Pompes", 2: "Squats", 3: "Fentes", 4: "Gainage (Planche)", 5: "Burpees",
+    6: "Tractions", 7: "Dips", 8: "Mountain Climbers", 9: "Jumping Jacks", 10: "High Knees",
+    11: "Curl biceps", 12: "Extensions triceps", 13: "Développé militaire", 14: "Rowing", 15: "Soulevé de terre",
+    16: "Planche latérale", 17: "Crunchs", 18: "Mollets debout", 19: "Abduction des hanches", 20: "Course à pied",
+    21: "Vélo", 22: "Natation", 23: "Marche", 24: "Étirements", 25: "Sauts sur place",
+    26: "Kettlebell Swing", 27: "Corde à sauter", 28: "Tirage horizontal", 29: "Développé couché", 30: "Yoga"
+}
+
+# Exercices mesurés en temps (durée) plutôt qu'en répétitions
+TIME_BASED_EXERCISES = {
+    4: "Gainage (Planche)",      # Planche
+    16: "Planche latérale",      # Planche latérale
+    24: "Étirements",           # Étirements
+    25: "Cardio",               # Cardio général
+    20: "Course à pied",        # Course
+    21: "Vélo",                 # Vélo
+    22: "Natation",             # Natation
+    23: "Marche"                # Marche
 }
 
 DAY_MAPPING = {1: "Lundi", 2: "Mardi", 3: "Mercredi", 4: "Jeudi", 5: "Vendredi", 6: "Samedi", 7: "Dimanche"}
@@ -191,12 +203,17 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
     # Liste des exercices disponibles avec leurs IDs
     exercise_list = "\n".join([f"{k}: {v}" for k, v in EXERCISE_MAPPING.items()])
     
+    # Informations sur les exercices mesurés en temps
+    time_exercises = "\n".join([f"- {v} (ID: {k})" for k, v in TIME_BASED_EXERCISES.items()])
+    
     prompt = (
         f"Créez un programme d'entraînement pour: {age} ans, {height}cm, {weight}kg, {equipment_text}. "
         f"UTILISEZ UNIQUEMENT ce format JSON compressé et ces exercices:\n{exercise_list}\n\n"
+        f"IMPORTANT - Exercices mesurés en TEMPS (utilisez 'm' pour minutes):\n{time_exercises}\n\n"
         f"Format JSON OBLIGATOIRE (sans explication, sans ```json):\n"
-        f'{{"j":[{{"d":1,"t":1,"e":[{{"n":1,"s":3,"r":12}},{{"n":2,"s":3,"r":15}}]}},{{"d":2,"t":0,"e":[]}}]}}\n\n'
+        f'{{"j":[{{"d":1,"t":1,"e":[{{"n":1,"s":3,"r":12}},{{"n":4,"s":3,"m":1}}]}},{{"d":2,"t":0,"e":[]}}]}}\n\n'
         f"Légende: j=jours, d=jour(1-7), t=type(1=workout,0=rest), e=exercices, n=nom(ID), s=séries, r=répétitions, m=minutes\n"
+        f"RÈGLES: Pour les exercices de gainage, cardio et étirements, utilisez 'm' (minutes). Pour les autres, utilisez 'r' (répétitions).\n"
         f"Choisissez les exercices selon l'équipement disponible. RETOURNEZ SEULEMENT LE JSON."
     )
 

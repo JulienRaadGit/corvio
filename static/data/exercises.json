@@ -7,7 +7,8 @@
     "difficulty": "Intermédiaire",
     "equipment": "Aucun",
     "description": "Exercice de base pour renforcer le haut du corps",
-    "image": "pushups.jpg"
+    "image": "pushups.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 2,
@@ -17,7 +18,8 @@
     "difficulty": "Débutant",
     "equipment": "Aucun",
     "description": "Exercice fondamental pour les jambes",
-    "image": "squats.jpg"
+    "image": "squats.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 3,
@@ -27,7 +29,8 @@
     "difficulty": "Intermédiaire",
     "equipment": "Aucun",
     "description": "Excellent pour l'équilibre et la force des jambes",
-    "image": "lunges.jpg"
+    "image": "lunges.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 4,
@@ -37,7 +40,8 @@
     "difficulty": "Débutant",
     "equipment": "Aucun",
     "description": "Renforcement du tronc et de la stabilité",
-    "image": "plank.jpg"
+    "image": "plank.jpg",
+    "measurement_type": "time"
   },
   {
     "id": 5,
@@ -47,7 +51,8 @@
     "difficulty": "Avancé",
     "equipment": "Aucun",
     "description": "Exercice cardio complet et intense",
-    "image": "burpees.jpg"
+    "image": "burpees.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 6,
@@ -57,7 +62,8 @@
     "difficulty": "Avancé",
     "equipment": "Barre de traction",
     "description": "Exercice de traction pour le dos",
-    "image": "pullups.jpg"
+    "image": "pullups.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 7,
@@ -67,7 +73,8 @@
     "difficulty": "Intermédiaire",
     "equipment": "Barres parallèles",
     "description": "Renforcement des triceps et épaules",
-    "image": "dips.jpg"
+    "image": "dips.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 8,
@@ -77,7 +84,8 @@
     "difficulty": "Intermédiaire",
     "equipment": "Aucun",
     "description": "Exercice cardio dynamique",
-    "image": "mountain-climbers.jpg"
+    "image": "mountain-climbers.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 9,
@@ -87,7 +95,8 @@
     "difficulty": "Débutant",
     "equipment": "Aucun",
     "description": "Échauffement cardio classique",
-    "image": "jumping-jacks.jpg"
+    "image": "jumping-jacks.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 10,
@@ -97,7 +106,8 @@
     "difficulty": "Débutant",
     "equipment": "Aucun",
     "description": "Cardio dynamique pour les jambes",
-    "image": "high-knees.jpg"
+    "image": "high-knees.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 11,
@@ -107,7 +117,8 @@
     "difficulty": "Débutant",
     "equipment": "Haltères",
     "description": "Renforcement des biceps",
-    "image": "bicep-curl.jpg"
+    "image": "bicep-curl.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 12,
@@ -117,7 +128,8 @@
     "difficulty": "Débutant",
     "equipment": "Haltères",
     "description": "Renforcement des triceps",
-    "image": "tricep-extension.jpg"
+    "image": "tricep-extension.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 13,
@@ -127,7 +139,8 @@
     "difficulty": "Intermédiaire",
     "equipment": "Haltères",
     "description": "Renforcement des épaules",
-    "image": "military-press.jpg"
+    "image": "military-press.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 14,
@@ -137,7 +150,8 @@
     "difficulty": "Intermédiaire",
     "equipment": "Haltères",
     "description": "Renforcement du dos",
-    "image": "rowing.jpg"
+    "image": "rowing.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 15,
@@ -147,7 +161,8 @@
     "difficulty": "Avancé",
     "equipment": "Haltères",
     "description": "Exercice complet pour le dos et les jambes",
-    "image": "deadlift.jpg"
+    "image": "deadlift.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 16,
@@ -157,7 +172,8 @@
     "difficulty": "Intermédiaire",
     "equipment": "Aucun",
     "description": "Renforcement des obliques",
-    "image": "side-plank.jpg"
+    "image": "side-plank.jpg",
+    "measurement_type": "time"
   },
   {
     "id": 17,
@@ -167,7 +183,8 @@
     "difficulty": "Débutant",
     "equipment": "Aucun",
     "description": "Renforcement des abdominaux",
-    "image": "crunches.jpg"
+    "image": "crunches.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 18,
@@ -177,7 +194,8 @@
     "difficulty": "Débutant",
     "equipment": "Aucun",
     "description": "Renforcement des mollets",
-    "image": "calf-raises.jpg"
+    "image": "calf-raises.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 19,
@@ -187,7 +205,8 @@
     "difficulty": "Débutant",
     "equipment": "Bandes de résistance",
     "description": "Renforcement des fessiers",
-    "image": "hip-abduction.jpg"
+    "image": "hip-abduction.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 20,
@@ -197,7 +216,8 @@
     "difficulty": "Débutant",
     "equipment": "Aucun",
     "description": "Cardio efficace et accessible",
-    "image": "running.jpg"
+    "image": "running.jpg",
+    "measurement_type": "time"
   },
   {
     "id": 21,
@@ -207,7 +227,8 @@
     "difficulty": "Débutant",
     "equipment": "Vélo",
     "description": "Cardio à faible impact",
-    "image": "cycling.jpg"
+    "image": "cycling.jpg",
+    "measurement_type": "time"
   },
   {
     "id": 22,
@@ -217,7 +238,8 @@
     "difficulty": "Intermédiaire",
     "equipment": "Piscine",
     "description": "Cardio complet sans impact",
-    "image": "swimming.jpg"
+    "image": "swimming.jpg",
+    "measurement_type": "time"
   },
   {
     "id": 23,
@@ -227,7 +249,8 @@
     "difficulty": "Débutant",
     "equipment": "Aucun",
     "description": "Activité cardio douce",
-    "image": "walking.jpg"
+    "image": "walking.jpg",
+    "measurement_type": "time"
   },
   {
     "id": 24,
@@ -237,7 +260,8 @@
     "difficulty": "Débutant",
     "equipment": "Aucun",
     "description": "Amélioration de la flexibilité",
-    "image": "stretching.jpg"
+    "image": "stretching.jpg",
+    "measurement_type": "time"
   },
   {
     "id": 25,
@@ -246,8 +270,9 @@
     "muscle": "Jambes, Cardio",
     "difficulty": "Débutant",
     "equipment": "Aucun",
-    "description": "Cardio simple et efficace",
-    "image": "jumping.jpg"
+    "description": "Cardio simple et efficace"
+    "image": "jumping.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 26,
@@ -257,7 +282,8 @@
     "difficulty": "Avancé",
     "equipment": "Kettlebell",
     "description": "Exercice explosif complet",
-    "image": "kettlebell-swing.jpg"
+    "image": "kettlebell-swing.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 27,
@@ -267,7 +293,8 @@
     "difficulty": "Intermédiaire",
     "equipment": "Corde à sauter",
     "description": "Cardio et coordination",
-    "image": "jump-rope.jpg"
+    "image": "jump-rope.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 28,
@@ -277,7 +304,8 @@
     "difficulty": "Intermédiaire",
     "equipment": "Bandes de résistance",
     "description": "Renforcement du dos avec bandes",
-    "image": "horizontal-row.jpg"
+    "image": "horizontal-row.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 29,
@@ -287,7 +315,8 @@
     "difficulty": "Avancé",
     "equipment": "Haltères",
     "description": "Exercice de base pour les pectoraux",
-    "image": "bench-press.jpg"
+    "image": "bench-press.jpg",
+    "measurement_type": "repetitions"
   },
   {
     "id": 30,
@@ -297,6 +326,7 @@
     "difficulty": "Débutant",
     "equipment": "Tapis",
     "description": "Flexibilité et équilibre",
-    "image": "yoga.jpg"
+    "image": "yoga.jpg",
+    "measurement_type": "time"
   }
 ]

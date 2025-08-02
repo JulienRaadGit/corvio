@@ -1005,6 +1005,27 @@ header p {
     box-shadow: 0 2px 4px rgba(0, 212, 255, 0.3);
 }
 
+/* Styles pour différencier les types d'exercices */
+.exercise-type.time-based {
+    background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+.exercise-type.time-based::before {
+    content: "⏱️ ";
+    margin-right: 4px;
+}
+
+.exercise-type.repetition-based {
+    background: linear-gradient(135deg, var(--accent) 0%, #0099cc 100%);
+    box-shadow: 0 2px 4px rgba(0, 212, 255, 0.3);
+}
+
+.exercise-type.repetition-based::before {
+    content: "🔄 ";
+    margin-right: 4px;
+}
+
 .exercise-actions {
     display: flex;
     gap: 0.5rem;

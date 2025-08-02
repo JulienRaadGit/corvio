@@ -262,10 +262,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         const exerciseType = document.createElement('span');
                         exerciseType.classList.add('exercise-type');
                         
-                        if (exercise.repetitions) {
+                        // Déterminer si l'exercice est mesuré en temps ou répétitions
+                        const timeBasedExercises = [4, 16, 20, 21, 22, 23, 24, 30]; // IDs des exercices en temps
+                        const exerciseId = exercise.id || exercise.nom_id;
+                        
+                        if (exercise.duree_minutes || (exerciseId && timeBasedExercises.includes(exerciseId))) {
+                            // Exercice mesuré en temps
+                            const duration = exercise.duree_minutes || exercise.minutes || 1;
+                            exerciseType.textContent = `${exercise.series} séries × ${duration} min`;
+                            exerciseType.classList.add('time-based');
+                        } else if (exercise.repetitions) {
+                            // Exercice mesuré en répétitions
                             exerciseType.textContent = `${exercise.series} séries × ${exercise.repetitions} répétitions`;
-                        } else if (exercise.duree_minutes) {
-                            exerciseType.textContent = `${exercise.series} séries × ${exercise.duree_minutes} min`;
+                            exerciseType.classList.add('repetition-based');
                         } else {
                             exerciseType.textContent = `${exercise.series} séries`;
                         }
