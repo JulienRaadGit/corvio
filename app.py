@@ -551,6 +551,14 @@ def exercises():
 def ads():
     return send_from_directory(app.static_folder, 'ads.txt')
 
+@app.route('/legal')
+def legal():
+    return render_template('legal.html', user=session.get('user'))
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html', user=session.get('user'))
+
 if __name__ == '__main__':
     # Lance l'application Flask.
     port = int(os.environ.get('PORT', 5000))

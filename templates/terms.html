@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditions d'utilisation - Corvio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <header>
+        <h1>Conditions d'utilisation</h1>
+        <p>Règles et conditions d'utilisation du site Corvio</p>
+    </header>
+
+    <main>
+        <section class="info-section">
+            <div class="legal-content">
+                <div class="legal-section">
+                    <h2><i class="fas fa-info-circle"></i> Présentation du service</h2>
+                    <p>Corvio est un générateur de programmes d'entraînement personnalisés alimenté par l'intelligence artificielle. Le service permet aux utilisateurs de créer des programmes de fitness adaptés à leurs besoins et équipements disponibles.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-user-check"></i> Acceptation des conditions</h2>
+                    <p>En utilisant le site Corvio, vous acceptez sans réserve les présentes conditions d'utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser le service.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-user-shield"></i> Utilisation du service</h2>
+                    <p><strong>Vous vous engagez à :</strong></p>
+                    <ul>
+                        <li>Fournir des informations exactes lors de votre inscription</li>
+                        <li>Utiliser le service de manière responsable et respectueuse</li>
+                        <li>Ne pas tenter de contourner les mesures de sécurité</li>
+                        <li>Ne pas utiliser le service à des fins commerciales sans autorisation</li>
+                        <li>Respecter les droits de propriété intellectuelle</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Limitations de responsabilité</h2>
+                    <p><strong>Corvio ne peut être tenu responsable :</strong></p>
+                    <ul>
+                        <li>Des blessures ou accidents liés à l'exécution des exercices proposés</li>
+                        <li>Des résultats non obtenus malgré l'utilisation du service</li>
+                        <li>Des interruptions temporaires du service</li>
+                        <li>De la perte de données utilisateur</li>
+                    </ul>
+                    <p><strong>Recommandation importante :</strong> Consultez un professionnel de santé avant de commencer un programme d'entraînement, surtout si vous avez des problèmes de santé.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-lock"></i> Sécurité et confidentialité</h2>
+                    <p>Nous nous engageons à protéger vos données personnelles conformément à notre politique de confidentialité. Cependant, vous êtes responsable de la confidentialité de vos identifiants de connexion.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-ad"></i> Publicité et liens affiliés</h2>
+                    <p>Le site Corvio peut contenir des publicités et des liens d'affiliation. Ces contenus permettent de financer le service gratuit. Nous nous efforçons de ne proposer que des produits et services de qualité.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-ban"></i> Utilisations interdites</h2>
+                    <p><strong>Il est interdit de :</strong></p>
+                    <ul>
+                        <li>Utiliser le service à des fins illégales</li>
+                        <li>Tenter de pirater ou compromettre la sécurité du site</li>
+                        <li>Spammer ou harceler d'autres utilisateurs</li>
+                        <li>Reproduire ou distribuer le contenu sans autorisation</li>
+                        <li>Utiliser des bots ou scripts automatisés</li>
+                    </ul>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-copyright"></i> Propriété intellectuelle</h2>
+                    <p>Tout le contenu du site Corvio (textes, images, code, algorithmes) est protégé par les droits de propriété intellectuelle. Toute reproduction ou distribution non autorisée est interdite.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-gavel"></i> Modifications des conditions</h2>
+                    <p>Nous nous réservons le droit de modifier ces conditions d'utilisation à tout moment. Les modifications seront publiées sur cette page avec une date de mise à jour.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-phone"></i> Contact</h2>
+                    <p>Pour toute question concernant ces conditions d'utilisation, contactez-nous à : support@corvio.com</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-calendar-alt"></i> Dernière mise à jour</h2>
+                    <p>Ces conditions d'utilisation ont été mises à jour le 1er janvier 2025.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="{{ url_for('about') }}">À propos</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('privacy') }}">Politique de confidentialité</a>
+                <a href="{{ url_for('legal') }}">Mentions légales</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="GitHub" class="social-icon"><i class="fab fa-github"></i></a>
+            </div>
+            <p>&copy; 2025 Corvio. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html> 

@@ -33,6 +33,27 @@
                 <i class="fas fa-info-circle"></i>
                 À propos
             </a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-link dropdown-toggle">
+                    <i class="fas fa-gavel"></i>
+                    Légal
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('privacy') }}" class="dropdown-item">
+                        <i class="fas fa-shield-alt"></i>
+                        Confidentialité
+                    </a>
+                    <a href="{{ url_for('legal') }}" class="dropdown-item">
+                        <i class="fas fa-building"></i>
+                        Mentions légales
+                    </a>
+                    <a href="{{ url_for('terms') }}" class="dropdown-item">
+                        <i class="fas fa-file-contract"></i>
+                        Conditions d'utilisation
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- Desktop Auth -->
@@ -91,6 +112,18 @@
         <a href="{{ url_for('about') }}" class="nav-link">
             <i class="fas fa-info-circle"></i>
             À propos
+        </a>
+        <a href="{{ url_for('privacy') }}" class="nav-link">
+            <i class="fas fa-shield-alt"></i>
+            Confidentialité
+        </a>
+        <a href="{{ url_for('legal') }}" class="nav-link">
+            <i class="fas fa-building"></i>
+            Mentions légales
+        </a>
+        <a href="{{ url_for('terms') }}" class="nav-link">
+            <i class="fas fa-file-contract"></i>
+            Conditions d'utilisation
         </a>
         
         <!-- Mobile Auth -->

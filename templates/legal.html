@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentions légales - Corvio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <header>
+        <h1>Mentions Légales</h1>
+        <p>Informations légales et réglementaires</p>
+    </header>
+
+    <main>
+        <section class="info-section">
+            <div class="legal-content">
+                <div class="legal-section">
+                    <h2><i class="fas fa-building"></i> Éditeur du site</h2>
+                    <p><strong>Nom du site :</strong> Corvio</p>
+                    <p><strong>Adresse :</strong> Site web accessible à l'adresse corvio.xyz</p>
+                    <p><strong>Contact :</strong> support@corvio.com</p>
+                    <p><strong>Directeur de publication :</strong> Étudiant en informatique, créateur du site</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-server"></i> Hébergement</h2>
+                    <p>Ce site est hébergé par des services cloud professionnels assurant une disponibilité optimale et une sécurité des données conforme aux standards européens.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-copyright"></i> Propriété intellectuelle</h2>
+                    <p>L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques.</p>
+                    <p>La reproduction de tout ou partie de ce site sur un support électronique quel qu'il soit est formellement interdite sauf autorisation expresse du directeur de la publication.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-shield-alt"></i> Responsabilité</h2>
+                    <p>Les informations contenues sur ce site sont aussi précises que possible et le site est périodiquement remis à jour, mais peut toutefois contenir des inexactitudes, des omissions ou des lacunes.</p>
+                    <p>Si vous constatez une lacune, erreur ou ce qui parait être un dysfonctionnement, merci de bien vouloir le signaler par email à l'adresse support@corvio.com, en décrivant le problème de la manière la plus précise possible.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-link"></i> Liens hypertextes</h2>
+                    <p>Les liens hypertextes mis en place dans le cadre du présent site web en direction d'autres ressources présentes sur le réseau Internet ne sauraient engager la responsabilité de Corvio.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-cookie-bite"></i> Cookies</h2>
+                    <p>Le site peut-être amené à vous demander l'acceptation des cookies pour des besoins de statistiques et d'affichage. Un cookie ne nous permet pas de vous identifier ; il sert uniquement à enregistrer qu'une visite a été effectuée sur une page.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-database"></i> Données personnelles</h2>
+                    <p>Conformément aux dispositions de l'article L. 112-4 du Code de la propriété intellectuelle, vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant.</p>
+                    <p>Pour exercer ce droit, adressez-vous à : support@corvio.com</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-gavel"></i> Droit applicable</h2>
+                    <p>Tout litige en relation avec l'utilisation du site Corvio est soumis au droit français. En dehors des cas où la loi ne le permet pas, il est fait attribution exclusive de juridiction aux tribunaux compétents.</p>
+                </div>
+
+                <div class="legal-section">
+                    <h2><i class="fas fa-calendar-alt"></i> Dernière mise à jour</h2>
+                    <p>Ces mentions légales ont été mises à jour le 1er janvier 2025.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="{{ url_for('about') }}">À propos</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="{{ url_for('privacy') }}">Politique de confidentialité</a>
+                <a href="{{ url_for('terms') }}">Conditions d'utilisation</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="GitHub" class="social-icon"><i class="fab fa-github"></i></a>
+            </div>
+            <p>&copy; 2025 Corvio. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html> 
