@@ -2139,26 +2139,104 @@ footer {
     border-color: var(--accent);
 }
 
-.faq-item h4 {
-    color: var(--text-primary);
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
+    .faq-item h4 {
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
 
-.faq-item h4 i {
-    color: var(--accent);
-    font-size: 1.2rem;
-}
+    .faq-item h4 i {
+        color: var(--accent);
+        font-size: 1.2rem;
+    }
 
-.faq-item p {
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin: 0;
-}
+    .faq-item p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    /* Info Section */
+    .info-section {
+        padding: 4rem 2rem;
+        background: var(--bg-primary);
+    }
+
+    .info-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-top: 2rem;
+    }
+
+    .info-card {
+        background: var(--bg-card);
+        padding: 2rem;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        transition: var(--transition);
+        box-shadow: var(--shadow);
+        text-align: center;
+    }
+
+    .info-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--accent);
+    }
+
+    .info-card h3 {
+        color: var(--text-primary);
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+    }
+
+    .info-card h3 i {
+        color: var(--accent);
+        font-size: 1.4rem;
+    }
+
+    .info-card p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .info-content {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            padding: 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .info-section {
+            padding: 2rem 1rem;
+        }
+
+        .info-card {
+            padding: 1rem;
+        }
+
+        .info-card h3 {
+            font-size: 1.1rem;
+        }
+    }
 
 @media (max-width: 768px) {
     .faq-grid {

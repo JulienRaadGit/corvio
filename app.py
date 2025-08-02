@@ -132,7 +132,7 @@ BLOG_ARTICLES = [
         "title": "Guide complet de la musculation pour débutants",
         "category": "Musculation",
         "date": "28 Juillet 2025",
-        "image": "strength-training.jpg",
+        "image": "strength-training.png",
         "excerpt": "Découvrez les bases essentielles de la musculation : exercices fondamentaux, techniques correctes et progression adaptée aux débutants.",
         "content": """
         <h2>Les bases de la musculation</h2>
@@ -184,7 +184,7 @@ BLOG_ARTICLES = [
         "title": "5 séances de cardio efficaces pour brûler les graisses",
         "category": "Cardio",
         "date": "30 Juillet 2025",
-        "image": "cardio-workout.jpg",
+        "image": "cardio-workout.png",
         "excerpt": "Optimisez votre perte de poids avec ces entraînements cardio variés et intensifs, adaptés à tous les niveaux.",
         "content": """
         <h2>Le cardio pour perdre du poids</h2>
@@ -262,7 +262,7 @@ BLOG_ARTICLES = [
         "title": "Nutrition sportive : que manger avant et après l'entraînement",
         "category": "Nutrition",
         "date": "31 Juillet 2025",
-        "image": "nutrition.jpg",
+        "image": "nutrition.png",
         "excerpt": "Maximisez vos performances et votre récupération grâce à une alimentation adaptée à vos objectifs sportifs.",
         "content": """
         <h2>L'importance de la nutrition sportive</h2>
@@ -337,7 +337,7 @@ BLOG_ARTICLES = [
         "title": "Programme d'entraînement complet à domicile sans matériel",
         "category": "Entraînement",
         "date": "1 Août 2025",
-        "image": "home-workout.jpg",
+        "image": "home-workout.png",
         "excerpt": "Restez en forme même sans salle de sport avec ce programme complet utilisant uniquement votre poids de corps.",
         "content": """
         <h2>L'entraînement à domicile</h2>
@@ -446,7 +446,7 @@ BLOG_ARTICLES = [
         "title": "Les secrets d'une récupération musculaire optimale",
         "category": "Récupération",
         "date": "2 Août 2025",
-        "image": "recovery.jpg",
+        "image": "recovery.png",
         "excerpt": "Découvrez les techniques et astuces pour accélérer votre récupération et éviter les blessures.",
         "content": """
         <h2>La récupération : clé du progrès</h2>
