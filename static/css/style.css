@@ -548,7 +548,8 @@ header p {
     font-size: 0.9rem;
 }
 
-.form-group input, .form-input {
+.form-group input, .form-input,
+.form-group select {
     padding: 1rem;
     border: 1px solid var(--border);
     border-radius: var(--radius-small);
@@ -557,6 +558,16 @@ header p {
     font-size: 1rem;
     transition: var(--transition);
     font-family: inherit;
+}
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
 }
 
 .form-group input:focus, .form-input:focus {

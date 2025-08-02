@@ -187,7 +187,8 @@ def decompress_workout_plan(compressed_data):
     
     return decompressed
 
-def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipment_list: list[str]) -> str:
+def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipment_list: list[str], 
+                         difficulty: str = "intermediate", max_session_duration: int = None, max_workout_days: int = None) -> str:
     """
     Utilise l'API OpenAI pour générer un plan d'entraînement personnalisé en format compressé.
     """
@@ -200,6 +201,20 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
         else:
             equipment_text = "à domicile sans équipement"
 
+    # Construire le texte de difficulté
+    difficulty_text = f"niveau {difficulty}"
+    
+    # Construire les contraintes de durée et jours
+    constraints = []
+    if max_session_duration:
+        constraints.append(f"durée maximale de session: {max_session_duration} minutes")
+    if max_workout_days:
+        constraints.append(f"maximum {max_workout_days} jours d'entraînement par semaine")
+    
+    constraints_text = ""
+    if constraints:
+        constraints_text = f" Contraintes: {', '.join(constraints)}."
+
     # Liste des exercices disponibles avec leurs IDs
     exercise_list = "\n".join([f"{k}: {v}" for k, v in EXERCISE_MAPPING.items()])
     
@@ -207,14 +222,14 @@ def generate_workout_plan(height: str, weight: str, age: str, gym: bool, equipme
     time_exercises = "\n".join([f"- {v} (ID: {k})" for k, v in TIME_BASED_EXERCISES.items()])
     
     prompt = (
-        f"Créez un programme d'entraînement pour: {age} ans, {height}cm, {weight}kg, {equipment_text}. "
+        f"Créez un programme d'entraînement pour: {age} ans, {height}cm, {weight}kg, {equipment_text}, {difficulty_text}.{constraints_text} "
         f"UTILISEZ UNIQUEMENT ce format JSON compressé et ces exercices:\n{exercise_list}\n\n"
         f"IMPORTANT - Exercices mesurés en TEMPS (utilisez 'm' pour minutes):\n{time_exercises}\n\n"
         f"Format JSON OBLIGATOIRE (sans explication, sans ```json):\n"
         f'{{"j":[{{"d":1,"t":1,"e":[{{"n":1,"s":3,"r":12}},{{"n":4,"s":3,"m":1}}]}},{{"d":2,"t":0,"e":[]}}]}}\n\n'
         f"Légende: j=jours, d=jour(1-7), t=type(1=workout,0=rest), e=exercices, n=nom(ID), s=séries, r=répétitions, m=minutes\n"
         f"RÈGLES: Pour les exercices de gainage, cardio et étirements, utilisez 'm' (minutes). Pour les autres, utilisez 'r' (répétitions).\n"
-        f"Choisissez les exercices selon l'équipement disponible. RETOURNEZ SEULEMENT LE JSON."
+        f"Choisissez les exercices selon l'équipement disponible et le niveau de difficulté. RETOURNEZ SEULEMENT LE JSON."
     )
 
     if client is None:
@@ -366,6 +381,14 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
+@app.route('/check-auth')
+def check_auth():
+    """Check if user is authenticated"""
+    if 'user' in session:
+        return jsonify({'authenticated': True, 'user': session['user']})
+    else:
+        return jsonify({'authenticated': False})
+
 @app.route('/generate', methods=['POST'])
 def generate():
     # Vérifier que l'utilisateur est connecté
@@ -378,13 +401,30 @@ def generate():
     age = data.get('age', '')
     gym = data.get('gym', False)
     equipment_list = data.get('equipmentList', [])
+    difficulty = data.get('difficulty', 'intermediate')
+    max_session_duration = data.get('maxSessionDuration', None)
+    max_workout_days = data.get('maxWorkoutDays', None)
 
     if not isinstance(equipment_list, list):
         equipment_list = []
     equipment_list = [str(item) for item in equipment_list]
 
+    # Convertir les valeurs numériques
+    if max_session_duration:
+        try:
+            max_session_duration = int(max_session_duration)
+        except (ValueError, TypeError):
+            max_session_duration = None
+    
+    if max_workout_days:
+        try:
+            max_workout_days = int(max_workout_days)
+        except (ValueError, TypeError):
+            max_workout_days = None
+
     # Générer le plan compressé
-    compressed_plan = generate_workout_plan(height, weight, age, gym, equipment_list)
+    compressed_plan = generate_workout_plan(height, weight, age, gym, equipment_list, 
+                                          difficulty, max_session_duration, max_workout_days)
     
     # Sauvegarder pour l'utilisateur connecté
     if 'user' in session:

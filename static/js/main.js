@@ -40,21 +40,85 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // Auth state observer
-            onAuthStateChanged(auth, (user) => {
+            // Auth state observer with persistent session
+            onAuthStateChanged(auth, async (user) => {
                 if (user) {
                     console.log('User is signed in:', user.email);
+                    // Automatically refresh session on page load
+                    try {
+                        const idToken = await user.getIdToken(true); // Force refresh
+                        await fetch('/verify-token', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                idToken: idToken
+                            })
+                        });
+                        console.log('Session refreshed successfully');
+                    } catch (error) {
+                        console.error('Error refreshing session:', error);
+                    }
                 } else {
                     console.log('User is signed out');
                 }
             });
+
+            // Check authentication status on page load
+            checkAuthStatus();
         });
     }).catch(error => {
         console.error('Error loading Firebase:', error);
     });
 
+    // Function to check authentication status
+    async function checkAuthStatus() {
+        try {
+            const response = await fetch('/check-auth');
+            const data = await response.json();
+            
+            if (data.authenticated) {
+                console.log('User is authenticated:', data.user);
+                // Update UI to show authenticated state
+                updateAuthUI(true, data.user);
+            } else {
+                console.log('User is not authenticated');
+                updateAuthUI(false);
+            }
+        } catch (error) {
+            console.error('Error checking auth status:', error);
+        }
+    }
+
+    // Function to update UI based on authentication status
+    function updateAuthUI(isAuthenticated, user = null) {
+        const authElements = document.querySelectorAll('.auth-required');
+        const guestElements = document.querySelectorAll('.guest-only');
+        
+        if (isAuthenticated) {
+            // Show authenticated content
+            authElements.forEach(el => el.style.display = 'block');
+            guestElements.forEach(el => el.style.display = 'none');
+            
+            // Update user info if available
+            if (user) {
+                const userNameElements = document.querySelectorAll('.user-name');
+                userNameElements.forEach(el => {
+                    el.textContent = user.name || user.email;
+                });
+            }
+        } else {
+            // Show guest content
+            authElements.forEach(el => el.style.display = 'none');
+            guestElements.forEach(el => el.style.display = 'block');
+        }
+    }
+
     // Fonction pour afficher les exercices
     function renderExercises(exercises) {
+        if (!exerciseListDiv) return;
+        
         exerciseListDiv.innerHTML = '';
         exercises.forEach(item => {
             const container = document.createElement('div');
@@ -83,16 +147,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const equipmentOptionsDiv = document.getElementById('equipmentOptions');
 
     function toggleEquipmentOptions() {
-        if (gymNoRadio.checked) {
-            equipmentOptionsDiv.style.display = 'block';
-        } else {
-            equipmentOptionsDiv.style.display = 'none';
+        if (equipmentOptionsDiv) {
+            if (gymNoRadio && gymNoRadio.checked) {
+                equipmentOptionsDiv.style.display = 'block';
+            } else {
+                equipmentOptionsDiv.style.display = 'none';
+            }
         }
     }
 
     // Ajoute des écouteurs pour changer l'affichage
-    gymYesRadio.addEventListener('change', toggleEquipmentOptions);
-    gymNoRadio.addEventListener('change', toggleEquipmentOptions);
+    if (gymYesRadio) {
+        gymYesRadio.addEventListener('change', toggleEquipmentOptions);
+    }
+    if (gymNoRadio) {
+        gymNoRadio.addEventListener('change', toggleEquipmentOptions);
+    }
 
     // Afficher correctement lors du chargement initial
     toggleEquipmentOptions();
@@ -112,103 +182,133 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     // Gestionnaire pour le formulaire
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        // Récupérer les valeurs du formulaire
-        const age = document.getElementById('age').value;
-        const height = document.getElementById('height').value;
-        const weight = document.getElementById('weight').value;
-        // Déterminer si l'utilisateur est en salle de sport
-        const gym = gymYesRadio.checked;
-        // Récupérer la liste des équipements sélectionnés si pas en salle de sport
-        let equipmentList = [];
-        if (!gym) {
-            const checkboxes = document.querySelectorAll('input[name="equipmentList"]:checked');
-            equipmentList = Array.from(checkboxes).map(cb => cb.value);
-        }
+    if (form) {
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            // Récupérer les valeurs du formulaire
+            const age = document.getElementById('age').value;
+            const height = document.getElementById('height').value;
+            const weight = document.getElementById('weight').value;
+            const difficulty = document.getElementById('difficulty').value;
+            const maxSessionDuration = document.getElementById('maxSessionDuration').value || null;
+            const maxWorkoutDays = document.getElementById('maxWorkoutDays').value || null;
+            
+            // Déterminer si l'utilisateur est en salle de sport
+            const gym = gymYesRadio ? gymYesRadio.checked : false;
+            // Récupérer la liste des équipements sélectionnés si pas en salle de sport
+            let equipmentList = [];
+            if (!gym) {
+                const checkboxes = document.querySelectorAll('input[name="equipmentList"]:checked');
+                equipmentList = Array.from(checkboxes).map(cb => cb.value);
+            }
 
-        // Reset l'affichage
-        programContainer.innerHTML = '<p>Génération en cours…</p>';
-        productList.innerHTML = '';
-        resultSection.style.display = 'block';
-        // Show loading spinner, hide results
-        if (loadingSpinner) loadingSpinner.style.display = 'flex';
-        resultSection.classList.remove('visible');
-        try {
-            const response = await fetch('/generate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    age: age,
-                    height: height,
-                    weight: weight,
-                    gym: gym,
-                    equipmentList: equipmentList
-                })
-            });
-            
-            if (response.status === 401) {
-                // Rediriger vers la page de connexion si non authentifié
-                window.location.href = '/login';
-                return;
+            // Reset l'affichage
+            if (programContainer) {
+                programContainer.innerHTML = '<p>Génération en cours…</p>';
+            }
+            if (productList) {
+                productList.innerHTML = '';
+            }
+            if (resultSection) {
+                resultSection.style.display = 'block';
+            }
+            // Show loading spinner, hide results
+            if (loadingSpinner) loadingSpinner.style.display = 'flex';
+            if (resultSection) {
+                resultSection.classList.remove('visible');
             }
             
-            const data = await response.json();
-            // Essayer d'interpréter la réponse comme JSON structuré
-            let schedule;
             try {
-                schedule = JSON.parse(data.plan);
-            } catch (e) {
-                // Si ce n'est pas un JSON valide, afficher le texte brut
-                programContainer.textContent = data.plan;
-                schedule = null;
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        age: age,
+                        height: height,
+                        weight: weight,
+                        difficulty: difficulty,
+                        maxSessionDuration: maxSessionDuration,
+                        maxWorkoutDays: maxWorkoutDays,
+                        gym: gym,
+                        equipmentList: equipmentList
+                    })
+                });
+                
+                if (response.status === 401) {
+                    // Rediriger vers la page de connexion si non authentifié
+                    window.location.href = '/login';
+                    return;
+                }
+                
+                const data = await response.json();
+                // Essayer d'interpréter la réponse comme JSON structuré
+                let schedule;
+                try {
+                    schedule = JSON.parse(data.plan);
+                } catch (e) {
+                    // Si ce n'est pas un JSON valide, afficher le texte brut
+                    if (programContainer) {
+                        programContainer.textContent = data.plan;
+                    }
+                    schedule = null;
+                }
+                if (schedule && programContainer) {
+                    renderSchedule(schedule);
+                }
+                // Afficher les produits
+                if (data.products && productList) {
+                    data.products.forEach(prod => {
+                        const productCard = document.createElement('div');
+                        productCard.classList.add('product-card');
+                        
+                        const productName = document.createElement('h4');
+                        productName.textContent = prod.name;
+                        
+                        const productDesc = document.createElement('p');
+                        productDesc.textContent = prod.description;
+                        
+                        const productLink = document.createElement('a');
+                        productLink.href = prod.link || '#';
+                        productLink.target = '_blank';
+                        productLink.rel = 'noopener noreferrer';
+                        productLink.textContent = 'Voir le produit';
+                        productLink.innerHTML += ' <i class="fas fa-external-link-alt"></i>';
+                        
+                        productCard.appendChild(productName);
+                        productCard.appendChild(productDesc);
+                        productCard.appendChild(productLink);
+                        productList.appendChild(productCard);
+                    });
+                }
+                // Hide spinner, fade in results
+                if (loadingSpinner) loadingSpinner.style.display = 'none';
+                if (resultSection) {
+                    setTimeout(() => {
+                        resultSection.classList.add('visible');
+                    }, 100);
+                }
+            } catch (error) {
+                if (programContainer) {
+                    programContainer.textContent = 'Une erreur est survenue lors de la génération du programme.';
+                }
+                if (loadingSpinner) loadingSpinner.style.display = 'none';
+                if (resultSection) {
+                    resultSection.classList.add('visible');
+                }
+                console.error(error);
             }
-            if (schedule) {
-                renderSchedule(schedule);
-            }
-            // Afficher les produits
-            data.products.forEach(prod => {
-                const productCard = document.createElement('div');
-                productCard.classList.add('product-card');
-                
-                const productName = document.createElement('h4');
-                productName.textContent = prod.name;
-                
-                const productDesc = document.createElement('p');
-                productDesc.textContent = prod.description;
-                
-                const productLink = document.createElement('a');
-                productLink.href = prod.link || '#';
-                productLink.target = '_blank';
-                productLink.rel = 'noopener noreferrer';
-                productLink.textContent = 'Voir le produit';
-                productLink.innerHTML += ' <i class="fas fa-external-link-alt"></i>';
-                
-                productCard.appendChild(productName);
-                productCard.appendChild(productDesc);
-                productCard.appendChild(productLink);
-                productList.appendChild(productCard);
-            });
-            // Hide spinner, fade in results
-            if (loadingSpinner) loadingSpinner.style.display = 'none';
-            setTimeout(() => {
-                resultSection.classList.add('visible');
-            }, 100);
-        } catch (error) {
-            programContainer.textContent = 'Une erreur est survenue lors de la génération du programme.';
-            if (loadingSpinner) loadingSpinner.style.display = 'none';
-            resultSection.classList.add('visible');
-            console.error(error);
-        }
-    });
+        });
+    }
 
     /**
      * Affiche le programme structuré sous forme d'agenda interactif.
      * @param {Object} schedule - Objet JSON avec un tableau 'jours'.
      */
     function renderSchedule(schedule) {
+        if (!programContainer) return;
+        
         programContainer.innerHTML = '';
         if (!schedule || !Array.isArray(schedule.jours)) {
             programContainer.textContent = 'Format de programme inattendu.';
@@ -297,83 +397,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             programContainer.appendChild(card);
-    
         });
     }
 
-    // Ajouter les contrôles d'édition après avoir rendu le programme
-    // Note: Les boutons d'édition ne sont ajoutés que dans la page "Mes Workouts"
-    // Pas lors de la génération initiale
-
-    // Ajouter les contrôles d'édition après avoir rendu le programme
-    // Cette fonction n'est utilisée que dans la page "Mes Workouts"
-function addEditControls() {
-    // Vérifier si nous sommes dans la page "Mes Workouts" (workout_plan.html)
-    const isWorkoutPlanPage = window.location.pathname === '/workout-plan';
-    
-    if (!isWorkoutPlanPage) {
-        return; // Ne pas ajouter les contrôles d'édition sur la page d'accueil
-    }
-    
-    // Ajouter les boutons d'édition aux exercices
-    document.querySelectorAll('.exercise-item').forEach(item => {
-        if (!item.querySelector('.exercise-actions')) {
-            const actionsHTML = `
-                <div class="exercise-actions">
-                    <button class="btn-edit">Modifier</button>
-                    <button class="btn-delete">Supprimer</button>
-                </div>
-                <div class="exercise-edit-form">
-                    <div class="edit-form-grid">
-                        <div class="edit-form-group">
-                            <label>Nom de l'exercice</label>
-                            <input type="text" name="exercise-name" required>
-                        </div>
-                        <div class="edit-form-group">
-                            <label>Séries</label>
-                            <input type="number" name="series" min="1" required>
-                        </div>
-                        <div class="edit-form-group">
-                            <label>Répétitions</label>
-                            <input type="number" name="repetitions" min="1">
-                        </div>
-                    </div>
-                    <div class="edit-form-group">
-                        <label>Durée (minutes) - si pas de répétitions</label>
-                        <input type="number" name="duration" min="1">
-                    </div>
-                    <div class="edit-form-actions">
-                        <button class="btn btn-success btn-small btn-save-exercise">Sauvegarder</button>
-                        <button class="btn btn-cancel btn-small btn-cancel-edit">Annuler</button>
-                    </div>
-                </div>
-            `;
-            item.insertAdjacentHTML('beforeend', actionsHTML);
-        }
-    });
-    
-    // Ajouter des boutons "Ajouter exercice" aux jours d'entraînement
-    document.querySelectorAll('.day-card.workout-day').forEach(dayCard => {
-        if (!dayCard.querySelector('.add-exercise-btn')) {
-            const exercisesList = dayCard.querySelector('.exercises-list');
-            if (exercisesList) {
-                exercisesList.insertAdjacentHTML('afterend', '<button class="add-exercise-btn">+ Ajouter un exercice</button>');
-            }
-        }
-    });
-    
-    // Initialiser l'éditeur si disponible
-    if (typeof WorkoutEditor !== 'undefined') {
-        window.workoutEditor = new WorkoutEditor();
-        window.workoutEditor.workoutPlan = JSON.parse(plan);
-        window.workoutEditor.renderEditablePlan();
-    }
-}
-})
-// Code à ajouter à la fin du fichier main.js
-
-// Mobile Menu Functionality
-document.addEventListener('DOMContentLoaded', () => {
+    // Mobile Menu Functionality
     const toggleButton = document.querySelector('.nav-toggle');
     const mobileMenu = document.querySelector('.nav-menu.mobile-menu');
     const overlay = document.querySelector('.nav-overlay');
