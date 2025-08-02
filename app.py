@@ -368,6 +368,10 @@ def logout():
 
 @app.route('/generate', methods=['POST'])
 def generate():
+    # Vérifier que l'utilisateur est connecté
+    if 'user' not in session:
+        return jsonify({'error': 'Authentication required'}), 401
+    
     data = request.get_json(force=True)
     height = data.get('height', '')
     weight = data.get('weight', '')

@@ -148,6 +148,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     equipmentList: equipmentList
                 })
             });
+            
+            if (response.status === 401) {
+                // Rediriger vers la page de connexion si non authentifié
+                window.location.href = '/login';
+                return;
+            }
+            
             const data = await response.json();
             // Essayer d'interpréter la réponse comme JSON structuré
             let schedule;
@@ -291,16 +298,23 @@ document.addEventListener('DOMContentLoaded', () => {
             
             programContainer.appendChild(card);
     
-    // À la fin de la boucle, après avoir ajouté toutes les cartes
-    // Ajouter les contrôles d'édition
-    setTimeout(() => {
-        addEditControls();
-    }, 100);
         });
     }
 
     // Ajouter les contrôles d'édition après avoir rendu le programme
+    // Note: Les boutons d'édition ne sont ajoutés que dans la page "Mes Workouts"
+    // Pas lors de la génération initiale
+
+    // Ajouter les contrôles d'édition après avoir rendu le programme
+    // Cette fonction n'est utilisée que dans la page "Mes Workouts"
 function addEditControls() {
+    // Vérifier si nous sommes dans la page "Mes Workouts" (workout_plan.html)
+    const isWorkoutPlanPage = window.location.pathname === '/workout-plan';
+    
+    if (!isWorkoutPlanPage) {
+        return; // Ne pas ajouter les contrôles d'édition sur la page d'accueil
+    }
+    
     // Ajouter les boutons d'édition aux exercices
     document.querySelectorAll('.exercise-item').forEach(item => {
         if (!item.querySelector('.exercise-actions')) {

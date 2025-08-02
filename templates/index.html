@@ -69,10 +69,29 @@
 
         <!-- Generator/Form Section -->
         <section class="form-section" id="generator">
-            <div class="section-header">
-                <h2><i class="fas fa-user-cog"></i> Informations Personnelles</h2>
-                <p>Remplissez ces informations pour obtenir un programme personnalisé</p>
-            </div>
+            {% if user %}
+                <div class="section-header">
+                    <h2><i class="fas fa-user-cog"></i> Informations Personnelles</h2>
+                    <p>Remplissez ces informations pour obtenir un programme personnalisé</p>
+                </div>
+            {% else %}
+                <div class="section-header">
+                    <h2><i class="fas fa-lock"></i> Connexion Requise</h2>
+                    <p>Vous devez être connecté pour générer un programme d'entraînement personnalisé</p>
+                </div>
+                <div class="login-required-section">
+                    <div class="login-required-card">
+                        <i class="fas fa-user-lock"></i>
+                        <h3>Connectez-vous pour commencer</h3>
+                        <p>Créez votre compte ou connectez-vous pour accéder au générateur de programmes d'entraînement personnalisés.</p>
+                        <a href="{{ url_for('login') }}" class="btn btn-primary btn-large">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Se connecter
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+            {% if user %}
             <form id="infoForm">
                 <div class="form-grid">
                     <div class="form-group">
@@ -160,6 +179,7 @@
                 </button>
                 <div class="loading-spinner" id="loadingSpinner"></div>
             </form>
+            {% endif %}
         </section>
 
         <!-- Results Section -->
