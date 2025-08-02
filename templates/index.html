@@ -227,20 +227,7 @@
             </div>
             <div id="programContainer" class="workout-plan-container"></div>
             
-            <div class="plan-actions">
-                <button class="btn btn-secondary" id="printPlanBtn">
-                    <i class="fas fa-print"></i>
-                    Imprimer le plan
-                </button>
-                <button class="btn btn-success" id="savePlanBtn">
-                    <i class="fas fa-save"></i>
-                    Sauvegarder
-                </button>
-                <button class="btn btn-primary" id="sharePlanBtn">
-                    <i class="fas fa-share"></i>
-                    Partager
-                </button>
-            </div>
+
             
             <div class="products-section">
                 <h3><i class="fas fa-shopping-cart"></i> Produits Recommandés</h3>
@@ -422,33 +409,7 @@
             document.getElementById('generator').scrollIntoView({ behavior: 'smooth' });
         });
 
-        // Plan actions functionality
-        document.addEventListener('click', function(e) {
-            if (e.target.id === 'printPlanBtn') {
-                window.print();
-            }
-            
-            if (e.target.id === 'savePlanBtn') {
-                // Save functionality - could be enhanced with localStorage or API
-                alert('Fonctionnalité de sauvegarde à implémenter');
-            }
-            
-            if (e.target.id === 'sharePlanBtn') {
-                // Share functionality
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'Mon programme d\'entraînement Corvio',
-                        text: 'Découvrez mon programme d\'entraînement personnalisé généré par Corvio !',
-                        url: window.location.href
-                    });
-                } else {
-                    // Fallback: copy to clipboard
-                    navigator.clipboard.writeText(window.location.href).then(() => {
-                        alert('Lien copié dans le presse-papiers !');
-                    });
-                }
-            }
-        });
+
     </script>
 </body>
 </html>

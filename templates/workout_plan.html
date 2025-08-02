@@ -143,10 +143,6 @@
                         <i class="fas fa-magic"></i>
                         Générer un nouveau programme
                     </a>
-                    <button class="btn btn-secondary" onclick="printPlan()">
-                        <i class="fas fa-print"></i>
-                        Imprimer le programme
-                    </button>
                 </div>
             </section>
         {% else %}
@@ -207,10 +203,6 @@
     </footer>
 
     <script>
-        function printPlan() {
-            window.print();
-        }
-        
         // Passer les données du plan au JavaScript
         {% if workout_plan %}
         window.workoutPlanData = {{ workout_plan | tojson }};
