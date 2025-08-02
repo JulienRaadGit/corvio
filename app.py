@@ -1,6 +1,6 @@
 import os
 import json
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, send_from_directory
 from flask_cors import CORS
 from flask_session import Session
 import firebase_admin
@@ -546,6 +546,10 @@ def exercises():
     except Exception:
         exercises_data = []
     return jsonify(exercises_data)
+
+@app.route('/ads.txt')
+def ads():
+    return send_from_directory(app.static_folder, 'ads.txt')
 
 if __name__ == '__main__':
     # Lance l'application Flask.
