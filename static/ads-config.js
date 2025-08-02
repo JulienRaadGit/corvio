@@ -3,13 +3,7 @@ window.adsConfig = {
     // Google AdSense
     googleAdSense: {
         client: 'ca-pub-7173995370777543',
-        enabled: true,
-        adSlots: {
-            header: 'header-ad',
-            sidebar: 'sidebar-ad',
-            footer: 'footer-ad',
-            content: 'content-ad'
-        }
+        enabled: true
     },
     
     // Awin
@@ -26,9 +20,6 @@ window.adsConfig = {
         
         // Nombre maximum de publicités par page
         maxAdsPerPage: 3,
-        
-        // Zones où les publicités sont autorisées
-        allowedZones: ['header', 'sidebar', 'footer', 'content'],
         
         // Désactiver les publicités pour les utilisateurs connectés (optionnel)
         disableForLoggedUsers: false
@@ -86,80 +77,17 @@ function loadAwin() {
     document.head.appendChild(script);
 }
 
-// Fonction pour créer un emplacement publicitaire
-function createAdSlot(zone, adType = 'banner') {
-    const adContainer = document.createElement('div');
-    adContainer.id = `ad-${zone}-${Date.now()}`;
-    adContainer.className = 'ad-slot';
-    adContainer.setAttribute('data-ad-zone', zone);
-    adContainer.setAttribute('data-ad-type', adType);
-    
-    // Styles de base pour les emplacements publicitaires
-    adContainer.style.cssText = `
-        min-height: 90px;
-        margin: 1rem 0;
-        text-align: center;
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-secondary);
-        font-size: 0.9rem;
-    `;
-    
-    // Contenu de placeholder
-    adContainer.innerHTML = `
-        <div>
-            <i class="fas fa-ad" style="font-size: 2rem; color: var(--accent); margin-bottom: 0.5rem;"></i>
-            <p>Publicité</p>
-        </div>
-    `;
-    
-    return adContainer;
-}
-
-// Fonction pour insérer une publicité dans une zone spécifique
-function insertAd(zone, targetSelector, position = 'beforeend') {
-    const target = document.querySelector(targetSelector);
-    if (!target) return;
-    
-    const adSlot = createAdSlot(zone);
-    
-    if (position === 'beforebegin') {
-        target.parentNode.insertBefore(adSlot, target);
-    } else if (position === 'afterbegin') {
-        target.insertBefore(adSlot, target.firstChild);
-    } else if (position === 'beforeend') {
-        target.appendChild(adSlot);
-    } else if (position === 'afterend') {
-        target.parentNode.insertBefore(adSlot, target.nextSibling);
-    }
-}
-
 // Initialiser les publicités quand le DOM est chargé
 document.addEventListener('DOMContentLoaded', function() {
     // Attendre un délai avant de charger les publicités
     setTimeout(loadAds, window.adsConfig?.settings?.adDelay || 2000);
-    
-    // Insérer des publicités dans des zones spécifiques
-    if (window.adsConfig?.googleAdSense?.enabled) {
-        // Publicité dans le header
-        insertAd('header', '.hero-section', 'afterend');
-        
-        // Publicité dans le contenu
-        insertAd('content', '.form-section', 'afterend');
-        
-        // Publicité dans le footer
-        insertAd('footer', '.faq-section', 'afterend');
-    }
 });
 
 // Fonction pour désactiver les publicités (pour les tests)
 function disableAds() {
-    const adSlots = document.querySelectorAll('.ad-slot');
-    adSlots.forEach(slot => slot.remove());
+    // Supprimer les scripts AdSense
+    const adScripts = document.querySelectorAll('script[src*="googlesyndication"]');
+    adScripts.forEach(script => script.remove());
 }
 
 // Fonction pour activer les publicités
