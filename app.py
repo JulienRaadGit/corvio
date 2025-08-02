@@ -125,6 +125,146 @@ PRODUCT_SUGGESTIONS = [
     }
 ]
 
+# Blog articles data (5 articles)
+BLOG_ARTICLES = [
+    {
+        "id": "musculation-debutants",
+        "title": "Guide complet de la musculation pour débutants",
+        "category": "Musculation",
+        "date": "15 Janvier 2024",
+        "image": "strength-training.jpg",
+        "excerpt": "Découvrez les bases essentielles de la musculation : exercices fondamentaux, techniques correctes et progression adaptée aux débutants.",
+        "content": """
+        <h2>Les bases de la musculation</h2>
+        <p>La musculation est une discipline sportive qui vise à développer la force et la masse musculaire. Pour les débutants, il est essentiel de comprendre les principes fondamentaux avant de commencer.</p>
+        
+        <h3>Les exercices fondamentaux</h3>
+        <ul>
+            <li><strong>Pompes</strong> : Excellent exercice pour les pectoraux et les triceps</li>
+            <li><strong>Squats</strong> : Indispensable pour les jambes et les fessiers</li>
+            <li><strong>Gainage</strong> : Pour renforcer la ceinture abdominale</li>
+        </ul>
+        
+        <h3>Techniques correctes</h3>
+        <p>La qualité prime sur la quantité. Il est préférable de faire moins de répétitions avec une technique parfaite que l'inverse.</p>
+        
+        <h3>Progression adaptée</h3>
+        <p>Commencez progressivement et augmentez l'intensité au fil des semaines. Votre corps a besoin de temps pour s'adapter.</p>
+        """
+    },
+    {
+        "id": "cardio-efficace",
+        "title": "5 séances de cardio efficaces pour brûler les graisses",
+        "category": "Cardio",
+        "date": "12 Janvier 2024",
+        "image": "cardio-workout.jpg",
+        "excerpt": "Optimisez votre perte de poids avec ces entraînements cardio variés et intensifs, adaptés à tous les niveaux.",
+        "content": """
+        <h2>Le cardio pour perdre du poids</h2>
+        <p>Le cardio est essentiel pour brûler des calories et améliorer votre condition cardiovasculaire. Voici 5 séances efficaces.</p>
+        
+        <h3>Séance 1 : HIIT (High Intensity Interval Training)</h3>
+        <p>30 secondes d'effort intense suivies de 30 secondes de récupération, répété 10 fois.</p>
+        
+        <h3>Séance 2 : Course à pied</h3>
+        <p>Commencez par 20 minutes de course à un rythme modéré.</p>
+        
+        <h3>Séance 3 : Vélo</h3>
+        <p>45 minutes de vélo avec des variations d'intensité.</p>
+        
+        <h3>Séance 4 : Natation</h3>
+        <p>30 minutes de nage libre pour un cardio complet.</p>
+        
+        <h3>Séance 5 : Marche rapide</h3>
+        <p>1 heure de marche à un rythme soutenu.</p>
+        """
+    },
+    {
+        "id": "nutrition-sportive",
+        "title": "Nutrition sportive : que manger avant et après l'entraînement",
+        "category": "Nutrition",
+        "date": "10 Janvier 2024",
+        "image": "nutrition.jpg",
+        "excerpt": "Maximisez vos performances et votre récupération grâce à une alimentation adaptée à vos objectifs sportifs.",
+        "content": """
+        <h2>L'importance de la nutrition sportive</h2>
+        <p>Une alimentation adaptée peut faire la différence entre une séance moyenne et une séance exceptionnelle.</p>
+        
+        <h3>Avant l'entraînement</h3>
+        <ul>
+            <li><strong>2-3 heures avant</strong> : Repas complet avec glucides complexes</li>
+            <li><strong>1 heure avant</strong> : Fruit ou barre énergétique</li>
+            <li><strong>30 minutes avant</strong> : Hydratation suffisante</li>
+        </ul>
+        
+        <h3>Après l'entraînement</h3>
+        <ul>
+            <li><strong>Dans les 30 minutes</strong> : Protéines et glucides simples</li>
+            <li><strong>Dans les 2 heures</strong> : Repas équilibré</li>
+        </ul>
+        
+        <h3>Hydratation</h3>
+        <p>Buvez régulièrement avant, pendant et après l'effort pour maintenir vos performances.</p>
+        """
+    },
+    {
+        "id": "entrainement-domicile",
+        "title": "Programme d'entraînement complet à domicile sans matériel",
+        "category": "Entraînement",
+        "date": "8 Janvier 2024",
+        "image": "home-workout.jpg",
+        "excerpt": "Restez en forme même sans salle de sport avec ce programme complet utilisant uniquement votre poids de corps.",
+        "content": """
+        <h2>L'entraînement à domicile</h2>
+        <p>Pas besoin d'équipement coûteux pour se muscler et rester en forme. Votre corps est votre meilleur outil.</p>
+        
+        <h3>Programme complet</h3>
+        <ul>
+            <li><strong>Lundi</strong> : Haut du corps (pompes, dips, gainage)</li>
+            <li><strong>Mardi</strong> : Bas du corps (squats, fentes, mollets)</li>
+            <li><strong>Mercredi</strong> : Repos</li>
+            <li><strong>Jeudi</strong> : Cardio (burpees, jumping jacks)</li>
+            <li><strong>Vendredi</strong> : Corps complet</li>
+            <li><strong>Samedi</strong> : Étirements et yoga</li>
+            <li><strong>Dimanche</strong> : Repos</li>
+        </ul>
+        
+        <h3>Exercices clés</h3>
+        <p>Pompes, squats, gainage, burpees, mountain climbers, jumping jacks...</p>
+        """
+    },
+    {
+        "id": "recuperation-musculaire",
+        "title": "Les secrets d'une récupération musculaire optimale",
+        "category": "Récupération",
+        "date": "5 Janvier 2024",
+        "image": "recovery.jpg",
+        "excerpt": "Découvrez les techniques et astuces pour accélérer votre récupération et éviter les blessures.",
+        "content": """
+        <h2>La récupération : clé du progrès</h2>
+        <p>La récupération est aussi importante que l'entraînement lui-même. C'est pendant cette phase que vos muscles se reconstruisent.</p>
+        
+        <h3>Techniques de récupération</h3>
+        <ul>
+            <li><strong>Étirements</strong> : Après chaque séance</li>
+            <li><strong>Hydratation</strong> : Buvez suffisamment d'eau</li>
+            <li><strong>Sommeil</strong> : 7-9 heures par nuit</li>
+            <li><strong>Massage</strong> : Avec un rouleau de mousse</li>
+        </ul>
+        
+        <h3>Nutrition post-entraînement</h3>
+        <p>Consommez des protéines dans les 30 minutes suivant votre séance pour optimiser la récupération.</p>
+        """
+    }
+]
+
+# Fonction pour récupérer un article par ID
+def get_article_by_id(article_id):
+    for article in BLOG_ARTICLES:
+        if article['id'] == article_id:
+            return article
+    return None
+
 def compress_workout_plan(plan_data):
     """Compresse un plan d'entraînement en remplaçant les noms par des IDs"""
     if not isinstance(plan_data, dict) or 'jours' not in plan_data:
@@ -561,7 +701,15 @@ def terms():
 
 @app.route('/blog')
 def blog():
-    return render_template('blog.html', user=session.get('user'))
+    return render_template('blog.html', user=session.get('user'), articles=BLOG_ARTICLES)
+
+@app.route('/blog/<article_id>')
+def article(article_id):
+    article = get_article_by_id(article_id)
+    if article:
+        return render_template('article.html', user=session.get('user'), article=article, articles=BLOG_ARTICLES)
+    else:
+        return redirect(url_for('blog'))
 
 if __name__ == '__main__':
     # Lance l'application Flask.
