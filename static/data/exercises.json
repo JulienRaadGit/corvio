@@ -1,22 +1,302 @@
 [
-    {"name": "Pompes", "image": "pompes.jpg"},
-    {"name": "Squats", "image": "squats.jpg"},
-    {"name": "Fentes", "image": "fentes.jpg"},
-    {"name": "Gainage (Planche)", "image": "gainage-planche.jpg"},
-    {"name": "Soulevé de terre", "image": "souleve-de-terre.jpg"},
-    {"name": "Développé couché", "image": "developpe-couche.jpg"},
-    {"name": "Tractions", "image": "tractions.jpg"},
-    {"name": "Curl biceps", "image": "curl-biceps.jpg"},
-    {"name": "Extensions triceps", "image": "extensions-triceps.jpg"},
-    {"name": "Burpees", "image": "burpees.jpg"},
-    {"name": "Montées de genoux", "image": "montees-de-genoux.jpg"},
-    {"name": "Abdominaux (crunches)", "image": "abdominaux-crunches.jpg"},
-    {"name": "Planche latérale", "image": "planche-laterale.jpg"},
-    {"name": "Sauts sur place", "image": "sauts-sur-place.jpg"},
-    {"name": "Dips", "image": "dips.jpg"},
-    {"name": "Rowing", "image": "rowing.jpg"},
-    {"name": "Tirage horizontal", "image": "tirage-horizontal.jpg"},
-    {"name": "Mollets debout", "image": "mollets-debout.jpg"},
-    {"name": "Développé militaire (épaules)", "image": "developpe-militaire.jpg"},
-    {"name": "Abduction des hanches", "image": "abduction-des-hanches.jpg"}
+  {
+    "id": 1,
+    "name": "Pompes",
+    "category": "Haut du corps",
+    "muscle": "Pectoraux, Triceps, Épaules",
+    "difficulty": "Intermédiaire",
+    "equipment": "Aucun",
+    "description": "Exercice de base pour renforcer le haut du corps",
+    "image": "pushups.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Squats",
+    "category": "Bas du corps",
+    "muscle": "Quadriceps, Fessiers, Ischio-jambiers",
+    "difficulty": "Débutant",
+    "equipment": "Aucun",
+    "description": "Exercice fondamental pour les jambes",
+    "image": "squats.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Fentes",
+    "category": "Bas du corps",
+    "muscle": "Quadriceps, Fessiers, Équilibre",
+    "difficulty": "Intermédiaire",
+    "equipment": "Aucun",
+    "description": "Excellent pour l'équilibre et la force des jambes",
+    "image": "lunges.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Gainage (Planche)",
+    "category": "Core",
+    "muscle": "Abdominaux, Lombaires, Épaules",
+    "difficulty": "Débutant",
+    "equipment": "Aucun",
+    "description": "Renforcement du tronc et de la stabilité",
+    "image": "plank.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Burpees",
+    "category": "Cardio",
+    "muscle": "Tout le corps",
+    "difficulty": "Avancé",
+    "equipment": "Aucun",
+    "description": "Exercice cardio complet et intense",
+    "image": "burpees.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Tractions",
+    "category": "Haut du corps",
+    "muscle": "Dos, Biceps, Épaules",
+    "difficulty": "Avancé",
+    "equipment": "Barre de traction",
+    "description": "Exercice de traction pour le dos",
+    "image": "pullups.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Dips",
+    "category": "Haut du corps",
+    "muscle": "Triceps, Pectoraux, Épaules",
+    "difficulty": "Intermédiaire",
+    "equipment": "Barres parallèles",
+    "description": "Renforcement des triceps et épaules",
+    "image": "dips.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Mountain Climbers",
+    "category": "Cardio",
+    "muscle": "Core, Épaules, Cardio",
+    "difficulty": "Intermédiaire",
+    "equipment": "Aucun",
+    "description": "Exercice cardio dynamique",
+    "image": "mountain-climbers.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Jumping Jacks",
+    "category": "Cardio",
+    "muscle": "Tout le corps",
+    "difficulty": "Débutant",
+    "equipment": "Aucun",
+    "description": "Échauffement cardio classique",
+    "image": "jumping-jacks.jpg"
+  },
+  {
+    "id": 10,
+    "name": "High Knees",
+    "category": "Cardio",
+    "muscle": "Quadriceps, Cardio",
+    "difficulty": "Débutant",
+    "equipment": "Aucun",
+    "description": "Cardio dynamique pour les jambes",
+    "image": "high-knees.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Curl biceps",
+    "category": "Haut du corps",
+    "muscle": "Biceps",
+    "difficulty": "Débutant",
+    "equipment": "Haltères",
+    "description": "Renforcement des biceps",
+    "image": "bicep-curl.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Extensions triceps",
+    "category": "Haut du corps",
+    "muscle": "Triceps",
+    "difficulty": "Débutant",
+    "equipment": "Haltères",
+    "description": "Renforcement des triceps",
+    "image": "tricep-extension.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Développé militaire",
+    "category": "Haut du corps",
+    "muscle": "Épaules, Triceps",
+    "difficulty": "Intermédiaire",
+    "equipment": "Haltères",
+    "description": "Renforcement des épaules",
+    "image": "military-press.jpg"
+  },
+  {
+    "id": 14,
+    "name": "Rowing",
+    "category": "Haut du corps",
+    "muscle": "Dos, Biceps",
+    "difficulty": "Intermédiaire",
+    "equipment": "Haltères",
+    "description": "Renforcement du dos",
+    "image": "rowing.jpg"
+  },
+  {
+    "id": 15,
+    "name": "Soulevé de terre",
+    "category": "Bas du corps",
+    "muscle": "Dos, Jambes, Fessiers",
+    "difficulty": "Avancé",
+    "equipment": "Haltères",
+    "description": "Exercice complet pour le dos et les jambes",
+    "image": "deadlift.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Planche latérale",
+    "category": "Core",
+    "muscle": "Obliques, Épaules",
+    "difficulty": "Intermédiaire",
+    "equipment": "Aucun",
+    "description": "Renforcement des obliques",
+    "image": "side-plank.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Crunchs",
+    "category": "Core",
+    "muscle": "Abdominaux",
+    "difficulty": "Débutant",
+    "equipment": "Aucun",
+    "description": "Renforcement des abdominaux",
+    "image": "crunches.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Mollets debout",
+    "category": "Bas du corps",
+    "muscle": "Mollets",
+    "difficulty": "Débutant",
+    "equipment": "Aucun",
+    "description": "Renforcement des mollets",
+    "image": "calf-raises.jpg"
+  },
+  {
+    "id": 19,
+    "name": "Abduction des hanches",
+    "category": "Bas du corps",
+    "muscle": "Fessiers, Hanches",
+    "difficulty": "Débutant",
+    "equipment": "Bandes de résistance",
+    "description": "Renforcement des fessiers",
+    "image": "hip-abduction.jpg"
+  },
+  {
+    "id": 20,
+    "name": "Course à pied",
+    "category": "Cardio",
+    "muscle": "Tout le corps",
+    "difficulty": "Débutant",
+    "equipment": "Aucun",
+    "description": "Cardio efficace et accessible",
+    "image": "running.jpg"
+  },
+  {
+    "id": 21,
+    "name": "Vélo",
+    "category": "Cardio",
+    "muscle": "Jambes, Cardio",
+    "difficulty": "Débutant",
+    "equipment": "Vélo",
+    "description": "Cardio à faible impact",
+    "image": "cycling.jpg"
+  },
+  {
+    "id": 22,
+    "name": "Natation",
+    "category": "Cardio",
+    "muscle": "Tout le corps",
+    "difficulty": "Intermédiaire",
+    "equipment": "Piscine",
+    "description": "Cardio complet sans impact",
+    "image": "swimming.jpg"
+  },
+  {
+    "id": 23,
+    "name": "Marche",
+    "category": "Cardio",
+    "muscle": "Jambes, Cardio",
+    "difficulty": "Débutant",
+    "equipment": "Aucun",
+    "description": "Activité cardio douce",
+    "image": "walking.jpg"
+  },
+  {
+    "id": 24,
+    "name": "Étirements",
+    "category": "Flexibilité",
+    "muscle": "Tout le corps",
+    "difficulty": "Débutant",
+    "equipment": "Aucun",
+    "description": "Amélioration de la flexibilité",
+    "image": "stretching.jpg"
+  },
+  {
+    "id": 25,
+    "name": "Sauts sur place",
+    "category": "Cardio",
+    "muscle": "Jambes, Cardio",
+    "difficulty": "Débutant",
+    "equipment": "Aucun",
+    "description": "Cardio simple et efficace",
+    "image": "jumping.jpg"
+  },
+  {
+    "id": 26,
+    "name": "Kettlebell Swing",
+    "category": "Tout le corps",
+    "muscle": "Fessiers, Dos, Cardio",
+    "difficulty": "Avancé",
+    "equipment": "Kettlebell",
+    "description": "Exercice explosif complet",
+    "image": "kettlebell-swing.jpg"
+  },
+  {
+    "id": 27,
+    "name": "Corde à sauter",
+    "category": "Cardio",
+    "muscle": "Jambes, Cardio, Coordination",
+    "difficulty": "Intermédiaire",
+    "equipment": "Corde à sauter",
+    "description": "Cardio et coordination",
+    "image": "jump-rope.jpg"
+  },
+  {
+    "id": 28,
+    "name": "Tirage horizontal",
+    "category": "Haut du corps",
+    "muscle": "Dos, Biceps",
+    "difficulty": "Intermédiaire",
+    "equipment": "Bandes de résistance",
+    "description": "Renforcement du dos avec bandes",
+    "image": "horizontal-row.jpg"
+  },
+  {
+    "id": 29,
+    "name": "Développé couché",
+    "category": "Haut du corps",
+    "muscle": "Pectoraux, Triceps, Épaules",
+    "difficulty": "Avancé",
+    "equipment": "Haltères",
+    "description": "Exercice de base pour les pectoraux",
+    "image": "bench-press.jpg"
+  },
+  {
+    "id": 30,
+    "name": "Yoga",
+    "category": "Flexibilité",
+    "muscle": "Tout le corps",
+    "difficulty": "Débutant",
+    "equipment": "Tapis",
+    "description": "Flexibilité et équilibre",
+    "image": "yoga.jpg"
+  }
 ]

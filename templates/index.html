@@ -21,12 +21,33 @@
     <section class="hero-section">
         <div class="hero-bg"></div>
         <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-star"></i>
+                <span>Gratuit • IA • Personnalisé</span>
+            </div>
             <h1 class="hero-title">Votre Programme d'Entraînement Personnalisé</h1>
             <p class="hero-subtitle">Entrez vos informations et obtenez un programme de fitness gratuit, alimenté par l'IA. Aucune inscription requise !</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">30+</span>
+                    <span class="stat-label">Exercices</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">Jours</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Gratuit</span>
+                </div>
+            </div>
             <a href="#generator" class="btn btn-primary hero-btn" id="startNowBtn">
                 <i class="fas fa-rocket"></i>
                 Commencer maintenant
             </a>
+        </div>
+        <div class="hero-scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
         </div>
     </section>
 
@@ -48,48 +69,92 @@
 
         <!-- Generator/Form Section -->
         <section class="form-section" id="generator">
-            <h2>Informations Personnelles</h2>
+            <div class="section-header">
+                <h2><i class="fas fa-user-cog"></i> Informations Personnelles</h2>
+                <p>Remplissez ces informations pour obtenir un programme personnalisé</p>
+            </div>
             <form id="infoForm">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="age">Âge (années) :</label>
-                        <input type="number" id="age" name="age" min="1" max="120" required>
+                        <label for="age">
+                            <i class="fas fa-birthday-cake"></i>
+                            Âge (années) :
+                        </label>
+                        <input type="number" id="age" name="age" min="1" max="120" required placeholder="Ex: 25">
                     </div>
                     <div class="form-group">
-                        <label for="height">Taille (cm) :</label>
-                        <input type="number" id="height" name="height" min="50" max="250" required>
+                        <label for="height">
+                            <i class="fas fa-ruler-vertical"></i>
+                            Taille (cm) :
+                        </label>
+                        <input type="number" id="height" name="height" min="50" max="250" required placeholder="Ex: 175">
                     </div>
                     <div class="form-group">
-                        <label for="weight">Poids (kg) :</label>
-                        <input type="number" id="weight" name="weight" min="20" max="250" required>
+                        <label for="weight">
+                            <i class="fas fa-weight"></i>
+                            Poids (kg) :
+                        </label>
+                        <input type="number" id="weight" name="weight" min="20" max="250" required placeholder="Ex: 70">
                     </div>
                 </div>
 
                 <!-- Gym question -->
                 <fieldset class="gym-fieldset">
-                    <legend>Vous entraînez-vous en salle de sport ?</legend>
-                    <label>
-                        <input type="radio" name="gym" value="yes" id="gymYes" checked>
-                        Oui
-                    </label>
-                    <label>
-                        <input type="radio" name="gym" value="no" id="gymNo">
-                        Non
-                    </label>
+                    <legend><i class="fas fa-dumbbell"></i> Vous entraînez-vous en salle de sport ?</legend>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="gym" value="yes" id="gymYes" checked>
+                            <span class="radio-custom"></span>
+                            <i class="fas fa-building"></i>
+                            Oui, j'ai accès à une salle
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="gym" value="no" id="gymNo">
+                            <span class="radio-custom"></span>
+                            <i class="fas fa-home"></i>
+                            Non, je m'entraîne à domicile
+                        </label>
+                    </div>
                 </fieldset>
 
                 <!-- Equipment options if not in gym -->
                 <div id="equipmentOptions" class="equipment-options">
-                    <p>Sélectionnez les équipements que vous avez :</p>
-                    <label><input type="checkbox" name="equipmentList" value="dumbbells"> Haltères</label><br>
-                    <label><input type="checkbox" name="equipmentList" value="pull-up bar"> Barre de traction</label><br>
-                    <label><input type="checkbox" name="equipmentList" value="resistance bands"> Bandes de résistance</label><br>
-                    <label><input type="checkbox" name="equipmentList" value="kettlebell"> Kettlebell</label><br>
-                    <label><input type="checkbox" name="equipmentList" value="jump rope"> Corde à sauter</label><br>
-                    <label><input type="checkbox" name="equipmentList" value="mat"> Tapis</label><br>
+                    <h4><i class="fas fa-tools"></i> Sélectionnez les équipements que vous avez :</h4>
+                    <div class="equipment-grid">
+                        <label class="equipment-option">
+                            <input type="checkbox" name="equipmentList" value="dumbbells">
+                            <span class="equipment-icon"><i class="fas fa-dumbbell"></i></span>
+                            <span class="equipment-name">Haltères</span>
+                        </label>
+                        <label class="equipment-option">
+                            <input type="checkbox" name="equipmentList" value="pull-up bar">
+                            <span class="equipment-icon"><i class="fas fa-grip-lines"></i></span>
+                            <span class="equipment-name">Barre de traction</span>
+                        </label>
+                        <label class="equipment-option">
+                            <input type="checkbox" name="equipmentList" value="resistance bands">
+                            <span class="equipment-icon"><i class="fas fa-expand-arrows-alt"></i></span>
+                            <span class="equipment-name">Bandes de résistance</span>
+                        </label>
+                        <label class="equipment-option">
+                            <input type="checkbox" name="equipmentList" value="kettlebell">
+                            <span class="equipment-icon"><i class="fas fa-circle"></i></span>
+                            <span class="equipment-name">Kettlebell</span>
+                        </label>
+                        <label class="equipment-option">
+                            <input type="checkbox" name="equipmentList" value="jump rope">
+                            <span class="equipment-icon"><i class="fas fa-circle-notch"></i></span>
+                            <span class="equipment-name">Corde à sauter</span>
+                        </label>
+                        <label class="equipment-option">
+                            <input type="checkbox" name="equipmentList" value="mat">
+                            <span class="equipment-icon"><i class="fas fa-square"></i></span>
+                            <span class="equipment-name">Tapis</span>
+                        </label>
+                    </div>
                 </div>
 
-                <button type="submit" id="generateBtn">
+                <button type="submit" id="generateBtn" class="btn btn-primary btn-large">
                     <i class="fas fa-magic"></i>
                     Générer le Programme
                 </button>
@@ -99,26 +164,86 @@
 
         <!-- Results Section -->
         <section id="resultSection" class="result-section">
-            <h2>Votre Programme Personnalisé</h2>
+            <div class="section-header">
+                <h2><i class="fas fa-calendar-check"></i> Votre Programme Personnalisé</h2>
+                <p>Voici votre programme d'entraînement sur 7 jours, adapté à vos besoins</p>
+            </div>
             <div id="programContainer" class="workout-plan-container"></div>
-            <h3>Produits Recommandés</h3>
-            <ul id="productList"></ul>
+            
+            <div class="plan-actions">
+                <button class="btn btn-secondary" id="printPlanBtn">
+                    <i class="fas fa-print"></i>
+                    Imprimer le plan
+                </button>
+                <button class="btn btn-success" id="savePlanBtn">
+                    <i class="fas fa-save"></i>
+                    Sauvegarder
+                </button>
+                <button class="btn btn-primary" id="sharePlanBtn">
+                    <i class="fas fa-share"></i>
+                    Partager
+                </button>
+            </div>
+            
+            <div class="products-section">
+                <h3><i class="fas fa-shopping-cart"></i> Produits Recommandés</h3>
+                <p>Ces équipements peuvent vous aider dans votre entraînement</p>
+                <div id="productList" class="products-grid"></div>
+            </div>
         </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <div class="footer-links">
-                <a href="{{ url_for('about') }}">À propos</a>
-                <a href="{{ url_for('contact') }}">Contact</a>
-                <a href="{{ url_for('privacy') }}">Politique de confidentialité</a>
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Corvio" class="footer-logo">
+                    <h3>Corvio</h3>
+                    <p>Votre partenaire fitness intelligent pour des programmes d'entraînement personnalisés.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navigation</h4>
+                        <a href="{{ url_for('index') }}">Accueil</a>
+                        <a href="{{ url_for('index') }}#generator">Générateur</a>
+                        <a href="{{ url_for('about') }}">À propos</a>
+                        <a href="{{ url_for('contact') }}">Contact</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="{{ url_for('privacy') }}">Confidentialité</a>
+                        <a href="{{ url_for('contact') }}">Aide</a>
+                        <a href="{{ url_for('about') }}">FAQ</a>
+                    </div>
+                    
+                    <div class="footer-column">
+                        <h4>Fonctionnalités</h4>
+                        <a href="#generator">Programmes personnalisés</a>
+                        <a href="#generator">IA intégrée</a>
+                        <a href="#generator">Sauvegarde cloud</a>
+                    </div>
+                </div>
             </div>
-            <div class="footer-social">
-                <a href="#" aria-label="Twitter" class="social-icon"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="GitHub" class="social-icon"><i class="fab fa-github"></i></a>
+            
+            <div class="footer-bottom">
+                <div class="footer-social">
+                    <a href="#" aria-label="Twitter" class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" aria-label="Instagram" class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" aria-label="GitHub" class="social-icon">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="social-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+                <p>&copy; 2025 Corvio. Tous droits réservés. Propulsé par l'IA.</p>
             </div>
-            <p>&copy; 2025 Corvio. Tous droits réservés.</p>
         </div>
     </footer>
 
@@ -127,6 +252,39 @@
         document.getElementById('startNowBtn').addEventListener('click', function(e) {
             e.preventDefault();
             document.getElementById('generator').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Scroll indicator functionality
+        document.querySelector('.hero-scroll-indicator').addEventListener('click', function() {
+            document.getElementById('generator').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Plan actions functionality
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'printPlanBtn') {
+                window.print();
+            }
+            
+            if (e.target.id === 'savePlanBtn') {
+                // Save functionality - could be enhanced with localStorage or API
+                alert('Fonctionnalité de sauvegarde à implémenter');
+            }
+            
+            if (e.target.id === 'sharePlanBtn') {
+                // Share functionality
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Mon programme d\'entraînement Corvio',
+                        text: 'Découvrez mon programme d\'entraînement personnalisé généré par Corvio !',
+                        url: window.location.href
+                    });
+                } else {
+                    // Fallback: copy to clipboard
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        alert('Lien copié dans le presse-papiers !');
+                    });
+                }
+            }
         });
     </script>
 </body>

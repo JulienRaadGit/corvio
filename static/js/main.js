@@ -163,17 +163,26 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             // Afficher les produits
             data.products.forEach(prod => {
-                const li = document.createElement('li');
-                const anchor = document.createElement('a');
-                anchor.href = prod.link || '#';
-                anchor.target = '_blank';
-                anchor.rel = 'noopener noreferrer';
-                anchor.textContent = prod.name;
-                const span = document.createElement('span');
-                span.textContent = ` – ${prod.description}`;
-                li.appendChild(anchor);
-                li.appendChild(span);
-                productList.appendChild(li);
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                
+                const productName = document.createElement('h4');
+                productName.textContent = prod.name;
+                
+                const productDesc = document.createElement('p');
+                productDesc.textContent = prod.description;
+                
+                const productLink = document.createElement('a');
+                productLink.href = prod.link || '#';
+                productLink.target = '_blank';
+                productLink.rel = 'noopener noreferrer';
+                productLink.textContent = 'Voir le produit';
+                productLink.innerHTML += ' <i class="fas fa-external-link-alt"></i>';
+                
+                productCard.appendChild(productName);
+                productCard.appendChild(productDesc);
+                productCard.appendChild(productLink);
+                productList.appendChild(productCard);
             });
             // Hide spinner, fade in results
             if (loadingSpinner) loadingSpinner.style.display = 'none';
