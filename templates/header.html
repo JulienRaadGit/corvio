@@ -22,7 +22,6 @@
     <!-- Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='ads-config.js') }}"></script>
 </head>
 <body>
@@ -114,7 +113,7 @@
         </div>
 
         <!-- Mobile Burger Button -->
-        <button class="nav-toggle" aria-label="Toggle navigation menu">
+        <button class="nav-toggle" aria-label="Toggle navigation menu" type="button">
             <span class="hamburger"></span>
             <span class="hamburger"></span>
             <span class="hamburger"></span>
@@ -191,3 +190,7 @@
     <!-- Overlay for mobile menu -->
     <div class="nav-overlay"></div>
 </nav>
+
+<!-- Scripts chargés à la fin du body -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/mobile-menu-test.js') }}"></script>

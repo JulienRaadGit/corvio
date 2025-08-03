@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Content Loaded - Initializing mobile menu functionality');
+    
     const form = document.getElementById('infoForm');
     const resultSection = document.getElementById('resultSection');
     const programContainer = document.getElementById('programContainer');
@@ -401,16 +403,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Mobile Menu Functionality
+    console.log('Setting up mobile menu functionality...');
     const toggleButton = document.querySelector('.nav-toggle');
     const mobileMenu = document.querySelector('.nav-menu.mobile-menu');
     const overlay = document.querySelector('.nav-overlay');
     
+    console.log('Toggle button found:', !!toggleButton);
+    console.log('Mobile menu found:', !!mobileMenu);
+    console.log('Overlay found:', !!overlay);
+    
     if (toggleButton && mobileMenu && overlay) {
+        console.log('All mobile menu elements found, setting up event listeners...');
+        
         // Toggle mobile menu
-        toggleButton.addEventListener('click', () => {
+        toggleButton.addEventListener('click', (e) => {
+            console.log('Toggle button clicked!');
+            e.preventDefault();
+            e.stopPropagation();
+            
             toggleButton.classList.toggle('active');
             mobileMenu.classList.toggle('active');
             overlay.classList.toggle('active');
+            
+            console.log('Menu toggled - Active state:', mobileMenu.classList.contains('active'));
             
             // Prevent body scroll when menu is open
             if (mobileMenu.classList.contains('active')) {
@@ -422,6 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Close menu when clicking overlay
         overlay.addEventListener('click', () => {
+            console.log('Overlay clicked, closing menu');
             toggleButton.classList.remove('active');
             mobileMenu.classList.remove('active');
             overlay.classList.remove('active');
@@ -432,6 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const navLinks = mobileMenu.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
+                console.log('Nav link clicked, closing menu');
                 toggleButton.classList.remove('active');
                 mobileMenu.classList.remove('active');
                 overlay.classList.remove('active');
@@ -442,12 +459,20 @@ document.addEventListener('DOMContentLoaded', () => {
         // Close menu with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                console.log('Escape key pressed, closing menu');
                 toggleButton.classList.remove('active');
                 mobileMenu.classList.remove('active');
                 overlay.classList.remove('active');
                 document.body.style.overflow = '';
             }
         });
+        
+        console.log('Mobile menu event listeners attached successfully');
+    } else {
+        console.error('Mobile menu elements not found:');
+        console.error('- Toggle button:', !!toggleButton);
+        console.error('- Mobile menu:', !!mobileMenu);
+        console.error('- Overlay:', !!overlay);
     }
     
     // Handle window resize
@@ -460,4 +485,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = '';
         }
     });
+    
+    console.log('Mobile menu setup complete');
 });
